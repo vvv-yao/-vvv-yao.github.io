@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Squawk Rush – Scream to fly | vespayao.skr</title>
+<meta name="description" content="vespayao.skr is an independent game studio building for Solana Seeker. Squawk Rush: hum to walk, yell to jump, scream to fly.">
+<meta property="og:title" content="Squawk Rush by vespayao.skr">
+<meta property="og:description" content="A voice-controlled arcade game for Solana Seeker. The louder you scream, the higher you fly.">
+<meta property="og:image" content="../img/square.jpg">
+<link rel="icon" href="../img/favicon.png">
+<link rel="apple-touch-icon" href="../img/vespayao-icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1c1240;
+  --violet:#6a3cf0; --grape:#4a22c4; --indigo:#2e1690;
+  --pink:#ff3d9a; --mint:#2ef0a8; --sun:#ffd23f; --orange:#ff8a3d; --sky:#4fc3ff;
+  --text:#ffffff; --muted:#e6deff; --line:rgba(255,255,255,.22);
+  --display:"Fredoka","Baloo 2",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--indigo);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:30;padding:calc(env(safe-area-inset-top,0px) + 12px) 0 12px;transition:background .3s,box-shadow .3s}
+nav.solid{background:rgba(58,28,170,.82);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(20,8,70,.35)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-family:var(--display);font-weight:700;font-size:1.3rem;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand img{width:40px;height:40px;border-radius:12px;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+nav ul a{text-decoration:none;font-weight:800;color:var(--muted)}
+nav ul a:hover{color:var(--sun)}
+@media (max-width:760px){nav ul{display:none}}
+
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;
+  background:
+    radial-gradient(circle at 72% 38%,rgba(255,61,154,.75),transparent 42%),
+    radial-gradient(circle at 20% 80%,rgba(46,240,168,.35),transparent 40%),
+    linear-gradient(160deg,#7a45ff 0%,#4a22c4 45%,#2e1690 100%)}
+#scene{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.hero .fallback{position:absolute;inset:0;background:url(../img/keyart.jpg) center/cover;opacity:0;transition:opacity .6s}
+.hero.static .fallback{opacity:.6}
+.hero-copy{max-width:560px;padding-top:70px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-weight:800;background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:999px;margin:0 0 18px}
+.kicker::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint)}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(2.7rem,7vw,4.8rem);line-height:1;margin:0 0 18px;
+  text-shadow:0 2px 0 #c9b8ff,0 4px 0 #8a6cf0,0 6px 0 #5a35d0,0 8px 0 #3a1c9a,0 16px 24px rgba(20,6,70,.5)}
+.hero p.lead{font-size:1.18rem;color:var(--muted);margin:0 0 28px;max-width:30em;text-shadow:0 2px 8px rgba(30,10,90,.5)}
+.btns{display:flex;flex-wrap:wrap;gap:14px}
+.btn{font-family:var(--display);font-weight:600;font-size:1.08rem;border:0;border-radius:999px;padding:14px 26px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .12s,box-shadow .12s;color:#fff}
+.btn:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.btn.primary{background:linear-gradient(#ff6bb5,#ff2d8f);box-shadow:0 7px 0 #b0105c,0 14px 24px rgba(176,16,92,.45)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 9px 0 #b0105c,0 18px 28px rgba(176,16,92,.5)}
+.btn.primary:active{transform:translateY(5px);box-shadow:0 2px 0 #b0105c}
+.btn.ghost{background:linear-gradient(#5ef7c2,#20d394);color:#0d3b2c;box-shadow:0 7px 0 #0f8c5f,0 14px 24px rgba(15,140,95,.4)}
+.btn.ghost:hover{transform:translateY(-2px)}
+.btn.ghost:active{transform:translateY(5px);box-shadow:0 2px 0 #0f8c5f}
+.btn:disabled{opacity:.6;cursor:default;transform:none}
+
+/* flowing waves between sections */
+.flow{position:relative;height:110px;overflow:hidden;margin:-1px 0;z-index:2}
+.flow svg{position:absolute;bottom:0;left:0;width:200%;height:100%;animation:drift 12s linear infinite}
+.flow svg:nth-child(2){animation-duration:19s;animation-direction:reverse}
+.flow svg:nth-child(3){animation-duration:27s}
+@keyframes drift{to{transform:translateX(-50%)}}
+
+section{position:relative;padding:90px 0;overflow:hidden}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(2.1rem,4.8vw,3.3rem);line-height:1.05;margin:0 0 16px;
+  text-shadow:0 3px 0 rgba(0,0,0,.18),0 6px 0 rgba(0,0,0,.12)}
+.sub{color:var(--muted);font-size:1.12rem;max-width:36em;margin:0 0 40px}
+
+/* floating 3D pills decoration */
+.pill{position:absolute;height:28px;border-radius:999px;border:4px solid #fff;z-index:1;
+  box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),inset 0 6px 0 rgba(255,255,255,.45),0 12px 20px rgba(20,8,70,.35);animation:float 6s ease-in-out infinite}
+.pill.spiky::after{content:"";position:absolute;left:10%;right:10%;top:100%;height:16px;margin-top:4px;
+  background:linear-gradient(135deg,transparent 50%,#ff3b3b 50%) 0 0/16px 16px,linear-gradient(225deg,transparent 50%,#ff3b3b 50%) 0 0/16px 16px;
+  background:conic-gradient(from 135deg at 50% 0,#ffcf3a 0 90deg,transparent 0) 0 0/16px 16px repeat-x}
+@keyframes float{50%{transform:translateY(-14px) rotate(2deg)}}
+.coin{position:absolute;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7b0,#ffd23f 45%,#e09a00);border:3px solid #fff;z-index:1;
+  box-shadow:0 8px 16px rgba(20,8,70,.35);animation:spin 3s linear infinite}
+@keyframes spin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.15)}}
+
+/* 3D tilt */
+.tilt{transform-style:preserve-3d;transition:transform .2s ease-out;will-change:transform}
+
+/* game */
+#game{background:linear-gradient(180deg,#4a22c4,#6a3cf0 60%,#7d4bff)}
+.keyart{border-radius:30px;overflow:hidden;border:6px solid #fff;
+  box-shadow:0 10px 0 #2e1690,0 34px 60px rgba(20,6,70,.55);transform:perspective(1200px) rotateX(6deg)}
+.keyart img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.beats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.beat{border-radius:26px;padding:24px;color:var(--ink);border:4px solid #fff;
+  box-shadow:0 8px 0 rgba(0,0,0,.2),0 18px 30px rgba(20,8,70,.35)}
+.beat:nth-child(1){background:linear-gradient(#9be4ff,#4fc3ff)}
+.beat:nth-child(2){background:linear-gradient(#ffe88a,#ffd23f)}
+.beat:nth-child(3){background:linear-gradient(#ff9ccc,#ff3d9a);color:#fff}
+.beat b{font-family:var(--display);font-size:1.8rem;display:block;line-height:1.1}
+.beat span{font-weight:700;opacity:.85}
+.bars{display:flex;gap:5px;align-items:flex-end;height:38px;margin-bottom:10px}
+.bars i{width:8px;border-radius:4px;background:currentColor;animation:eq 1s ease-in-out infinite}
+.bars i:nth-child(2){animation-delay:.15s}.bars i:nth-child(3){animation-delay:.3s}.bars i:nth-child(4){animation-delay:.45s}.bars i:nth-child(5){animation-delay:.6s}
+.beat:nth-child(1) .bars i{--h:30%}.beat:nth-child(2) .bars i{--h:65%}.beat:nth-child(3) .bars i{--h:100%}
+@keyframes eq{0%,100%{height:15%}50%{height:var(--h)}}
+@media (max-width:760px){.beats{grid-template-columns:1fr}}
+
+/* play */
+#play{background:linear-gradient(180deg,#7d4bff,#c43cdc 55%,#ff4f9a)}
+.play-grid{display:grid;grid-template-columns:1fr 390px;gap:48px;align-items:center}
+.stage{position:relative;background:linear-gradient(#5a2fd8,#2e1690);border-radius:36px;border:6px solid #fff;overflow:hidden;aspect-ratio:3/4;
+  box-shadow:0 12px 0 #8a1660,0 34px 60px rgba(70,10,60,.5)}
+#demo{width:100%;height:100%;display:block;touch-action:none;cursor:pointer}
+.meter{position:absolute;left:16px;top:70px;bottom:70px;width:14px;border-radius:8px;background:rgba(255,255,255,.2);overflow:hidden;border:2px solid rgba(255,255,255,.5)}
+.meter i{position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(var(--pink),var(--sun),var(--mint))}
+.hud{position:absolute;top:16px;left:0;right:0;text-align:center;font-family:var(--display);font-weight:700;font-size:1.6rem;pointer-events:none;text-shadow:0 3px 0 rgba(0,0,0,.25)}
+.hud small{display:block;font-size:.9rem;font-family:var(--body);opacity:.85}
+.tap-hint{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-weight:800;font-size:.9rem;pointer-events:none;opacity:.9}
+.controls{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 14px}
+.note{color:var(--muted);font-size:.95rem}
+#status{font-weight:800;color:var(--sun);min-height:1.6em;text-shadow:0 2px 0 rgba(0,0,0,.2)}
+@media (max-width:880px){.play-grid{grid-template-columns:1fr}.stage{max-width:390px;margin:0 auto;width:100%}}
+
+/* video */
+#video{background:linear-gradient(180deg,#ff4f9a,#ff8a3d 60%,#ffb83d)}
+#video .sub{color:#fff3e6}
+.player{position:relative;aspect-ratio:16/9;border-radius:30px;overflow:hidden;border:6px solid #fff;background:#000;
+  box-shadow:0 12px 0 #b8501a,0 34px 60px rgba(120,40,10,.45)}
+.player img{width:100%;height:100%;object-fit:cover}
+.player button{position:absolute;inset:0;margin:auto;width:104px;height:104px;border-radius:50%;border:6px solid #fff;background:linear-gradient(#ff6bb5,#ff2d8f);
+  box-shadow:0 7px 0 #b0105c,0 0 0 16px rgba(255,255,255,.25);cursor:pointer;animation:pulse 2s ease-in-out infinite}
+.player button::after{content:"";position:absolute;left:38px;top:27px;border-left:32px solid #fff;border-top:20px solid transparent;border-bottom:20px solid transparent}
+.player button:focus-visible{outline:3px solid var(--sun);outline-offset:8px}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@keyframes pulse{50%{box-shadow:0 7px 0 #b0105c,0 0 0 30px rgba(255,255,255,0)}}
+
+/* modes */
+#modes{background:linear-gradient(180deg,#ffb83d,#2ef0a8 8%,#18b8c9 55%,#4a22c4)}
+#modes h2,#modes .sub{color:#0b2a40;text-shadow:none}
+#modes .sub{color:#0d3550;font-weight:600}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,280px);gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 22px 34px;margin:0 -22px;perspective:1000px}
+.rail::-webkit-scrollbar{height:10px}.rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.6);border-radius:8px}
+.card{scroll-snap-align:start;background:#fff;color:var(--ink);border-radius:28px;overflow:hidden;border:5px solid #fff;
+  box-shadow:0 10px 0 rgba(20,8,70,.25),0 24px 36px rgba(20,8,70,.3);transition:transform .25s}
+.card:hover{transform:translateY(-10px) rotateX(6deg) rotateZ(-1deg)}
+.card img{aspect-ratio:9/13;object-fit:cover;width:100%;border-radius:22px 22px 0 0}
+.card div{padding:16px 18px 20px}
+.card h3{font-family:var(--display);font-size:1.4rem;margin:0 0 4px;color:var(--grape)}
+.card p{margin:0;color:#4a4270;font-size:.96rem}
+.more{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.chip{background:#fff;color:var(--ink);border-radius:999px;padding:9px 18px;font-weight:700;box-shadow:0 5px 0 rgba(20,8,70,.25)}
+.chip b{color:var(--pink)}
+
+/* seeker */
+#seeker{background:linear-gradient(180deg,#4a22c4,#2e1690)}
+.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.feat{border-radius:28px;padding:28px;background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.06));border:3px solid rgba(255,255,255,.35);
+  box-shadow:0 8px 0 rgba(0,0,0,.2),0 22px 34px rgba(10,4,50,.4)}
+.feat h3{font-family:var(--display);font-size:1.45rem;margin:0 0 6px}
+.feat p{margin:0;color:var(--muted)}
+.gem{width:46px;height:46px;border-radius:14px;margin-bottom:14px;border:3px solid #fff;transform:rotate(45deg) scale(.8);
+  box-shadow:inset 0 -6px 0 rgba(0,0,0,.2),inset 0 6px 0 rgba(255,255,255,.5),0 8px 14px rgba(0,0,0,.3)}
+@media (max-width:760px){.feats{grid-template-columns:1fr}}
+
+/* studio */
+#studio{background:linear-gradient(180deg,#2e1690,#6a3cf0)}
+.studio{display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:center}
+.studio img{border-radius:36px;border:6px solid #fff;box-shadow:0 10px 0 #2e1690,0 30px 50px rgba(10,4,50,.5)}
+.studio p{font-size:1.15rem;color:var(--muted);margin:0 0 16px}
+@media (max-width:760px){.studio{grid-template-columns:1fr}.studio img{max-width:220px}}
+
+footer{background:#1e0e6a;padding:44px 0 calc(env(safe-area-inset-bottom,0px) + 40px);color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px}
+footer a{color:#fff;font-weight:800;margin-right:18px;text-underline-offset:3px;text-decoration-color:var(--pink)}
+
+/* music button */
+#musicBtn{position:fixed;right:18px;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:40;width:62px;height:62px;border-radius:50%;border:4px solid #fff;cursor:pointer;
+  background:linear-gradient(#ffe88a,#ffc21a);box-shadow:0 6px 0 #c48a00,0 14px 24px rgba(0,0,0,.35);display:grid;place-items:center;font-size:0}
+#musicBtn svg{width:28px;height:28px}
+#musicBtn.on{animation:bop .5s ease-in-out infinite alternate}
+#musicBtn:not(.on) .slash{display:block}
+#musicBtn.on .slash{display:none}
+#musicBtn:focus-visible{outline:3px solid #fff;outline-offset:4px}
+@keyframes bop{to{transform:translateY(-4px) rotate(-6deg)}}
+
+.rise{opacity:0;transform:translateY(30px) scale(.97);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.9,.3,1.2)}
+.rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .flow svg,.bars i,.player button,.pill,.coin,#musicBtn.on{animation:none}
+  .rise{opacity:1;transform:none;transition:none}
+}
+@media (max-width:760px){nav ul{display:none}
+  .hero{align-items:flex-end}
+  .hero-copy{padding:0 0 calc(env(safe-area-inset-bottom,0px) + 40px)}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:1;pointer-events:none;
+    background:linear-gradient(rgba(46,22,144,0),rgba(46,22,144,.88) 38%,#2e1690)}
+  h1{font-size:2.6rem}
+  .hero p.lead{font-size:1.02rem;margin-bottom:22px}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../img/vespayao-icon-512.png" alt="">vespayao.skr</a>
+    <ul>
+      <li><a href="#game">Squawk Rush</a></li>
+      <li><a href="#play">Try it</a></li>
+      <li><a href="#video">Trailer</a></li>
+      <li><a href="#modes">Modes</a></li>
+      <li><a href="../">Developer</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="fallback" aria-hidden="true"></div>
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="kicker">Squawk Rush · a game by vespayao.skr</p>
+      <h1>Scream to fly.</h1>
+      <p class="lead">A voice-controlled arcade game for Solana Seeker. Hum to walk, yell to jump, and the louder you scream, the higher you fly.</p>
+      <div class="btns">
+        <a class="btn primary" href="#play">Try it with your voice</a>
+        <a class="btn ghost" href="#video">Watch the trailer</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="flow" aria-hidden="true" style="background:#4a22c4">
+  <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto;transform-origin:center"><path d="M0 0 H2400 V40 C2200 90 2000 0 1800 40 S1400 90 1200 40 S800 0 600 40 S200 90 0 40Z" fill="#2e1690"/></svg>
+  <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto"><path d="M0 52 C200 100 400 10 600 52 S1000 100 1200 52 S1600 10 1800 52 S2200 100 2400 52" fill="none" stroke="#2ef0a8" stroke-width="7" stroke-linecap="round"/></svg>
+  <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto"><path d="M0 66 C200 20 400 110 600 66 S1000 20 1200 66 S1600 110 1800 66 S2200 20 2400 66" fill="none" stroke="#ff3d9a" stroke-width="7" stroke-linecap="round"/></svg>
+</div>
+
+<section id="game">
+  <span class="pill spiky" style="width:150px;left:-30px;top:120px;background:linear-gradient(#ffe88a,#ffd23f)"></span>
+  <span class="pill" style="width:120px;right:4%;top:70px;background:linear-gradient(#ff9ccc,#ff3d9a);animation-delay:-2s"></span>
+  <span class="coin" style="right:12%;top:180px"></span>
+  <div class="wrap">
+    <h2>Squawk Rush</h2>
+    <p class="sub">A voice-controlled arcade climber. There are no buttons: your voice moves the bird, and the front camera puts your face behind the game. Every run ends with a highlight clip worth sending to a friend.</p>
+    <div class="keyart rise tilt" data-tilt><img src="../img/keyart.jpg" alt="Squawk Rush key art: a blue bird screaming as it flies up a tower of colorful platforms" width="1600" height="900" loading="lazy"></div>
+    <div class="beats">
+      <div class="beat tilt" data-tilt><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><b>Hum</b><span>and your bird walks.</span></div>
+      <div class="beat tilt" data-tilt><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><b>Shout</b><span>and it jumps.</span></div>
+      <div class="beat tilt" data-tilt><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><b>Scream</b><span>and it flies higher.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="play">
+  <span class="pill" style="width:130px;left:3%;bottom:80px;background:linear-gradient(#5ef7c2,#20d394)"></span>
+  <span class="coin" style="left:40%;top:60px;animation-delay:-1s"></span>
+  <div class="wrap play-grid">
+    <div>
+      <h2>Try it right here</h2>
+      <p class="sub">A tiny taste of the game. Turn on your microphone and shout: the louder you are, the higher the bird jumps. No microphone? Hold the stage and let go, the longer you hold, the bigger the jump.</p>
+      <div class="controls">
+        <button class="btn primary" id="micBtn">Use my microphone</button>
+        <button class="btn ghost" id="soundBtn" aria-pressed="true">Sound effects on</button>
+      </div>
+      <p id="status" role="status"></p>
+      <p class="note">Your audio stays on your device. Nothing is recorded or sent anywhere.</p>
+    </div>
+    <div class="stage tilt" data-tilt="4">
+      <canvas id="demo" aria-label="Mini Squawk Rush demo. Shout or hold to jump."></canvas>
+      <div class="meter" aria-hidden="true"><i id="meterFill"></i></div>
+      <div class="hud"><span id="height">0 m</span><small>Best <span id="best">0</span> m</small></div>
+      <div class="tap-hint">Shout, or hold and release</div>
+    </div>
+  </div>
+</section>
+
+<section id="video">
+  <span class="coin" style="left:6%;top:90px"></span>
+  <span class="pill spiky" style="width:140px;right:-20px;top:140px;background:linear-gradient(#9be4ff,#4fc3ff);animation-delay:-3s"></span>
+  <div class="wrap">
+    <h2>Watch the trailer</h2>
+    <p class="sub">Two minutes of hazards, game modes and screaming, captured on a Seeker.</p>
+    <div class="player tilt" data-tilt="3" id="player">
+      <img src="../img/poster.jpg" alt="" loading="lazy">
+      <button id="playVideo" aria-label="Play the Squawk Rush trailer"></button>
+    </div>
+  </div>
+</section>
+
+<section id="modes">
+  <div class="wrap">
+    <h2>Seven ways to play</h2>
+    <p class="sub">Climb alone, race a ghost, or pass one phone around the room.</p>
+    <div class="rail rise">
+      <article class="card"><img src="../img/phone.jpg" alt="Squawk Rush running on a phone held in two hands" loading="lazy"><div><h3>Daily Challenge</h3><p>The whole world climbs the same tower every day. Ranked runs are replayed on the server, so scores can't be faked.</p></div></article>
+      <article class="card"><img src="../img/ghost-battle.jpg" alt="Ghost Battle: the bird races a ghost opponent" loading="lazy"><div><h3>Ghost Battle</h3><p>Race a replay of the player just above you. The ghost waits for you and talks trash.</p></div></article>
+      <article class="card"><img src="../img/party.jpg" alt="Party mode: five birds cheering around one phone" loading="lazy"><div><h3>Party</h3><p>One phone, up to six friends, and a lot of noise.</p></div></article>
+      <article class="card"><img src="../img/mute-bomb.jpg" alt="A mute bomb counting down while the bird stays quiet" loading="lazy"><div><h3>Mute bombs</h3><p>Spikes, meteors and fire arrows knock you around. Land on a mute bomb and the only way out is silence.</p></div></article>
+      <article class="card"><img src="../img/neon.jpg" alt="The bird blasting upward through neon platforms" loading="lazy"><div><h3>Glide &amp; Endless Run</h3><p>Glide between the pipes as the speed builds, or dash through an endless run with power-ups.</p></div></article>
+    </div>
+    <div class="more">
+      <span class="chip"><b>Free Climb</b> at your own pace</span>
+      <span class="chip"><b>Scale Mode</b> sing the right note to jump</span>
+    </div>
+  </div>
+</section>
+
+<section id="seeker">
+  <span class="pill" style="width:110px;right:6%;top:60px;background:linear-gradient(#ffc28a,#ff8a3d)"></span>
+  <div class="wrap">
+    <h2>Built for Seeker</h2>
+    <p class="sub">Play without a wallet. Connect one when you want your score to count.</p>
+    <div class="feats">
+      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#5ef7c2,#20d394)"></div><h3>Wallet sign-in</h3><p>Sign in with Seed Vault or Phantom over Mobile Wallet Adapter to join the leaderboard and race ghosts.</p></div>
+      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#ffe88a,#ffd23f)"></div><h3>A leaderboard of your own</h3><p>Seeker owners get a Seeker-only leaderboard, and Seeker Genesis Token holders earn login rewards just by playing.</p></div>
+      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#ff9ccc,#ff3d9a)"></div><h3>SKR cosmetics</h3><p>Skins, hats, trails and No Ads, paid in SKR and verified on chain. Your look shows in every mode and in every clip.</p></div>
+      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#9be4ff,#4fc3ff)"></div><h3>Fair by design</h3><p>Cosmetics never change the rules, and every ranked run is checked by replaying it with the same game code.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="studio">
+  <span class="coin" style="right:8%;bottom:60px;animation-delay:-2s"></span>
+  <div class="wrap studio">
+    <img class="tilt" data-tilt="8" src="../img/square.jpg" alt="Squawk Rush artwork" loading="lazy" width="900" height="900">
+    <div>
+      <h2>Made by vespayao.skr</h2>
+      <p>Squawk Rush is the first game from vespayao.skr, an independent developer building playful apps and games for Solana Seeker.</p>
+      <div class="btns"><a class="btn primary" href="../">Meet the developer</a><a class="btn ghost" href="https://squawkrush.party">squawkrush.party</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a href="https://squawkrush.party">squawkrush.party</a>
+      <a href="https://squawkrush.party/privacy">Privacy</a>
+      <a href="https://squawkrush.party/terms">Terms</a>
+      <a href="mailto:support@squawkrush.party">support@squawkrush.party</a>
+    </div>
+    <div>© 2026 vespayao.skr</div>
+  </div>
+</footer>
+
+<button id="musicBtn" aria-label="Background music" aria-pressed="false">
+  <svg viewBox="0 0 24 24" fill="none" stroke="#5a2a00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3" fill="#5a2a00"/><circle cx="17" cy="16" r="3" fill="#5a2a00"/><path class="slash" d="M3 3l18 18" stroke="#c4002f" stroke-width="3" style="display:none"/></svg>
+</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40),{passive:true});
+
+/* reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rise').forEach(el=>io.observe(el));
+
+/* 3D tilt on pointer */
+if(!REDUCED && matchMedia('(hover:hover)').matches){
+  document.querySelectorAll('[data-tilt]').forEach(el=>{
+    const max=+el.dataset.tilt||7;
+    el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      el.style.transform=`perspective(1000px) rotateY(${x*max*2}deg) rotateX(${-y*max*2}deg) translateZ(10px)`});
+    el.addEventListener('pointerleave',()=>el.style.transform='');
+  });
+}
+
+/* ---------- 3D hero ---------- */
+(function hero(){
+  const heroEl=document.querySelector('.hero'), cv=document.getElementById('scene');
+  if(!window.THREE||REDUCED){heroEl.classList.add('static');return}
+  let renderer;
+  try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){heroEl.classList.add('static');return}
+  const mobile=innerWidth<760;
+  renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.5:2));
+  const scene=new THREE.Scene(); scene.fog=new THREE.Fog(0x5a2fd8,26,60);
+  const cam=new THREE.PerspectiveCamera(50,1,.1,100); cam.position.set(0,1,15);
+  scene.add(new THREE.HemisphereLight(0xffffff,0x7a45ff,.55));
+  const key=new THREE.DirectionalLight(0xffffff,1.1); key.position.set(4,9,10); scene.add(key);
+  const rim=new THREE.PointLight(0xff3d9a,1.6,40); rim.position.set(-6,3,6); scene.add(rim);
+  const rim2=new THREE.PointLight(0x2ef0a8,1.2,40); rim2.position.set(8,-4,6); scene.add(rim2);
+
+  const colors=[0x2ef0a8,0xffd23f,0xff8a3d,0xff3d9a,0x4fc3ff];
+  const spikeMat=new THREE.MeshStandardMaterial({color:0xffcf3a,emissive:0xff3b00,emissiveIntensity:.25,roughness:.4});
+  function platform(len,color,spiky){
+    const g=new THREE.Group(), m=new THREE.MeshStandardMaterial({color,roughness:.25,metalness:.05,emissive:color,emissiveIntensity:.25});
+    const edge=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.3});
+    const body=new THREE.Mesh(new THREE.CylinderGeometry(.34,.34,len,28),m); body.rotation.z=Math.PI/2; g.add(body);
+    const shell=new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,len,28),edge); shell.rotation.z=Math.PI/2; shell.scale.set(1,1,.35); shell.position.z=-.22; g.add(shell);
+    [-1,1].forEach(s=>{const c=new THREE.Mesh(new THREE.SphereGeometry(.34,24,16),m);c.position.x=s*len/2;g.add(c);
+      const e=new THREE.Mesh(new THREE.SphereGeometry(.4,24,16),edge);e.position.set(s*len/2,0,-.22);e.scale.z=.35;g.add(e)});
+    if(spiky){const n=Math.max(3,Math.round(len/.45));for(let i=0;i<n;i++){const k=new THREE.Mesh(new THREE.ConeGeometry(.17,.42,4),spikeMat);
+      k.rotation.x=Math.PI;k.position.set(-len/2+.25+i*(len-.5)/(n-1),-.55,0);g.add(k)}}
+    return g;
+  }
+  const xOff=mobile?0:6.2, N=mobile?14:22, GAP=1.7;
+  const px=()=>mobile?(Math.random()*2-1)*4:xOff+(Math.random()*2-1)*4.2;
+  const plats=[];
+  for(let i=0;i<N;i++){
+    const p=platform(1.6+Math.random()*1.8,colors[i%colors.length],Math.random()<.35);
+    p.position.set(px(),(i-N/2)*GAP,-1-Math.random()*7); p.userData.spin=(Math.random()-.5)*.006;
+    scene.add(p); plats.push(p);
+  }
+  // spinning coins
+  const coinMat=new THREE.MeshStandardMaterial({color:0xffd23f,metalness:.6,roughness:.25,emissive:0xb07800,emissiveIntensity:.35});
+  const coins=[];
+  for(let i=0;i<(mobile?6:12);i++){const c=new THREE.Group(), d=new THREE.Mesh(new THREE.CylinderGeometry(.32,.32,.1,32),coinMat);d.rotation.x=Math.PI/2;c.add(d);
+    c.rotation.y=Math.random()*3; c.position.set(px(),(Math.random()-.5)*N*GAP,-Math.random()*5); scene.add(c); coins.push(c)}
+  // stars
+  const sg=new THREE.BufferGeometry(), sp=[];
+  for(let i=0;i<600;i++)sp.push((Math.random()-.5)*60,(Math.random()-.5)*40,-8-Math.random()*30);
+  sg.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
+  scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.1,transparent:true,opacity:.9})));
+  // bird
+  const tex=new THREE.TextureLoader().load('../img/bird.png');
+  const bird=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true}));
+  const bs=mobile?2.9:3.9, by0=mobile?4.4:1.2;
+  bird.scale.set(bs,bs,1); bird.position.set(mobile?1:xOff,by0,3); scene.add(bird);
+  // speed trail
+  // sound-wave rings from the beak
+  const rings=[];
+  function emit(){
+    const r=new THREE.Mesh(new THREE.TorusGeometry(.5,.08,10,48),new THREE.MeshBasicMaterial({color:Math.random()<.6?0x2ef0a8:0xffffff,transparent:true,opacity:.95,fog:false}));
+    r.position.set(bird.position.x+bs*.32,bird.position.y+bs*.22,bird.position.z); r.rotation.y=.6; r.userData.t=0; scene.add(r); rings.push(r);
+  }
+  let mx=0,my=0;
+  addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});
+  function resize(){const w=cv.clientWidth,h=cv.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+  addEventListener('resize',resize); resize();
+  let last=performance.now(), emitT=0, running=true;
+  new IntersectionObserver(([e])=>{running=e.isIntersecting; if(running){last=performance.now();requestAnimationFrame(loop)}}).observe(heroEl);
+  function loop(now){
+    if(!running)return;
+    const dt=Math.min((now-last)/1000,.05); last=now;
+    const boost=1+Math.max(0,Math.sin(now/900))*2.4;   // pulses like a scream
+    const top=N/2*GAP;
+    plats.forEach(p=>{p.position.y-=dt*1.7*boost;p.rotation.y+=p.userData.spin;if(p.position.y<-top){p.position.y+=N*GAP;p.position.x=px()}});
+    coins.forEach(c=>{c.position.y-=dt*1.7*boost;c.rotation.y+=dt*3;if(c.position.y<-top){c.position.y+=N*GAP;c.position.x=px()}});
+    bird.position.y=by0+Math.sin(now/450)*.35;
+    bird.material.rotation=Math.sin(now/900)*.08;
+    emitT+=dt*boost; if(emitT>.5){emitT=0;emit()}
+    for(let i=rings.length-1;i>=0;i--){const r=rings[i];r.userData.t+=dt;const s=.6+r.userData.t*2.4;r.scale.set(s,s,s);r.position.x+=dt*1.4;r.position.y+=dt*.5;
+      r.material.opacity=Math.max(0,.95-r.userData.t*.75); if(r.material.opacity<=0){scene.remove(r);r.geometry.dispose();r.material.dispose();rings.splice(i,1)}}
+    cam.position.x+=(mx*2.4-cam.position.x)*.04; cam.position.y+=(1-my*1.6-cam.position.y)*.04; cam.lookAt(mobile?0:1.5,1,0);
+    renderer.render(scene,cam); requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* ---------- audio: sound effects + background music (all synthesized) ---------- */
+let actx=null, sfxOn=true, master=null, musicGain=null;
+function ac(){
+  if(!actx){actx=new (window.AudioContext||window.webkitAudioContext)();master=actx.createGain();master.gain.value=1;master.connect(actx.destination);
+    musicGain=actx.createGain();musicGain.gain.value=0;musicGain.connect(master)}
+  if(actx.state==='suspended')actx.resume(); return actx;
+}
+function tone(f0,f1,dur,type='square',vol=.12,dest){
+  const a=ac(), o=a.createOscillator(), g=a.createGain(), t=a.currentTime;
+  o.type=type; o.frequency.setValueAtTime(f0,t); o.frequency.exponentialRampToValueAtTime(f1,t+dur);
+  g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g).connect(dest||master); o.start(t); o.stop(t+dur+.02);
+}
+const sfx={
+  jump:p=>sfxOn&&tone(300+p*300,900+p*900,.18+p*.12,'square',.08),
+  land:()=>sfxOn&&tone(180,90,.08,'triangle',.15),
+  best:()=>{if(!sfxOn)return;tone(660,990,.12,'triangle',.12);setTimeout(()=>tone(990,1320,.16,'triangle',.12),110)}
+};
+const soundBtn=document.getElementById('soundBtn');
+soundBtn.onclick=()=>{sfxOn=!sfxOn;soundBtn.textContent=sfxOn?'Sound effects on':'Sound effects off';soundBtn.setAttribute('aria-pressed',sfxOn)};
+
+/* chiptune loop: 128 bpm, C - G - Am - F */
+const music=(()=>{
+  const BPM=128, step=60/BPM/4; let playing=false, nextT=0, idx=0, timer=null, noiseBuf=null;
+  const chords=[[48,52,55],[43,47,50],[45,48,52],[41,45,48]];   // C G Am F (midi)
+  const melody=[72,null,76,79,77,null,76,74, 74,null,71,74,79,null,77,74, 76,null,72,76,81,null,79,76, 77,null,76,74,72,null,74,null];
+  const hz=m=>440*Math.pow(2,(m-69)/12);
+  function note(freq,t,dur,type,vol){const a=actx,o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=freq;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(musicGain);o.start(t);o.stop(t+dur+.05)}
+  function hat(t,vol){if(!noiseBuf){noiseBuf=actx.createBuffer(1,actx.sampleRate*.05,actx.sampleRate);const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+    const s=actx.createBufferSource(),f=actx.createBiquadFilter(),g=actx.createGain();s.buffer=noiseBuf;f.type='highpass';f.frequency.value=7000;g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+.05);s.connect(f).connect(g).connect(musicGain);s.start(t)}
+  function kick(t){const o=actx.createOscillator(),g=actx.createGain();o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(45,t+.15);g.gain.setValueAtTime(.5,t);g.gain.exponentialRampToValueAtTime(.0001,t+.2);o.connect(g).connect(musicGain);o.start(t);o.stop(t+.22)}
+  function schedule(){
+    while(nextT<actx.currentTime+.15){
+      const s=idx%32, bar=Math.floor(idx/16)%4, ch=chords[bar];
+      if(s%4===0)kick(nextT);
+      hat(nextT,s%2?.05:.09);
+      if(s%2===0)note(hz(ch[0]-12),nextT,step*1.8,'triangle',.28);           // bass
+      note(hz(ch[(s>>0)%3]+12),nextT,step*.9,'square',.035);                  // arpeggio
+      const m=melody[s]; if(m)note(hz(m),nextT,step*1.7,'square',.07);         // lead
+      nextT+=step; idx++;
+    }
+  }
+  return{
+    start(){ac(); if(playing)return; playing=true; nextT=actx.currentTime+.05; musicGain.gain.cancelScheduledValues(actx.currentTime);
+      musicGain.gain.setTargetAtTime(.32,actx.currentTime,.3); timer=setInterval(schedule,25)},
+    stop(){if(!playing)return; playing=false; musicGain.gain.setTargetAtTime(0,actx.currentTime,.15); setTimeout(()=>{if(!playing)clearInterval(timer)},600)},
+    get on(){return playing}
+  };
+})();
+const musicBtn=document.getElementById('musicBtn');
+let musicTouched=false;
+function setMusic(on){on?music.start():music.stop();musicBtn.classList.toggle('on',on);musicBtn.setAttribute('aria-pressed',on)}
+musicBtn.onclick=e=>{e.stopPropagation();musicTouched=true;setMusic(!music.on)};
+// browsers only allow sound after the visitor interacts, so the music starts on the first tap or click
+addEventListener('pointerdown',()=>{if(!musicTouched){musicTouched=true;setMusic(true)}},{once:true});
+document.addEventListener('visibilitychange',()=>{if(actx){document.hidden?actx.suspend():actx.resume()}});
+
+/* ---------- mini playable demo ---------- */
+(function demo(){
+  const cv=document.getElementById('demo'), x=cv.getContext('2d');
+  const hEl=document.getElementById('height'), bEl=document.getElementById('best'), meter=document.getElementById('meterFill'), status=document.getElementById('status');
+  const birdImg=new Image(); birdImg.src='../img/bird.png';
+  let W,H; function size(){const dpr=Math.min(devicePixelRatio,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0)}
+  addEventListener('resize',size); size();
+  const GAP=95, cols=[['#5ef7c2','#20d394'],['#ffe88a','#ffd23f'],['#ffc28a','#ff8a3d'],['#ff9ccc','#ff3d9a'],['#9be4ff','#4fc3ff']];
+  const plat=i=>({y:i*GAP, x:Math.sin(i*1.7)*40, w:120+((i*37)%50), c:cols[i%5]});
+  const b={y:0,vy:0,ground:0}; let camY=0, best=0, charging=0, holdStart=0, tilt=0;
+  function jump(power){ if(b.vy!==0||b.y>b.ground)return; b.vy=380+power*820; sfx.jump(power) }
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();ac();holdStart=performance.now();charging=1});
+  addEventListener('pointerup',()=>{if(!charging)return;charging=0;jump(Math.min(1,(performance.now()-holdStart)/900))});
+  let visible=false; new IntersectionObserver(([e])=>visible=e.isIntersecting).observe(cv);
+  addEventListener('keydown',e=>{if(e.code==='Space'&&!e.repeat&&visible&&document.activeElement===document.body){e.preventDefault();holdStart=performance.now();charging=1}});
+  addEventListener('keyup',e=>{if(e.code==='Space'&&charging){charging=0;jump(Math.min(1,(performance.now()-holdStart)/900))}});
+
+  // microphone: crossing the threshold starts the jump; peak loudness in the next ~170 ms sets the height
+  let analyser=null, buf=null, floor=.01, armedAt=0, peak=0;
+  const micBtn=document.getElementById('micBtn');
+  micBtn.onclick=async()=>{
+    try{
+      const s=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:false}});
+      const a=ac(), src=a.createMediaStreamSource(s); analyser=a.createAnalyser(); analyser.fftSize=1024; buf=new Float32Array(analyser.fftSize); src.connect(analyser);
+      status.textContent='Calibrating… stay quiet for a second.';
+      let n=0,sum=0; const t0=performance.now();
+      (function cal(){analyser.getFloatTimeDomainData(buf);sum+=rms();n++; if(performance.now()-t0<900)requestAnimationFrame(cal); else {floor=Math.max(.004,sum/n); status.textContent='Ready. Shout!'}})();
+      micBtn.disabled=true; micBtn.textContent='Microphone on';
+    }catch(err){status.textContent='Microphone is blocked. Hold the stage to jump instead.'}
+  };
+  function rms(){let s=0;for(let i=0;i<buf.length;i++)s+=buf[i]*buf[i];return Math.sqrt(s/buf.length)}
+  function pill(px,py,w,h,c){const g=x.createLinearGradient(0,py,0,py+h);g.addColorStop(0,c[0]);g.addColorStop(1,c[1]);
+    x.fillStyle='rgba(20,8,70,.35)';rr(px,py+6,w,h);x.fill();
+    x.fillStyle=g;x.strokeStyle='#fff';x.lineWidth=3;rr(px,py,w,h);x.fill();x.stroke();
+    x.fillStyle='rgba(255,255,255,.5)';rr(px+8,py+3,w-16,4);x.fill()}
+  function rr(px,py,w,h){x.beginPath();x.roundRect?x.roundRect(px,py,w,h,h/2):x.rect(px,py,w,h)}
+
+  let last=performance.now();
+  function loop(now){
+    const dt=Math.min((now-last)/1000,.04); last=now;
+    let level=0;
+    if(analyser){analyser.getFloatTimeDomainData(buf); const r=rms(); level=Math.min(1,Math.max(0,(r-floor*1.8)/.25));
+      const thr=floor*4+.02;
+      if(!armedAt&&r>thr&&b.vy===0){armedAt=now;peak=r}
+      if(armedAt){peak=Math.max(peak,r); if(now-armedAt>170){jump(Math.min(1,(peak-thr)/.3));armedAt=0}}
+    }
+    if(charging)level=Math.min(1,(now-holdStart)/900);
+    meter.style.height=(level*100)+'%';
+    if(b.vy!==0||b.y>b.ground){
+      const prev=b.y; b.vy-=1500*dt; b.y+=b.vy*dt;
+      if(b.vy<0){
+        for(let i=Math.floor(prev/GAP);i>=0;i--){const top=i*GAP; if(prev>=top&&b.y<=top){b.y=top;b.vy=0;b.ground=top;sfx.land();
+          const m=Math.round(top/GAP*2); if(m>best){best=m;bEl.textContent=best;if(m>2)sfx.best()} break}}
+        if(b.y<0){b.y=0;b.vy=0;b.ground=0}
+      }
+    }
+    hEl.textContent=Math.round(b.y/GAP*2)+' m';
+    camY+=((b.y-H*.14)-camY)*Math.min(1,dt*4);
+    tilt+=((b.vy>0?-.25:b.vy<0?.15:0)-tilt)*Math.min(1,dt*8);
+
+    x.clearRect(0,0,W,H);
+    // twinkling stars
+    x.fillStyle='rgba(255,255,255,.7)';
+    for(let i=0;i<40;i++){const sx=(i*97)%W, sy=((i*53-camY*.3)%H+H)%H; x.globalAlpha=.4+.4*Math.sin(now/600+i); x.fillRect(sx,sy,2,2)} x.globalAlpha=1;
+    const cx=W/2, sy=v=>H-60-(v-camY);
+    const i0=Math.max(0,Math.floor((camY-80)/GAP)), i1=Math.ceil((camY+H)/GAP)+1;
+    for(let i=i0;i<=i1;i++){const p=plat(i), y=sy(p.y);
+      if(i===0)pill(-20,y,W+40,18,['#ff9ccc','#ff3d9a']); else pill(cx+p.x-p.w/2,y,p.w,18,p.c)}
+    const by=sy(b.y), squash=charging?1-level*.22:1, s=92;
+    if(birdImg.complete&&birdImg.naturalWidth){x.save();x.translate(cx-4,by);x.rotate(tilt);x.scale(2-squash,squash);x.drawImage(birdImg,-s/2,-s*.95,s,s);x.restore()}
+    if(level>.05){x.strokeStyle='rgba(46,240,168,'+(.4+level*.6)+')';x.lineWidth=5;x.lineCap='round';
+      for(let k=1;k<=3;k++){x.beginPath();x.arc(cx+34,by-62,8+k*10*(.6+level),-.9,.5);x.stroke()}}
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* ---------- trailer (YouTube loads only on click) ---------- */
+document.getElementById('playVideo').onclick=()=>{
+  setMusic(false);
+  document.getElementById('player').innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/dFGgLivoUSE?autoplay=1&rel=0&playsinline=1" title="Squawk Rush trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+};
+</script>
+</body>
+</html>

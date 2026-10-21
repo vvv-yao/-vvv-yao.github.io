@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>vespayao.skr – Games you play with your voice</title>
-<meta name="description" content="vespayao.skr is an independent game studio building for Solana Seeker. Squawk Rush: hum to walk, yell to jump, scream to fly.">
-<meta property="og:title" content="Squawk Rush by vespayao.skr">
-<meta property="og:description" content="A voice-controlled arcade game for Solana Seeker. The louder you scream, the higher you fly.">
-<meta property="og:image" content="img/square.jpg">
-<link rel="icon" href="img/icon.jpg">
-<link rel="apple-touch-icon" href="img/icon.jpg">
+<title>vespayao.skr – Independent developer on Solana Seeker</title>
+<meta name="description" content="vespayao.skr builds playful apps and games for Solana Seeker, including Squawk Rush, a game you play with your voice.">
+<meta property="og:title" content="vespayao.skr">
+<meta property="og:description" content="Independent developer building playful apps and games for Solana Seeker.">
+<meta property="og:image" content="img/vespayao-icon-512.png">
+<link rel="icon" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/vespayao-icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
@@ -204,19 +204,52 @@ footer a{color:#fff;font-weight:800;margin-right:18px;text-underline-offset:3px;
     background:linear-gradient(rgba(46,22,144,0),rgba(46,22,144,.88) 38%,#2e1690)}
   h1{font-size:2.6rem}
   .hero p.lead{font-size:1.02rem;margin-bottom:22px}}
+h1 .dot{color:var(--mint)}
+#about{background:linear-gradient(180deg,#4a22c4,#6a3cf0 60%,#7d4bff)}
+.about{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:center}
+.about .mark{border-radius:64px;box-shadow:0 12px 0 #2e1690,0 34px 60px rgba(20,6,70,.5)}
+.about p{font-size:1.15rem;color:var(--muted);margin:0 0 16px}
+#work{background:linear-gradient(180deg,#7d4bff,#c43cdc 55%,#ff4f9a)}
+.works{display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:stretch}
+.work{border-radius:30px;border:6px solid #fff;overflow:hidden;box-shadow:0 12px 0 rgba(90,10,70,.5),0 30px 50px rgba(70,10,60,.45)}
+.work.featured{background:#fff;color:var(--ink)}
+.work .shot img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.work-body{padding:24px 26px 28px}
+.work h3{font-family:var(--display);font-size:2rem;margin:0 0 6px;line-height:1.1}
+.work.featured h3{color:var(--grape)}
+.work.featured p{color:#4a4270}
+.tag{display:inline-block;font-weight:800;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding:4px 12px;border-radius:999px;background:#ffe88a;color:#5a3a00}
+.work.featured .btns{margin-top:18px}
+.work.next{background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.08));padding:28px;display:flex;flex-direction:column;justify-content:center;text-align:center;align-items:center}
+.work.next p{color:#fff3fb;margin:0}
+.next-mark{width:120px;height:120px;border-radius:32px;border:4px dashed rgba(255,255,255,.8);display:grid;place-items:center;margin-bottom:18px;animation:float 5s ease-in-out infinite}
+.next-mark span{font-family:var(--display);font-weight:700;font-size:4rem;line-height:1}
+@media (max-width:860px){.works{grid-template-columns:1fr}.about{grid-template-columns:1fr}.about .mark{max-width:200px}}
+#build{background:linear-gradient(180deg,#ff4f9a,#ff8a3d 50%,#4a22c4)}
+#journey{background:linear-gradient(180deg,#4a22c4,#2e1690)}
+.timeline{list-style:none;margin:40px 0 0;padding:0 0 0 34px;position:relative;max-width:720px}
+.timeline::before{content:"";position:absolute;left:10px;top:6px;bottom:6px;width:6px;border-radius:6px;background:linear-gradient(var(--mint),var(--sun),var(--pink))}
+.timeline li{position:relative;margin:0 0 30px;display:flex;flex-direction:column;gap:2px}
+.timeline li::before{content:"";position:absolute;left:-34px;top:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:5px solid var(--pink);box-shadow:0 4px 0 rgba(0,0,0,.25)}
+.timeline li.future::before{background:var(--sun);border-style:dashed}
+.timeline .when{font-weight:800;color:var(--sun);font-size:.9rem;letter-spacing:.05em;text-transform:uppercase}
+.timeline b{font-family:var(--display);font-size:1.4rem}
+.timeline span:last-child{color:var(--muted)}
+#contact{background:linear-gradient(180deg,#2e1690,#6a3cf0);text-align:center}
+.contact .sub{margin-left:auto;margin-right:auto}
+.contact .btns{justify-content:center}
 </style>
 </head>
 <body>
-
 <nav id="nav">
   <div class="wrap">
-    <a class="brand" href="#top"><img src="img/icon.jpg" alt="">vespayao.skr</a>
+    <a class="brand" href="#top"><img src="img/vespayao-icon-512.png" alt="">vespayao.skr</a>
     <ul>
-      <li><a href="#game">Squawk Rush</a></li>
-      <li><a href="#play">Try it</a></li>
-      <li><a href="#video">Trailer</a></li>
-      <li><a href="#modes">Modes</a></li>
-      <li><a href="#studio">Studio</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#build">How I build</a></li>
+      <li><a href="#journey">Journey</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -226,127 +259,106 @@ footer a{color:#fff;font-weight:800;margin-right:18px;text-underline-offset:3px;
   <canvas id="scene" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="hero-copy">
-      <p class="kicker">Now on Solana Seeker</p>
-      <h1>Games you play with your voice.</h1>
-      <p class="lead">vespayao.skr is an independent game studio building for Solana Seeker. Our first game, Squawk Rush, turns every shout into a jump.</p>
+      <p class="kicker">Independent developer on Solana Seeker</p>
+      <h1>vespayao<span class="dot">.skr</span></h1>
+      <p class="lead">I build playful apps and games for Solana Seeker, starting with games you play with your voice.</p>
       <div class="btns">
-        <a class="btn primary" href="#play">Try it with your voice</a>
-        <a class="btn ghost" href="#video">Watch the trailer</a>
+        <a class="btn primary" href="#work">See my work</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
       </div>
     </div>
   </div>
 </header>
 
 <div class="flow" aria-hidden="true" style="background:#4a22c4">
-  <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto;transform-origin:center"><path d="M0 0 H2400 V40 C2200 90 2000 0 1800 40 S1400 90 1200 40 S800 0 600 40 S200 90 0 40Z" fill="#2e1690"/></svg>
+  <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto"><path d="M0 0 H2400 V40 C2200 90 2000 0 1800 40 S1400 90 1200 40 S800 0 600 40 S200 90 0 40Z" fill="#2e1690"/></svg>
   <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto"><path d="M0 52 C200 100 400 10 600 52 S1000 100 1200 52 S1600 10 1800 52 S2200 100 2400 52" fill="none" stroke="#2ef0a8" stroke-width="7" stroke-linecap="round"/></svg>
   <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto"><path d="M0 66 C200 20 400 110 600 66 S1000 20 1200 66 S1600 110 1800 66 S2200 20 2400 66" fill="none" stroke="#ff3d9a" stroke-width="7" stroke-linecap="round"/></svg>
 </div>
 
-<section id="game">
-  <span class="pill spiky" style="width:150px;left:-30px;top:120px;background:linear-gradient(#ffe88a,#ffd23f)"></span>
-  <span class="pill" style="width:120px;right:4%;top:70px;background:linear-gradient(#ff9ccc,#ff3d9a);animation-delay:-2s"></span>
-  <span class="coin" style="right:12%;top:180px"></span>
-  <div class="wrap">
-    <h2>Squawk Rush</h2>
-    <p class="sub">A voice-controlled arcade climber. There are no buttons: your voice moves the bird, and the front camera puts your face behind the game. Every run ends with a highlight clip worth sending to a friend.</p>
-    <div class="keyart rise tilt" data-tilt><img src="img/keyart.jpg" alt="Squawk Rush key art: a blue bird screaming as it flies up a tower of colorful platforms" width="1600" height="900" loading="lazy"></div>
-    <div class="beats">
-      <div class="beat tilt" data-tilt><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><b>Hum</b><span>and your bird walks.</span></div>
-      <div class="beat tilt" data-tilt><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><b>Shout</b><span>and it jumps.</span></div>
-      <div class="beat tilt" data-tilt><div class="bars"><i></i><i></i><i></i><i></i><i></i></div><b>Scream</b><span>and it flies higher.</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="play">
-  <span class="pill" style="width:130px;left:3%;bottom:80px;background:linear-gradient(#5ef7c2,#20d394)"></span>
-  <span class="coin" style="left:40%;top:60px;animation-delay:-1s"></span>
-  <div class="wrap play-grid">
+<section id="about">
+  <span class="pill" style="width:130px;right:5%;top:80px;background:linear-gradient(#ffe88a,#ffd23f)"></span>
+  <span class="coin" style="left:4%;bottom:70px"></span>
+  <div class="wrap about">
+    <img class="tilt mark" data-tilt="10" src="img/vespayao-icon-512.png" alt="vespayao logo" width="512" height="512">
     <div>
-      <h2>Try it right here</h2>
-      <p class="sub">A tiny taste of the game. Turn on your microphone and shout: the louder you are, the higher the bird jumps. No microphone? Hold the stage and let go, the longer you hold, the bigger the jump.</p>
-      <div class="controls">
-        <button class="btn primary" id="micBtn">Use my microphone</button>
-        <button class="btn ghost" id="soundBtn" aria-pressed="true">Sound effects on</button>
-      </div>
-      <p id="status" role="status"></p>
-      <p class="note">Your audio stays on your device. Nothing is recorded or sent anywhere.</p>
-    </div>
-    <div class="stage tilt" data-tilt="4">
-      <canvas id="demo" aria-label="Mini Squawk Rush demo. Shout or hold to jump."></canvas>
-      <div class="meter" aria-hidden="true"><i id="meterFill"></i></div>
-      <div class="hud"><span id="height">0 m</span><small>Best <span id="best">0</span> m</small></div>
-      <div class="tap-hint">Shout, or hold and release</div>
+      <h2>Hi, I'm vespayao</h2>
+      <p>Seeker is where mobile and crypto finally meet: a phone with a wallet built in, and a community that owns what it uses. I build apps that feel native to that future, made for the phone in your hand rather than ported from somewhere else.</p>
+      <p>I love games, and I can't wait to design many more fun ones that help the Seeker ecosystem grow.</p>
     </div>
   </div>
 </section>
 
-<section id="video">
-  <span class="coin" style="left:6%;top:90px"></span>
-  <span class="pill spiky" style="width:140px;right:-20px;top:140px;background:linear-gradient(#9be4ff,#4fc3ff);animation-delay:-3s"></span>
+<section id="work">
+  <span class="pill spiky" style="width:150px;left:-30px;top:110px;background:linear-gradient(#ff9ccc,#ff3d9a)"></span>
   <div class="wrap">
-    <h2>Watch the trailer</h2>
-    <p class="sub">Two minutes of hazards, game modes and screaming, captured on a Seeker.</p>
-    <div class="player tilt" data-tilt="3" id="player">
-      <img src="img/poster.jpg" alt="" loading="lazy">
-      <button id="playVideo" aria-label="Play the Squawk Rush trailer"></button>
+    <h2>My work</h2>
+    <p class="sub">Every project starts with one question: what would be fun on a Seeker?</p>
+    <div class="works">
+      <article class="work featured tilt" data-tilt="4">
+        <a class="shot" href="squawk-rush/"><img src="img/keyart.jpg" alt="Squawk Rush key art" width="1600" height="900" loading="lazy"></a>
+        <div class="work-body">
+          <p class="tag">Game · Coming to Seeker</p>
+          <h3>Squawk Rush</h3>
+          <p>A voice-controlled arcade game. Hum to walk, yell to jump, and the louder you scream, the higher you fly. Seven modes, server-verified scores and an SKR cosmetics shop.</p>
+          <div class="btns">
+            <a class="btn primary" href="squawk-rush/">Explore the game</a>
+            <a class="btn ghost" href="https://squawkrush.party">squawkrush.party</a>
+          </div>
+        </div>
+      </article>
+      <article class="work next">
+        <div class="next-mark" aria-hidden="true"><span>?</span></div>
+        <p class="tag">Coming next</p>
+        <h3>Something new</h3>
+        <p>The next project is in the works. Check back soon.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<section id="modes">
+<section id="build">
+  <span class="coin" style="right:7%;top:70px;animation-delay:-1s"></span>
   <div class="wrap">
-    <h2>Seven ways to play</h2>
-    <p class="sub">Climb alone, race a ghost, or pass one phone around the room.</p>
-    <div class="rail rise">
-      <article class="card"><img src="img/phone.jpg" alt="Squawk Rush running on a phone held in two hands" loading="lazy"><div><h3>Daily Challenge</h3><p>The whole world climbs the same tower every day. Ranked runs are replayed on the server, so scores can't be faked.</p></div></article>
-      <article class="card"><img src="img/ghost-battle.jpg" alt="Ghost Battle: the bird races a ghost opponent" loading="lazy"><div><h3>Ghost Battle</h3><p>Race a replay of the player just above you. The ghost waits for you and talks trash.</p></div></article>
-      <article class="card"><img src="img/party.jpg" alt="Party mode: five birds cheering around one phone" loading="lazy"><div><h3>Party</h3><p>One phone, up to six friends, and a lot of noise.</p></div></article>
-      <article class="card"><img src="img/mute-bomb.jpg" alt="A mute bomb counting down while the bird stays quiet" loading="lazy"><div><h3>Mute bombs</h3><p>Spikes, meteors and fire arrows knock you around. Land on a mute bomb and the only way out is silence.</p></div></article>
-      <article class="card"><img src="img/neon.jpg" alt="The bird blasting upward through neon platforms" loading="lazy"><div><h3>Glide &amp; Endless Run</h3><p>Glide between the pipes as the speed builds, or dash through an endless run with power-ups.</p></div></article>
-    </div>
-    <div class="more">
-      <span class="chip"><b>Free Climb</b> at your own pace</span>
-      <span class="chip"><b>Scale Mode</b> sing the right note to jump</span>
-    </div>
-  </div>
-</section>
-
-<section id="seeker">
-  <span class="pill" style="width:110px;right:6%;top:60px;background:linear-gradient(#ffc28a,#ff8a3d)"></span>
-  <div class="wrap">
-    <h2>Built for Seeker</h2>
-    <p class="sub">Play without a wallet. Connect one when you want your score to count.</p>
+    <h2>How I build</h2>
+    <p class="sub">A few principles behind everything I make.</p>
     <div class="feats">
-      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#5ef7c2,#20d394)"></div><h3>Wallet sign-in</h3><p>Sign in with Seed Vault or Phantom over Mobile Wallet Adapter to join the leaderboard and race ghosts.</p></div>
-      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#ffe88a,#ffd23f)"></div><h3>A leaderboard of your own</h3><p>Seeker owners get a Seeker-only leaderboard, and Seeker Genesis Token holders earn login rewards just by playing.</p></div>
-      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#ff9ccc,#ff3d9a)"></div><h3>SKR cosmetics</h3><p>Skins, hats, trails and No Ads, paid in SKR and verified on chain. Your look shows in every mode and in every clip.</p></div>
-      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#9be4ff,#4fc3ff)"></div><h3>Fair by design</h3><p>Cosmetics never change the rules, and every ranked run is checked by replaying it with the same game code.</p></div>
+      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#5ef7c2,#20d394)"></div><h3>New ways to play</h3><p>Phones have microphones and cameras, not just screens. I use them as controllers so the fun goes beyond two thumbs.</p></div>
+      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#ffe88a,#ffd23f)"></div><h3>Seeker-native</h3><p>Mobile Wallet Adapter sign-in, Seed Vault support, Seeker Genesis Token rewards and SKR payments verified on chain.</p></div>
+      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#ff9ccc,#ff3d9a)"></div><h3>Fair by design</h3><p>Ranked results are checked on the server, and anything you buy is cosmetic. Paying never changes the rules.</p></div>
+      <div class="feat tilt" data-tilt="5"><div class="gem" style="background:linear-gradient(#9be4ff,#4fc3ff)"></div><h3>Built with AI</h3><p>I work with Claude Code as a coding partner, which lets an independent developer ship faster and test more.</p></div>
     </div>
   </div>
 </section>
 
-<section id="studio">
-  <span class="coin" style="right:8%;bottom:60px;animation-delay:-2s"></span>
-  <div class="wrap studio">
-    <img class="tilt" data-tilt="8" src="img/square.jpg" alt="Squawk Rush artwork" loading="lazy" width="900" height="900">
-    <div>
-      <h2>About the studio</h2>
-      <p>Seeker is where mobile and crypto finally meet: a phone with a wallet built in, and a community that owns what it uses. We build games that feel native to that future, starting with one you play with your voice.</p>
-      <p>We love games, and we can't wait to design many more fun ones that help the Seeker ecosystem grow.</p>
+<section id="journey">
+  <span class="pill" style="width:120px;left:5%;bottom:60px;background:linear-gradient(#5ef7c2,#20d394);animation-delay:-2s"></span>
+  <div class="wrap">
+    <h2>Journey so far</h2>
+    <ol class="timeline">
+      <li><span class="when">Mar 2026</span><b>Joined the Solana dApp Store</b><span>Became a publisher on the Seeker dApp Store.</span></li>
+      <li><span class="when">Oct 2026</span><b>Built Squawk Rush</b><span>Designed and built a voice-controlled game from scratch for Seeker.</span></li>
+      <li><span class="when">Oct 2026</span><b>Entered the CLOCK IN hackathon</b><span>Submitted Squawk Rush with its demo, deck and APK.</span></li>
+      <li><span class="when">Oct 2026</span><b>Submitted to the dApp Store</b><span>Squawk Rush heads to Seeker owners.</span></li>
+      <li class="future"><span class="when">Next</span><b>More games</b><span>This list is just getting started.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact">
+    <h2>Let's build something fun</h2>
+    <p class="sub">Questions, feedback or ideas for working together are all welcome.</p>
+    <div class="btns">
+      <a class="btn primary" href="mailto:support@squawkrush.party">support@squawkrush.party</a>
+      <a class="btn ghost" href="https://github.com/vvv-yao">GitHub</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <div>
-      <a href="https://squawkrush.party">squawkrush.party</a>
-      <a href="https://squawkrush.party/privacy">Privacy</a>
-      <a href="https://squawkrush.party/terms">Terms</a>
-      <a href="mailto:support@squawkrush.party">support@squawkrush.party</a>
-    </div>
+    <div><a href="squawk-rush/">Squawk Rush</a><a href="https://squawkrush.party">squawkrush.party</a></div>
     <div>© 2026 vespayao.skr</div>
   </div>
 </footer>
@@ -360,12 +372,8 @@ footer a{color:#fff;font-weight:800;margin-right:18px;text-underline-offset:3px;
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40),{passive:true});
-
-/* reveal */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rise').forEach(el=>io.observe(el));
-
-/* 3D tilt on pointer */
 if(!REDUCED && matchMedia('(hover:hover)').matches){
   document.querySelectorAll('[data-tilt]').forEach(el=>{
     const max=+el.dataset.tilt||7;
@@ -375,7 +383,7 @@ if(!REDUCED && matchMedia('(hover:hover)').matches){
   });
 }
 
-/* ---------- 3D hero ---------- */
+/* ---------- 3D logo hero: the Echo V mark in 3D ---------- */
 (function hero(){
   const heroEl=document.querySelector('.hero'), cv=document.getElementById('scene');
   if(!window.THREE||REDUCED){heroEl.classList.add('static');return}
@@ -383,75 +391,73 @@ if(!REDUCED && matchMedia('(hover:hover)').matches){
   try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){heroEl.classList.add('static');return}
   const mobile=innerWidth<760;
   renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.5:2));
-  const scene=new THREE.Scene(); scene.fog=new THREE.Fog(0x5a2fd8,26,60);
-  const cam=new THREE.PerspectiveCamera(50,1,.1,100); cam.position.set(0,1,15);
-  scene.add(new THREE.HemisphereLight(0xffffff,0x7a45ff,.55));
-  const key=new THREE.DirectionalLight(0xffffff,1.1); key.position.set(4,9,10); scene.add(key);
-  const rim=new THREE.PointLight(0xff3d9a,1.6,40); rim.position.set(-6,3,6); scene.add(rim);
-  const rim2=new THREE.PointLight(0x2ef0a8,1.2,40); rim2.position.set(8,-4,6); scene.add(rim2);
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(45,1,.1,100); cam.position.set(0,0,14);
+  scene.add(new THREE.HemisphereLight(0xffffff,0x7a45ff,.6));
+  const key=new THREE.DirectionalLight(0xffffff,1.1); key.position.set(5,8,10); scene.add(key);
+  const rim=new THREE.PointLight(0xff3d9a,1.5,40); rim.position.set(-6,-2,6); scene.add(rim);
+  const rim2=new THREE.PointLight(0x2ef0a8,1.2,40); rim2.position.set(7,4,4); scene.add(rim2);
+  const mat=(c,e=.25)=>new THREE.MeshStandardMaterial({color:c,roughness:.25,metalness:.05,emissive:c,emissiveIntensity:e});
 
-  const colors=[0x2ef0a8,0xffd23f,0xff8a3d,0xff3d9a,0x4fc3ff];
-  const spikeMat=new THREE.MeshStandardMaterial({color:0xffcf3a,emissive:0xff3b00,emissiveIntensity:.25,roughness:.4});
-  function platform(len,color,spiky){
-    const g=new THREE.Group(), m=new THREE.MeshStandardMaterial({color,roughness:.25,metalness:.05,emissive:color,emissiveIntensity:.25});
-    const edge=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.3});
-    const body=new THREE.Mesh(new THREE.CylinderGeometry(.34,.34,len,28),m); body.rotation.z=Math.PI/2; g.add(body);
-    const shell=new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,len,28),edge); shell.rotation.z=Math.PI/2; shell.scale.set(1,1,.35); shell.position.z=-.22; g.add(shell);
-    [-1,1].forEach(s=>{const c=new THREE.Mesh(new THREE.SphereGeometry(.34,24,16),m);c.position.x=s*len/2;g.add(c);
-      const e=new THREE.Mesh(new THREE.SphereGeometry(.4,24,16),edge);e.position.set(s*len/2,0,-.22);e.scale.z=.35;g.add(e)});
-    if(spiky){const n=Math.max(3,Math.round(len/.45));for(let i=0;i<n;i++){const k=new THREE.Mesh(new THREE.ConeGeometry(.17,.42,4),spikeMat);
-      k.rotation.x=Math.PI;k.position.set(-len/2+.25+i*(len-.5)/(n-1),-.55,0);g.add(k)}}
-    return g;
+  const logo=new THREE.Group(), U=1/40, T=13*U;           // logo units -> world
+  // white stem from the vertex up and to the left
+  const sx=-52*U, sy=106*U, len=Math.hypot(sx,sy);
+  const stem=new THREE.Group();
+  const white=mat(0xffffff,.12);
+  const cyl=new THREE.Mesh(new THREE.CylinderGeometry(T,T,len,32),white); cyl.position.y=len/2; stem.add(cyl);
+  const cap=new THREE.Mesh(new THREE.SphereGeometry(T,32,20),white); cap.position.y=len; stem.add(cap);
+  stem.rotation.z=Math.atan2(-sx,sy); logo.add(stem);
+  // three sound-wave arcs
+  const arcs=[[52,0x2ef0a8],[84,0xffd23f],[116,0xff3d9a]].map(([r,c],i)=>{
+    const m=mat(c,.3), g=new THREE.Group();
+    const a0=48*Math.PI/180, sweep=32*Math.PI/180, R=r*U, t=10*U;
+    const torus=new THREE.Mesh(new THREE.TorusGeometry(R,t,20,64,sweep),m); torus.rotation.z=a0; g.add(torus);
+    [a0,a0+sweep].forEach(a=>{const s=new THREE.Mesh(new THREE.SphereGeometry(t,20,14),m);s.position.set(R*Math.cos(a),R*Math.sin(a),0);g.add(s)});
+    logo.add(g); return {g,m,i};
+  });
+  // pink vertex dot with a white ring
+  const dot=new THREE.Mesh(new THREE.SphereGeometry(17*U,32,20),mat(0xff3d9a,.35)); logo.add(dot);
+  const ring=new THREE.Mesh(new THREE.TorusGeometry(17*U,3.5*U,16,48),white); logo.add(ring);
+  // centre the mark around its own middle
+  const box=new THREE.Box3().setFromObject(logo), c=box.getCenter(new THREE.Vector3());
+  logo.children.forEach(ch=>ch.position.sub(c));
+  const holder=new THREE.Group(); holder.add(logo); scene.add(holder);
+  const S=mobile?1.05:1.25; holder.scale.set(S,S,S);
+  holder.position.set(mobile?0:6.3, mobile?2.9:0.2, 0);
+
+  // floating pills, gems and coins around it
+  const cols=[0x2ef0a8,0xffd23f,0xff8a3d,0xff3d9a,0x4fc3ff], floaters=[];
+  for(let i=0;i<(mobile?10:18);i++){
+    const kind=1+(i%2), color=cols[i%5]; let m;
+    if(kind===0){m=new THREE.Group();const mm=mat(color);const L=.8+Math.random()*1.2;const b=new THREE.Mesh(new THREE.CylinderGeometry(.22,.22,L,20),mm);b.rotation.z=Math.PI/2;m.add(b);
+      [-1,1].forEach(s=>{const e=new THREE.Mesh(new THREE.SphereGeometry(.22,20,14),mm);e.position.x=s*L/2;m.add(e)})}
+    else if(kind===1){m=new THREE.Mesh(new THREE.OctahedronGeometry(.32),mat(color,.3))}
+    else{m=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.08,28),new THREE.MeshStandardMaterial({color:0xffd23f,metalness:.6,roughness:.25,emissive:0xb07800,emissiveIntensity:.35}));m.rotation.x=Math.PI/2}
+    const ang=Math.random()*Math.PI*2, rad=(mobile?2.6:3.6)+Math.random()*(mobile?2:2.6);
+    m.userData={ang,rad,speed:(.08+Math.random()*.12)*(Math.random()<.5?-1:1),y:(mobile?2.9:0)+(Math.random()-.5)*(mobile?4:6.5),bob:Math.random()*6,spin:(Math.random()-.5)*.03};
+    scene.add(m); floaters.push(m);
   }
-  const xOff=mobile?0:6.2, N=mobile?14:22, GAP=1.7;
-  const px=()=>mobile?(Math.random()*2-1)*4:xOff+(Math.random()*2-1)*4.2;
-  const plats=[];
-  for(let i=0;i<N;i++){
-    const p=platform(1.6+Math.random()*1.8,colors[i%colors.length],Math.random()<.35);
-    p.position.set(px(),(i-N/2)*GAP,-1-Math.random()*7); p.userData.spin=(Math.random()-.5)*.006;
-    scene.add(p); plats.push(p);
-  }
-  // spinning coins
-  const coinMat=new THREE.MeshStandardMaterial({color:0xffd23f,metalness:.6,roughness:.25,emissive:0xb07800,emissiveIntensity:.35});
-  const coins=[];
-  for(let i=0;i<(mobile?6:12);i++){const c=new THREE.Group(), d=new THREE.Mesh(new THREE.CylinderGeometry(.32,.32,.1,32),coinMat);d.rotation.x=Math.PI/2;c.add(d);
-    c.rotation.y=Math.random()*3; c.position.set(px(),(Math.random()-.5)*N*GAP,-Math.random()*5); scene.add(c); coins.push(c)}
-  // stars
   const sg=new THREE.BufferGeometry(), sp=[];
-  for(let i=0;i<600;i++)sp.push((Math.random()-.5)*60,(Math.random()-.5)*40,-8-Math.random()*30);
+  for(let i=0;i<500;i++)sp.push((Math.random()-.5)*60,(Math.random()-.5)*40,-8-Math.random()*30);
   sg.setAttribute('position',new THREE.Float32BufferAttribute(sp,3));
   scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0xffffff,size:.1,transparent:true,opacity:.9})));
-  // bird
-  const tex=new THREE.TextureLoader().load('img/bird.png');
-  const bird=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true}));
-  const bs=mobile?2.9:3.9, by0=mobile?4.4:1.2;
-  bird.scale.set(bs,bs,1); bird.position.set(mobile?1:xOff,by0,3); scene.add(bird);
-  // speed trail
-  // sound-wave rings from the beak
-  const rings=[];
-  function emit(){
-    const r=new THREE.Mesh(new THREE.TorusGeometry(.5,.08,10,48),new THREE.MeshBasicMaterial({color:Math.random()<.6?0x2ef0a8:0xffffff,transparent:true,opacity:.95,fog:false}));
-    r.position.set(bird.position.x+bs*.32,bird.position.y+bs*.22,bird.position.z); r.rotation.y=.6; r.userData.t=0; scene.add(r); rings.push(r);
-  }
+
   let mx=0,my=0;
   addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});
   function resize(){const w=cv.clientWidth,h=cv.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
   addEventListener('resize',resize); resize();
-  let last=performance.now(), emitT=0, running=true;
-  new IntersectionObserver(([e])=>{running=e.isIntersecting; if(running){last=performance.now();requestAnimationFrame(loop)}}).observe(heroEl);
+  let running=true, t0=performance.now();
+  new IntersectionObserver(([e])=>{running=e.isIntersecting; if(running)requestAnimationFrame(loop)}).observe(heroEl);
   function loop(now){
     if(!running)return;
-    const dt=Math.min((now-last)/1000,.05); last=now;
-    const boost=1+Math.max(0,Math.sin(now/900))*2.4;   // pulses like a scream
-    const top=N/2*GAP;
-    plats.forEach(p=>{p.position.y-=dt*1.7*boost;p.rotation.y+=p.userData.spin;if(p.position.y<-top){p.position.y+=N*GAP;p.position.x=px()}});
-    coins.forEach(c=>{c.position.y-=dt*1.7*boost;c.rotation.y+=dt*3;if(c.position.y<-top){c.position.y+=N*GAP;c.position.x=px()}});
-    bird.position.y=by0+Math.sin(now/450)*.35;
-    bird.material.rotation=Math.sin(now/900)*.08;
-    emitT+=dt*boost; if(emitT>.5){emitT=0;emit()}
-    for(let i=rings.length-1;i>=0;i--){const r=rings[i];r.userData.t+=dt;const s=.6+r.userData.t*2.4;r.scale.set(s,s,s);r.position.x+=dt*1.4;r.position.y+=dt*.5;
-      r.material.opacity=Math.max(0,.95-r.userData.t*.75); if(r.material.opacity<=0){scene.remove(r);r.geometry.dispose();r.material.dispose();rings.splice(i,1)}}
-    cam.position.x+=(mx*2.4-cam.position.x)*.04; cam.position.y+=(1-my*1.6-cam.position.y)*.04; cam.lookAt(mobile?0:1.5,1,0);
+    const t=(now-t0)/1000;
+    holder.rotation.y=Math.sin(t*.6)*.45+mx*.6; holder.rotation.x=Math.sin(t*.4)*.12+my*.3;
+    holder.position.y=(mobile?2.9:0.2)+Math.sin(t*1.2)*.15;
+    // waves light up one after another, like sound leaving the dot
+    arcs.forEach(a=>{const p=Math.max(0,Math.sin(t*3-a.i*.9)); a.m.emissiveIntensity=.2+p*.55; const s=1+p*.06; a.g.scale.set(s,s,s)});
+    floaters.forEach(f=>{const u=f.userData;u.ang+=u.speed*.016;
+      f.position.set(holder.position.x+Math.cos(u.ang)*u.rad,u.y+Math.sin(t+u.bob)*.4,Math.sin(u.ang)*u.rad-5);
+      f.rotation.y+=u.spin+.01; f.rotation.z+=u.spin});
     renderer.render(scene,cam); requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
@@ -475,8 +481,6 @@ const sfx={
   land:()=>sfxOn&&tone(180,90,.08,'triangle',.15),
   best:()=>{if(!sfxOn)return;tone(660,990,.12,'triangle',.12);setTimeout(()=>tone(990,1320,.16,'triangle',.12),110)}
 };
-const soundBtn=document.getElementById('soundBtn');
-soundBtn.onclick=()=>{sfxOn=!sfxOn;soundBtn.textContent=sfxOn?'Sound effects on':'Sound effects off';soundBtn.setAttribute('aria-pressed',sfxOn)};
 
 /* chiptune loop: 128 bpm, C - G - Am - F */
 const music=(()=>{
@@ -515,88 +519,7 @@ musicBtn.onclick=e=>{e.stopPropagation();musicTouched=true;setMusic(!music.on)};
 addEventListener('pointerdown',()=>{if(!musicTouched){musicTouched=true;setMusic(true)}},{once:true});
 document.addEventListener('visibilitychange',()=>{if(actx){document.hidden?actx.suspend():actx.resume()}});
 
-/* ---------- mini playable demo ---------- */
-(function demo(){
-  const cv=document.getElementById('demo'), x=cv.getContext('2d');
-  const hEl=document.getElementById('height'), bEl=document.getElementById('best'), meter=document.getElementById('meterFill'), status=document.getElementById('status');
-  const birdImg=new Image(); birdImg.src='img/bird.png';
-  let W,H; function size(){const dpr=Math.min(devicePixelRatio,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0)}
-  addEventListener('resize',size); size();
-  const GAP=95, cols=[['#5ef7c2','#20d394'],['#ffe88a','#ffd23f'],['#ffc28a','#ff8a3d'],['#ff9ccc','#ff3d9a'],['#9be4ff','#4fc3ff']];
-  const plat=i=>({y:i*GAP, x:Math.sin(i*1.7)*40, w:120+((i*37)%50), c:cols[i%5]});
-  const b={y:0,vy:0,ground:0}; let camY=0, best=0, charging=0, holdStart=0, tilt=0;
-  function jump(power){ if(b.vy!==0||b.y>b.ground)return; b.vy=380+power*820; sfx.jump(power) }
-  cv.addEventListener('pointerdown',e=>{e.preventDefault();ac();holdStart=performance.now();charging=1});
-  addEventListener('pointerup',()=>{if(!charging)return;charging=0;jump(Math.min(1,(performance.now()-holdStart)/900))});
-  let visible=false; new IntersectionObserver(([e])=>visible=e.isIntersecting).observe(cv);
-  addEventListener('keydown',e=>{if(e.code==='Space'&&!e.repeat&&visible&&document.activeElement===document.body){e.preventDefault();holdStart=performance.now();charging=1}});
-  addEventListener('keyup',e=>{if(e.code==='Space'&&charging){charging=0;jump(Math.min(1,(performance.now()-holdStart)/900))}});
 
-  // microphone: crossing the threshold starts the jump; peak loudness in the next ~170 ms sets the height
-  let analyser=null, buf=null, floor=.01, armedAt=0, peak=0;
-  const micBtn=document.getElementById('micBtn');
-  micBtn.onclick=async()=>{
-    try{
-      const s=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:false}});
-      const a=ac(), src=a.createMediaStreamSource(s); analyser=a.createAnalyser(); analyser.fftSize=1024; buf=new Float32Array(analyser.fftSize); src.connect(analyser);
-      status.textContent='Calibrating… stay quiet for a second.';
-      let n=0,sum=0; const t0=performance.now();
-      (function cal(){analyser.getFloatTimeDomainData(buf);sum+=rms();n++; if(performance.now()-t0<900)requestAnimationFrame(cal); else {floor=Math.max(.004,sum/n); status.textContent='Ready. Shout!'}})();
-      micBtn.disabled=true; micBtn.textContent='Microphone on';
-    }catch(err){status.textContent='Microphone is blocked. Hold the stage to jump instead.'}
-  };
-  function rms(){let s=0;for(let i=0;i<buf.length;i++)s+=buf[i]*buf[i];return Math.sqrt(s/buf.length)}
-  function pill(px,py,w,h,c){const g=x.createLinearGradient(0,py,0,py+h);g.addColorStop(0,c[0]);g.addColorStop(1,c[1]);
-    x.fillStyle='rgba(20,8,70,.35)';rr(px,py+6,w,h);x.fill();
-    x.fillStyle=g;x.strokeStyle='#fff';x.lineWidth=3;rr(px,py,w,h);x.fill();x.stroke();
-    x.fillStyle='rgba(255,255,255,.5)';rr(px+8,py+3,w-16,4);x.fill()}
-  function rr(px,py,w,h){x.beginPath();x.roundRect?x.roundRect(px,py,w,h,h/2):x.rect(px,py,w,h)}
-
-  let last=performance.now();
-  function loop(now){
-    const dt=Math.min((now-last)/1000,.04); last=now;
-    let level=0;
-    if(analyser){analyser.getFloatTimeDomainData(buf); const r=rms(); level=Math.min(1,Math.max(0,(r-floor*1.8)/.25));
-      const thr=floor*4+.02;
-      if(!armedAt&&r>thr&&b.vy===0){armedAt=now;peak=r}
-      if(armedAt){peak=Math.max(peak,r); if(now-armedAt>170){jump(Math.min(1,(peak-thr)/.3));armedAt=0}}
-    }
-    if(charging)level=Math.min(1,(now-holdStart)/900);
-    meter.style.height=(level*100)+'%';
-    if(b.vy!==0||b.y>b.ground){
-      const prev=b.y; b.vy-=1500*dt; b.y+=b.vy*dt;
-      if(b.vy<0){
-        for(let i=Math.floor(prev/GAP);i>=0;i--){const top=i*GAP; if(prev>=top&&b.y<=top){b.y=top;b.vy=0;b.ground=top;sfx.land();
-          const m=Math.round(top/GAP*2); if(m>best){best=m;bEl.textContent=best;if(m>2)sfx.best()} break}}
-        if(b.y<0){b.y=0;b.vy=0;b.ground=0}
-      }
-    }
-    hEl.textContent=Math.round(b.y/GAP*2)+' m';
-    camY+=((b.y-H*.14)-camY)*Math.min(1,dt*4);
-    tilt+=((b.vy>0?-.25:b.vy<0?.15:0)-tilt)*Math.min(1,dt*8);
-
-    x.clearRect(0,0,W,H);
-    // twinkling stars
-    x.fillStyle='rgba(255,255,255,.7)';
-    for(let i=0;i<40;i++){const sx=(i*97)%W, sy=((i*53-camY*.3)%H+H)%H; x.globalAlpha=.4+.4*Math.sin(now/600+i); x.fillRect(sx,sy,2,2)} x.globalAlpha=1;
-    const cx=W/2, sy=v=>H-60-(v-camY);
-    const i0=Math.max(0,Math.floor((camY-80)/GAP)), i1=Math.ceil((camY+H)/GAP)+1;
-    for(let i=i0;i<=i1;i++){const p=plat(i), y=sy(p.y);
-      if(i===0)pill(-20,y,W+40,18,['#ff9ccc','#ff3d9a']); else pill(cx+p.x-p.w/2,y,p.w,18,p.c)}
-    const by=sy(b.y), squash=charging?1-level*.22:1, s=92;
-    if(birdImg.complete&&birdImg.naturalWidth){x.save();x.translate(cx-4,by);x.rotate(tilt);x.scale(2-squash,squash);x.drawImage(birdImg,-s/2,-s*.95,s,s);x.restore()}
-    if(level>.05){x.strokeStyle='rgba(46,240,168,'+(.4+level*.6)+')';x.lineWidth=5;x.lineCap='round';
-      for(let k=1;k<=3;k++){x.beginPath();x.arc(cx+34,by-62,8+k*10*(.6+level),-.9,.5);x.stroke()}}
-    requestAnimationFrame(loop);
-  }
-  requestAnimationFrame(loop);
-})();
-
-/* ---------- trailer (YouTube loads only on click) ---------- */
-document.getElementById('playVideo').onclick=()=>{
-  setMusic(false);
-  document.getElementById('player').innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/dFGgLivoUSE?autoplay=1&rel=0&playsinline=1" title="Squawk Rush trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
-};
 </script>
 </body>
 </html>

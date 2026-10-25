@@ -21,246 +21,68 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Luckiest+Guy&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#1c1240;
-  --violet:#6a3cf0; --grape:#4a22c4; --indigo:#2e1690;
+  --pen:#2e1690; --violet:#6a3cf0; --grape:#4a22c4; --indigo:#2e1690;
   --pink:#ff3d9a; --mint:#2ef0a8; --sun:#ffd23f; --orange:#ff8a3d; --sky:#4fc3ff;
-  --text:#ffffff; --muted:#e6deff; --line:rgba(255,255,255,.22);
-  --display:"Fredoka","Baloo 2",system-ui,sans-serif;
+  --paper:#fffdf6; --rule:#cfe0ff; --margin:#ff9dbb;
+  --display:"Fredoka",system-ui,sans-serif;
   --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
   --loud:"Luckiest Guy","Fredoka",system-ui,sans-serif;
-  --pen:#2e1690; --paper:#fffdf6; --rule:#cfe0ff; --margin:#ff9dbb;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:72px}
-body{margin:0;background:var(--indigo);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;color:var(--pen);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden;
+  background-color:var(--paper);
+  background-image:linear-gradient(90deg,transparent 64px,var(--margin) 64px,var(--margin) 66px,transparent 66px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 34px)}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
-.wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px 0 90px;position:relative;z-index:2}
+@media (max-width:760px){
+  body{background-image:linear-gradient(90deg,transparent 14px,var(--margin) 14px,var(--margin) 16px,transparent 16px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 34px)}
+  .wrap{padding:0 16px 0 30px}}
 
-/* nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:30;padding:calc(env(safe-area-inset-top,0px) + 12px) 0 12px;transition:background .3s,box-shadow .3s}
-nav.solid{background:rgba(58,28,170,.82);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(20,8,70,.35)}
-nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{font-family:var(--display);font-weight:700;font-size:1.3rem;text-decoration:none;display:flex;align-items:center;gap:10px}
-.brand img{width:40px;height:40px;border-radius:12px;box-shadow:0 4px 0 rgba(0,0,0,.25)}
-nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
-nav ul a{text-decoration:none;font-weight:800;color:var(--muted)}
-nav ul a:hover{color:var(--sun)}
-@media (max-width:760px){nav ul{display:none}}
-
-/* hero */
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;
-  background:
-    radial-gradient(circle at 72% 38%,rgba(255,61,154,.75),transparent 42%),
-    radial-gradient(circle at 20% 80%,rgba(46,240,168,.35),transparent 40%),
-    linear-gradient(160deg,#7a45ff 0%,#4a22c4 45%,#2e1690 100%)}
-#scene{position:absolute;inset:0;width:100%;height:100%;z-index:1}
-.hero .fallback{position:absolute;inset:0;background:url(img/keyart.jpg) center/cover;opacity:0;transition:opacity .6s}
-.hero.static .fallback{opacity:.6}
-.hero-copy{max-width:560px;padding-top:70px}
-.kicker{display:inline-flex;align-items:center;gap:8px;font-weight:800;background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:999px;margin:0 0 18px}
-.kicker::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint)}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(2.7rem,7vw,4.8rem);line-height:1;margin:0 0 18px;
-  text-shadow:0 2px 0 #c9b8ff,0 4px 0 #8a6cf0,0 6px 0 #5a35d0,0 8px 0 #3a1c9a,0 16px 24px rgba(20,6,70,.5)}
-.hero p.lead{font-size:1.18rem;color:var(--muted);margin:0 0 28px;max-width:30em;text-shadow:0 2px 8px rgba(30,10,90,.5)}
-.btns{display:flex;flex-wrap:wrap;gap:14px}
-.btn{font-family:var(--display);font-weight:600;font-size:1.08rem;border:0;border-radius:999px;padding:14px 26px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .12s,box-shadow .12s;color:#fff}
-.btn:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
-.btn.primary{background:linear-gradient(#ff6bb5,#ff2d8f);box-shadow:0 7px 0 #b0105c,0 14px 24px rgba(176,16,92,.45)}
-.btn.primary:hover{transform:translateY(-2px);box-shadow:0 9px 0 #b0105c,0 18px 28px rgba(176,16,92,.5)}
-.btn.primary:active{transform:translateY(5px);box-shadow:0 2px 0 #b0105c}
-.btn.ghost{background:linear-gradient(#5ef7c2,#20d394);color:#0d3b2c;box-shadow:0 7px 0 #0f8c5f,0 14px 24px rgba(15,140,95,.4)}
-.btn.ghost:hover{transform:translateY(-2px)}
-.btn.ghost:active{transform:translateY(5px);box-shadow:0 2px 0 #0f8c5f}
-.btn:disabled{opacity:.6;cursor:default;transform:none}
-
-/* flowing waves between sections */
-.flow{position:relative;height:110px;overflow:hidden;margin:-1px 0;z-index:2}
-.flow svg{position:absolute;bottom:0;left:0;width:200%;height:100%;animation:drift 12s linear infinite}
-.flow svg:nth-child(2){animation-duration:19s;animation-direction:reverse}
-.flow svg:nth-child(3){animation-duration:27s}
-@keyframes drift{to{transform:translateX(-50%)}}
-
-section{position:relative;padding:90px 0;overflow:hidden}
-h2{font-family:var(--display);font-weight:700;font-size:clamp(2.1rem,4.8vw,3.3rem);line-height:1.05;margin:0 0 16px;
-  text-shadow:0 3px 0 rgba(0,0,0,.18),0 6px 0 rgba(0,0,0,.12)}
-.sub{color:var(--muted);font-size:1.12rem;max-width:36em;margin:0 0 40px}
-
-/* floating 3D pills decoration */
-.pill{position:absolute;height:28px;border-radius:999px;border:4px solid #fff;z-index:1;
-  box-shadow:inset 0 -7px 0 rgba(0,0,0,.18),inset 0 6px 0 rgba(255,255,255,.45),0 12px 20px rgba(20,8,70,.35);animation:float 6s ease-in-out infinite}
-.pill.spiky::after{content:"";position:absolute;left:10%;right:10%;top:100%;height:16px;margin-top:4px;
-  background:linear-gradient(135deg,transparent 50%,#ff3b3b 50%) 0 0/16px 16px,linear-gradient(225deg,transparent 50%,#ff3b3b 50%) 0 0/16px 16px;
-  background:conic-gradient(from 135deg at 50% 0,#ffcf3a 0 90deg,transparent 0) 0 0/16px 16px repeat-x}
-@keyframes float{50%{transform:translateY(-14px) rotate(2deg)}}
-.coin{position:absolute;width:38px;height:38px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7b0,#ffd23f 45%,#e09a00);border:3px solid #fff;z-index:1;
-  box-shadow:0 8px 16px rgba(20,8,70,.35);animation:spin 3s linear infinite}
-@keyframes spin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.15)}}
-
-/* 3D tilt */
-.tilt{transform-style:preserve-3d;transition:transform .2s ease-out;will-change:transform}
-
-/* game */
-#game{background:linear-gradient(180deg,#4a22c4,#6a3cf0 60%,#7d4bff)}
-.keyart{border-radius:30px;overflow:hidden;border:6px solid #fff;
-  box-shadow:0 10px 0 #2e1690,0 34px 60px rgba(20,6,70,.55);transform:perspective(1200px) rotateX(6deg)}
-.keyart img{width:100%;aspect-ratio:16/9;object-fit:cover}
-.beats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
-.beat{border-radius:26px;padding:24px;color:var(--ink);border:4px solid #fff;
-  box-shadow:0 8px 0 rgba(0,0,0,.2),0 18px 30px rgba(20,8,70,.35)}
-.beat:nth-child(1){background:linear-gradient(#9be4ff,#4fc3ff)}
-.beat:nth-child(2){background:linear-gradient(#ffe88a,#ffd23f)}
-.beat:nth-child(3){background:linear-gradient(#ff9ccc,#ff3d9a);color:#fff}
-.beat b{font-family:var(--display);font-size:1.8rem;display:block;line-height:1.1}
-.beat span{font-weight:700;opacity:.85}
-.bars{display:flex;gap:5px;align-items:flex-end;height:38px;margin-bottom:10px}
-.bars i{width:8px;border-radius:4px;background:currentColor;animation:eq 1s ease-in-out infinite}
-.bars i:nth-child(2){animation-delay:.15s}.bars i:nth-child(3){animation-delay:.3s}.bars i:nth-child(4){animation-delay:.45s}.bars i:nth-child(5){animation-delay:.6s}
-.beat:nth-child(1) .bars i{--h:30%}.beat:nth-child(2) .bars i{--h:65%}.beat:nth-child(3) .bars i{--h:100%}
-@keyframes eq{0%,100%{height:15%}50%{height:var(--h)}}
-@media (max-width:760px){.beats{grid-template-columns:1fr}}
-
-/* play */
-#play{background:linear-gradient(180deg,#7d4bff,#c43cdc 55%,#ff4f9a)}
-.play-grid{display:grid;grid-template-columns:1fr 390px;gap:48px;align-items:center}
-.stage{position:relative;background:linear-gradient(#5a2fd8,#2e1690);border-radius:36px;border:6px solid #fff;overflow:hidden;aspect-ratio:3/4;
-  box-shadow:0 12px 0 #8a1660,0 34px 60px rgba(70,10,60,.5)}
-#demo{width:100%;height:100%;display:block;touch-action:none;cursor:pointer}
-.meter{position:absolute;left:16px;top:70px;bottom:70px;width:14px;border-radius:8px;background:rgba(255,255,255,.2);overflow:hidden;border:2px solid rgba(255,255,255,.5)}
-.meter i{position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(var(--pink),var(--sun),var(--mint))}
-.hud{position:absolute;top:16px;left:0;right:0;text-align:center;font-family:var(--display);font-weight:700;font-size:1.6rem;pointer-events:none;text-shadow:0 3px 0 rgba(0,0,0,.25)}
-.hud small{display:block;font-size:.9rem;font-family:var(--body);opacity:.85}
-.tap-hint{position:absolute;bottom:18px;left:0;right:0;text-align:center;font-weight:800;font-size:.9rem;pointer-events:none;opacity:.9}
-.controls{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 14px}
-.note{color:var(--muted);font-size:.95rem}
-#status{font-weight:800;color:var(--sun);min-height:1.6em;text-shadow:0 2px 0 rgba(0,0,0,.2)}
-@media (max-width:880px){.play-grid{grid-template-columns:1fr}.stage{max-width:390px;margin:0 auto;width:100%}}
-
-/* video */
-#video{background:linear-gradient(180deg,#ff4f9a,#ff8a3d 60%,#ffb83d)}
-#video .sub{color:#fff3e6}
-.player{position:relative;aspect-ratio:16/9;border-radius:30px;overflow:hidden;border:6px solid #fff;background:#000;
-  box-shadow:0 12px 0 #b8501a,0 34px 60px rgba(120,40,10,.45)}
-.player img{width:100%;height:100%;object-fit:cover}
-.player button{position:absolute;inset:0;margin:auto;width:104px;height:104px;border-radius:50%;border:6px solid #fff;background:linear-gradient(#ff6bb5,#ff2d8f);
-  box-shadow:0 7px 0 #b0105c,0 0 0 16px rgba(255,255,255,.25);cursor:pointer;animation:pulse 2s ease-in-out infinite}
-.player button::after{content:"";position:absolute;left:38px;top:27px;border-left:32px solid #fff;border-top:20px solid transparent;border-bottom:20px solid transparent}
-.player button:focus-visible{outline:3px solid var(--sun);outline-offset:8px}
-.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-@keyframes pulse{50%{box-shadow:0 7px 0 #b0105c,0 0 0 30px rgba(255,255,255,0)}}
-
-/* modes */
-#modes{background:linear-gradient(180deg,#ffb83d,#2ef0a8 8%,#18b8c9 55%,#4a22c4)}
-#modes h2,#modes .sub{color:#0b2a40;text-shadow:none}
-#modes .sub{color:#0d3550;font-weight:600}
-.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(250px,280px);gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 22px 34px;margin:0 -22px;perspective:1000px}
-.rail::-webkit-scrollbar{height:10px}.rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.6);border-radius:8px}
-.card{scroll-snap-align:start;background:#fff;color:var(--ink);border-radius:28px;overflow:hidden;border:5px solid #fff;
-  box-shadow:0 10px 0 rgba(20,8,70,.25),0 24px 36px rgba(20,8,70,.3);transition:transform .25s}
-.card:hover{transform:translateY(-10px) rotateX(6deg) rotateZ(-1deg)}
-.card img{aspect-ratio:9/13;object-fit:cover;width:100%;border-radius:22px 22px 0 0}
-.card div{padding:16px 18px 20px}
-.card h3{font-family:var(--display);font-size:1.4rem;margin:0 0 4px;color:var(--grape)}
-.card p{margin:0;color:#4a4270;font-size:.96rem}
-.more{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
-.chip{background:#fff;color:var(--ink);border-radius:999px;padding:9px 18px;font-weight:700;box-shadow:0 5px 0 rgba(20,8,70,.25)}
-.chip b{color:var(--pink)}
-
-/* seeker */
-#seeker{background:linear-gradient(180deg,#4a22c4,#2e1690)}
-.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
-.feat{border-radius:28px;padding:28px;background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.06));border:3px solid rgba(255,255,255,.35);
-  box-shadow:0 8px 0 rgba(0,0,0,.2),0 22px 34px rgba(10,4,50,.4)}
-.feat h3{font-family:var(--display);font-size:1.45rem;margin:0 0 6px}
-.feat p{margin:0;color:var(--muted)}
-.gem{width:46px;height:46px;border-radius:14px;margin-bottom:14px;border:3px solid #fff;transform:rotate(45deg) scale(.8);
-  box-shadow:inset 0 -6px 0 rgba(0,0,0,.2),inset 0 6px 0 rgba(255,255,255,.5),0 8px 14px rgba(0,0,0,.3)}
-@media (max-width:760px){.feats{grid-template-columns:1fr}}
-
-/* studio */
-#studio{background:linear-gradient(180deg,#2e1690,#6a3cf0)}
-.studio{display:grid;grid-template-columns:280px 1fr;gap:44px;align-items:center}
-.studio img{border-radius:36px;border:6px solid #fff;box-shadow:0 10px 0 #2e1690,0 30px 50px rgba(10,4,50,.5)}
-.studio p{font-size:1.15rem;color:var(--muted);margin:0 0 16px}
-@media (max-width:760px){.studio{grid-template-columns:1fr}.studio img{max-width:220px}}
-
-footer{background:#1e0e6a;padding:44px 0 calc(env(safe-area-inset-bottom,0px) + 40px);color:var(--muted)}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px}
-footer a{color:#fff;font-weight:800;margin-right:18px;white-space:nowrap;text-underline-offset:3px;text-decoration-color:var(--pink)}
-
-/* music button */
-#musicBtn{position:fixed;right:18px;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:40;width:62px;height:62px;border-radius:50%;border:4px solid #fff;cursor:pointer;
-  background:linear-gradient(#ffe88a,#ffc21a);box-shadow:0 6px 0 #c48a00,0 14px 24px rgba(0,0,0,.35);display:grid;place-items:center;font-size:0}
-#musicBtn svg{width:28px;height:28px}
-#musicBtn.on{animation:bop .5s ease-in-out infinite alternate}
-#musicBtn:not(.on) .slash{display:block}
-#musicBtn.on .slash{display:none}
-#musicBtn:focus-visible{outline:3px solid #fff;outline-offset:4px}
-@keyframes bop{to{transform:translateY(-4px) rotate(-6deg)}}
-
-.rise{opacity:0;transform:translateY(30px) scale(.97);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.9,.3,1.2)}
-.rise.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .flow svg,.bars i,.player button,.pill,.coin,#musicBtn.on{animation:none}
-  .rise{opacity:1;transform:none;transition:none}
-}
-@media (max-width:760px){nav ul{display:none}
-  .hero{align-items:flex-end}
-  .hero-copy{padding:0 0 calc(env(safe-area-inset-bottom,0px) + 40px)}
-  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:62%;z-index:1;pointer-events:none;
-    background:linear-gradient(rgba(46,22,144,0),rgba(46,22,144,.88) 38%,#2e1690)}
-  h1{font-size:2.6rem}
-  .hero p.lead{font-size:1.02rem;margin-bottom:22px}}
-h1 .dot{color:var(--mint)}
-#about{background:linear-gradient(180deg,#4a22c4,#6a3cf0 60%,#7d4bff)}
-.about{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:center}
-.about .mark{border-radius:64px;box-shadow:0 12px 0 #2e1690,0 34px 60px rgba(20,6,70,.5)}
-.about p{font-size:1.15rem;color:var(--muted);margin:0 0 16px}
-#work{background:linear-gradient(180deg,#7d4bff,#c43cdc 55%,#ff4f9a)}
-.works{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
-.work{border-radius:30px;border:6px solid #fff;overflow:hidden;box-shadow:0 12px 0 rgba(90,10,70,.5),0 30px 50px rgba(70,10,60,.45)}
-.work.featured{background:#fff;color:var(--ink)}
-.work .shot img{width:100%;aspect-ratio:16/9;object-fit:cover}
-.work-body{padding:24px 26px 28px}
-.work h3{font-family:var(--display);font-size:2rem;margin:0 0 6px;line-height:1.1}
-.work.featured h3{color:var(--grape)}
-.work.featured p{color:#4a4270}
-.tag.live{background:#5ef7c2;color:#0d3b2c}
-.tag{display:inline-block;font-weight:800;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding:4px 12px;border-radius:999px;background:#ffe88a;color:#5a3a00}
-.work.featured .btns{margin-top:18px}
-.work.next{background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.08));padding:28px;display:flex;flex-direction:column;justify-content:center;text-align:center;align-items:center}
-.work.next p{color:#fff3fb;margin:0}
-.next-mark{width:120px;height:120px;border-radius:32px;border:4px dashed rgba(255,255,255,.8);display:grid;place-items:center;margin-bottom:18px;animation:float 5s ease-in-out infinite}
-.next-mark span{font-family:var(--display);font-weight:700;font-size:4rem;line-height:1}
-@media (max-width:860px){.works{grid-template-columns:1fr}.about{grid-template-columns:1fr}.about .mark{max-width:200px}}
-#build{background:linear-gradient(180deg,#ff4f9a,#ff8a3d 50%,#4a22c4)}
-#journey{background:linear-gradient(180deg,#4a22c4,#2e1690)}
-.timeline{list-style:none;margin:40px 0 0;padding:0 0 0 34px;position:relative;max-width:720px}
-.timeline::before{content:"";position:absolute;left:10px;top:6px;bottom:6px;width:6px;border-radius:6px;background:linear-gradient(var(--mint),var(--sun),var(--pink))}
-.timeline li{position:relative;margin:0 0 30px;display:flex;flex-direction:column;gap:2px}
-.timeline li::before{content:"";position:absolute;left:-34px;top:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:5px solid var(--pink);box-shadow:0 4px 0 rgba(0,0,0,.25)}
-.timeline li.future::before{background:var(--sun);border-style:dashed}
-.timeline .when{font-weight:800;color:var(--sun);font-size:.9rem;letter-spacing:.05em;text-transform:uppercase}
-.timeline b{font-family:var(--display);font-size:1.4rem}
-.timeline span:last-child{color:var(--muted)}
-#contact{background:linear-gradient(180deg,#2e1690,#6a3cf0);text-align:center}
-/* ===== doodle layer (Scribble Siege art on top of the Echo V look) ===== */
-/* crayon "boil": lines wobble like they are hand drawn */
+/* crayon wobble */
 .boil{animation:boil .36s steps(1) infinite}
 @keyframes boil{0%{filter:url(#b1)}33%{filter:url(#b2)}66%{filter:url(#b3)}}
-.flow svg path[stroke]{filter:url(#b2)}
-/* sticky-note titles: one letter per note */
-h2 .notes{display:flex;flex-wrap:wrap;gap:6px .5em;font-family:var(--loud);font-weight:400;line-height:1;font-size:clamp(1.9rem,4.6vw,3rem);text-shadow:none}
+
+/* nav: a strip of paper */
+nav{position:fixed;top:10px;left:50%;transform:translateX(-50%);z-index:30;width:min(1080px,calc(100% - 24px));background:#fff;border:3px solid var(--pen);border-radius:16px;
+  box-shadow:0 6px 0 var(--pen);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-family:var(--display);font-weight:700;font-size:1.2rem;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand img{width:38px;height:38px;border-radius:11px;border:2px solid var(--pen)}
+nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+nav ul a{text-decoration:none;font-weight:800;padding:6px 12px;border-radius:10px}
+nav ul a:hover{background:var(--sun)}
+@media (max-width:760px){nav ul{display:none}}
+
+/* chunky 3D buttons, ink outline (B's thick drop) */
+.btns{display:flex;flex-wrap:wrap;gap:14px}
+.btn{font-family:var(--display);font-weight:700;font-size:1.08rem;color:var(--pen);text-decoration:none;display:inline-flex;align-items:center;gap:8px;position:relative;overflow:hidden;
+  padding:12px 24px;border:4px solid var(--pen);border-radius:18px;box-shadow:0 7px 0 var(--pen),0 14px 22px rgba(46,22,144,.22);transition:transform .12s,box-shadow .12s;cursor:pointer;background:#fff}
+.btn:hover{transform:translateY(-2px);box-shadow:0 9px 0 var(--pen),0 18px 26px rgba(46,22,144,.25)}
+.btn:active{transform:translateY(5px);box-shadow:0 2px 0 var(--pen)}
+.btn:focus-visible{outline:3px solid var(--pink);outline-offset:4px}
+.btn.pink{background:linear-gradient(#ff6bb5,#ff2d8f);color:#fff}
+.btn.mint{background:linear-gradient(#5ef7c2,#20d394)}
+.btn.sun{background:linear-gradient(#ffe88a,#ffd23f)}
+.btn.pink::after{content:"";position:absolute;top:-10%;width:26%;height:120%;background:linear-gradient(90deg,#fff0,#fff9,#fff0);transform:skewX(-20deg);animation:sweep 3s ease-in-out infinite}
+@keyframes sweep{0%{left:-40%}55%,100%{left:130%}}
+
+/* sticky-note titles */
+.notes{display:flex;flex-wrap:wrap;gap:6px .5em;font-family:var(--loud);font-weight:400;line-height:1;margin:0}
 .notes .w{display:inline-flex;flex-wrap:nowrap;gap:6px}
 .notes .n{display:inline-grid;place-items:center;min-width:.95em;height:1.15em;padding:.1em .08em 0;color:var(--pen);position:relative;
-  border:3px solid var(--pen);border-radius:6px 4px 8px 5px;box-shadow:0 5px 0 var(--pen),0 12px 18px rgba(20,8,70,.35);
+  border:3px solid var(--pen);border-radius:6px 4px 8px 5px;box-shadow:0 5px 0 var(--pen),0 12px 18px rgba(20,8,70,.2);
   transform:rotate(var(--r,0deg));animation:bob 2s ease-in-out infinite;animation-delay:var(--d,0s)}
 .notes .n::before{content:"";position:absolute;left:28%;top:-.16em;width:44%;height:.22em;background:#ffffffb8;transform:rotate(-5deg)}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-5px) rotate(var(--r,0deg))}}
-#contact h2 .notes{justify-content:center}
-/* stickers and how they move */
+h2{margin:0 0 10px}
+h2 .notes{font-size:clamp(1.8rem,4.4vw,2.8rem)}
+@media (max-width:480px){h2 .notes{font-size:min(1.8rem,6.6vw)}.notes .w{gap:3px}.notes .n{border-width:2px}}
+.sub{font-size:1.12rem;font-weight:600;max-width:36em;margin:6px 0 34px;color:#4a3a8a}
+
+/* stickers & tape */
 .sticker{filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 8px 8px rgba(46,22,144,.28))}
+.tape{position:absolute;width:96px;height:28px;background:rgba(255,236,150,.8);box-shadow:0 2px 4px rgba(46,22,144,.15);z-index:5}
 .walk{animation:walk .5s ease-in-out infinite alternate}
 @keyframes walk{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-6px) rotate(5deg)}}
 .fly{animation:fly 4.6s ease-in-out infinite}
@@ -269,153 +91,243 @@ h2 .notes{display:flex;flex-wrap:wrap;gap:6px .5em;font-family:var(--loud);font-
 @keyframes hop{0%,100%{transform:translateY(0) rotate(-6deg)}40%{transform:translateY(-14px) rotate(6deg)}}
 .flap{animation:flap .5s ease-in-out infinite}
 @keyframes flap{0%,100%{scale:1 1}50%{scale:.84 1.05}}
-.floaty{position:absolute;z-index:1;pointer-events:none}
-.tape{position:absolute;width:96px;height:28px;background:rgba(255,236,150,.78);box-shadow:0 2px 4px rgba(46,22,144,.15);z-index:3}
-/* hero: sticky note, crayon underline, monsters peeking from the bottom */
-.hero-note{position:absolute;right:4%;bottom:130px;z-index:3;width:170px;padding:18px 14px 14px;background:#fff2a8;color:var(--pen);border:3px solid var(--pen);border-radius:4px 6px 10px 4px;
-  box-shadow:0 7px 0 var(--pen),0 18px 30px rgba(20,8,70,.4);transform:rotate(6deg);font-family:var(--loud);font-size:1.25rem;line-height:1.1;text-align:center}
-.hero-note::before{content:"";position:absolute;left:50%;top:-14px;width:70px;margin-left:-35px;height:24px;background:#ffffffc0;transform:rotate(-4deg)}
-.hero-note small{display:block;font-family:var(--body);font-weight:800;font-size:.8rem;margin-top:6px}
-h1 .dot{position:relative;display:inline-block}
-h1 .dot svg{position:absolute;left:-6%;bottom:-14px;width:112%;height:22px}
-.peekers{position:absolute;left:0;right:0;bottom:-6px;z-index:3;pointer-events:none;height:90px}
-.peekers img{position:absolute;bottom:0}
-@media (max-width:760px){.hero-note,.peekers{display:none}}
-/* My work becomes a notebook page */
-.page{position:relative;background-color:var(--paper);background-image:linear-gradient(90deg,transparent 48px,var(--margin) 48px,var(--margin) 50px,transparent 50px),repeating-linear-gradient(transparent 0 31px,var(--rule) 31px 32px);
-  border:4px solid var(--pen);border-radius:22px;padding:46px 26px 26px 64px;box-shadow:0 12px 0 var(--pen),0 34px 60px rgba(70,10,60,.45);transform:rotate(-.6deg)}
-.page::before{content:"";position:absolute;left:22px;right:22px;top:14px;height:18px;background:radial-gradient(circle,#c43cdc 6px,transparent 7px) 0 0/36px 18px repeat-x}
-.page>.tape{top:-16px;left:40%;transform:rotate(-3deg)}
-.page .work{border-color:var(--pen);border-width:4px;box-shadow:0 8px 0 var(--pen),0 18px 30px rgba(46,22,144,.25);position:relative}
-.page .work.featured h3{font-family:var(--loud);font-weight:400;letter-spacing:.02em}
-.shot{position:relative;display:block}
-.sticker-tag{position:absolute;top:14px;right:14px;z-index:3;font-family:var(--loud);font-size:.95rem;color:var(--pen);padding:7px 12px 4px;border:3px solid var(--pen);border-radius:10px;box-shadow:0 4px 0 var(--pen);transform:rotate(6deg)}
-.work .peek{position:absolute;z-index:4;width:84px;bottom:24px;transition:transform .3s}
+.drift{animation:drift 7s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateX(0)}50%{transform:translateX(var(--dx,20px))}}
+
+/* ===== hero: copy on the notebook, the 3D Echo V stage taped on as a polaroid ===== */
+.hero{min-height:100svh;display:flex;align-items:center;padding:110px 0 50px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center}
+.label{display:inline-block;font-weight:800;background:#fff;border:3px solid var(--pen);border-radius:10px;padding:4px 14px;transform:rotate(-2deg);box-shadow:0 4px 0 var(--pen);margin:0 0 22px}
+.label i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--mint);border:2px solid var(--pen);margin-right:8px;vertical-align:1px}
+h1{margin:0 0 6px}
+h1 .notes{font-size:min(4.2rem,5vw)}
+h1 .notes .w{gap:.08em}
+.skr{position:relative;display:inline-block;font-family:var(--loud);font-size:clamp(2rem,4.4vw,3rem);margin:12px 0 0 6px;transform:rotate(-3deg)}
+.skr::before{content:"";position:absolute;left:-12px;right:-12px;top:42%;height:48%;background:var(--mint);opacity:.85;border-radius:6px 14px 8px 12px;z-index:-1;animation:wipe 3.2s ease-out infinite}
+@keyframes wipe{0%{clip-path:inset(0 100% 0 0)}35%,100%{clip-path:inset(0 0 0 0)}}
+.lead{font-size:1.2rem;font-weight:600;max-width:30em;margin:18px 0 26px}
+.lead mark{background:linear-gradient(transparent 55%,#ffe36b 55%);color:inherit}
+.stagebox{position:relative;justify-self:center;width:100%;max-width:500px}
+.polaroid{position:relative;background:#fff;border:4px solid var(--pen);border-radius:12px;padding:14px 14px 56px;box-shadow:0 12px 0 var(--pen),0 30px 44px rgba(46,22,144,.28);transform:rotate(3deg);margin:0}
+.polaroid .tape{left:50%;top:-15px;margin-left:-48px;transform:rotate(-4deg)}
+.polaroid figcaption{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-family:var(--loud);font-size:clamp(.95rem,2.4vw,1.25rem);letter-spacing:.04em;white-space:nowrap}
+.stage3d{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:3px solid var(--pen);
+  background:radial-gradient(circle at 72% 30%,rgba(255,61,154,.75),transparent 46%),radial-gradient(circle at 20% 85%,rgba(46,240,168,.35),transparent 42%),linear-gradient(160deg,#7a45ff 0%,#4a22c4 50%,#2e1690 100%)}
+#scene{position:absolute;inset:0;width:100%;height:100%}
+.stage3d .fallback{position:absolute;inset:12%;opacity:0;transition:opacity .4s}
+.stage3d.static .fallback{opacity:1}
+.stagebox .d{position:absolute;z-index:6}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}.stagebox{max-width:330px;order:-1}h1 .notes{font-size:min(4.2rem,9vw)}.hero{padding-top:90px}}
+
+/* crayon squiggle divider in the three brand colors */
+.squiggle{height:70px;margin:10px 0;overflow:hidden}
+.squiggle svg{width:100%;height:100%}
+
+section{position:relative;padding:60px 0;overflow-x:clip}
+html{overflow-x:hidden}
+
+/* about */
+.card{background:#fff;border:3px solid var(--pen);border-radius:14px;box-shadow:0 8px 0 var(--pen);position:relative;padding:26px}
+.about{display:grid;grid-template-columns:200px 1fr;gap:34px;align-items:center}
+.about img{border-radius:40px;border:3px solid var(--pen);box-shadow:0 8px 0 var(--pen);transform:rotate(-3deg)}
+.about p{margin:0 0 12px;font-size:1.1rem}
+.about .tape{right:30px;top:-14px;transform:rotate(5deg)}
+.margin-doodle{position:absolute;width:86px;height:110px;right:-8px;bottom:-44px;transform:rotate(8deg)}
+@media (max-width:760px){.about{grid-template-columns:1fr}.about img{max-width:150px}.margin-doodle{display:none}}
+
+/* ===== my games: two worlds side by side, each in its own polaroid (C) ===== */
+.works{display:grid;grid-template-columns:1fr 1fr;gap:38px}
+.work{background:#fff;border:4px solid var(--pen);border-radius:14px;box-shadow:0 10px 0 var(--pen),0 22px 34px rgba(46,22,144,.2);position:relative;padding:12px 12px 0;transition:transform .25s}
+.work:nth-child(1){transform:rotate(-1.4deg)}
+.work:nth-child(2){transform:rotate(1.2deg)}
+.work>.tape{left:24px;top:-15px;transform:rotate(-6deg)}
+.world{position:relative;display:block;border-radius:8px;overflow:hidden;border:3px solid var(--pen);aspect-ratio:16/10}
+.world img{width:100%;height:100%;object-fit:cover}
+.world .side{font-size:.85rem}
+/* Squawk Rush sits on its own purple stage, so the neon art reads as "voice world" instead of clashing with the paper */
+.world.voice{background:radial-gradient(circle at 30% 30%,#ff5fae 0,transparent 50%),linear-gradient(160deg,#8a55ff,#4a22c4 70%);padding:14px}
+.world.voice img{border-radius:6px;border:3px solid #fff;box-shadow:0 8px 0 rgba(20,6,70,.45)}
+.world.voice .rings{position:absolute;left:12%;top:70%;width:0;height:0;z-index:2}
+.world.voice .rings i{position:absolute;left:-40px;top:-40px;width:80px;height:80px;border-radius:50%;border:6px solid;animation:ring 2.4s ease-out infinite;opacity:0}
+.world.voice .rings i:nth-child(1){border-color:var(--mint)}
+.world.voice .rings i:nth-child(2){border-color:var(--sun);animation-delay:.8s}
+.world.voice .rings i:nth-child(3){border-color:var(--pink);animation-delay:1.6s}
+@keyframes ring{0%{transform:scale(.4);opacity:1}100%{transform:scale(3);opacity:0}}
+.world.pen{background:var(--paper)}
+.side{position:absolute;z-index:4;font-family:var(--loud);font-size:.95rem;padding:7px 12px 4px;border:3px solid var(--pen);border-radius:10px;box-shadow:0 4px 0 var(--pen)}
+.side.l{left:10px;bottom:10px;background:var(--sun);transform:rotate(-4deg)}
+.side.r{right:10px;bottom:10px;background:var(--mint);transform:rotate(4deg)}
+.stamp{position:absolute;top:-18px;right:-12px;z-index:6;font-family:var(--loud);font-size:1rem;padding:8px 14px 5px;border:3px solid var(--pen);border-radius:12px;box-shadow:0 5px 0 var(--pen);transform:rotate(7deg)}
+.work-body{padding:24px 12px 26px}
+.work h3{font-family:var(--loud);font-weight:400;font-size:2rem;margin:0 0 6px;line-height:1.05;letter-spacing:.02em}
+.work p{margin:0 0 16px}
+.peek{position:absolute;z-index:6;width:84px;top:22%;transition:transform .3s}
 .work:hover .peek{transform:translateY(-14px) rotate(-8deg)}
-@media (max-width:760px){.page{padding:40px 14px 18px 30px;background-image:linear-gradient(90deg,transparent 16px,var(--margin) 16px,var(--margin) 18px,transparent 18px),repeating-linear-gradient(transparent 0 31px,var(--rule) 31px 32px)}
-  .work .peek{width:60px}}
-/* monsters march along a dashed path (a tower defense nod) */
-.march{position:relative;height:110px;overflow:hidden;margin-top:10px;color:#fff}
-.march .path{position:absolute;left:0;right:0;bottom:22px;border-top:4px dashed currentColor;opacity:.45}
+@media (max-width:860px){.works{grid-template-columns:1fr}.peek{width:62px}}
+
+/* monsters march along a dashed path (tower defense nod) */
+.march{position:relative;height:110px;overflow:hidden;margin-top:34px}
+.march .path{position:absolute;left:0;right:0;bottom:22px;border-top:4px dashed var(--pen);opacity:.4}
 .march .m{position:absolute;bottom:20px;left:0;width:70px;animation:cross 22s linear infinite}
 .march .m img{width:100%}
 @keyframes cross{from{transform:translateX(-120px)}to{transform:translateX(calc(100vw + 40px))}}
-/* boss parade */
-.parade{position:relative;background:var(--paper);border-top:4px solid var(--pen);border-bottom:4px solid var(--pen);padding:58px 0 18px;overflow:hidden;z-index:2}
+
+/* boss parade (C) */
+.parade{position:relative;background:#fff;border-top:4px solid var(--pen);border-bottom:4px solid var(--pen);padding:58px 0 18px;overflow:hidden;z-index:2;box-shadow:0 8px 0 rgba(46,22,144,.12)}
 .parade .row{display:flex;gap:30px;width:max-content;animation:scroll 60s linear infinite}
 .parade img{height:96px;width:auto}
 .parade .row img:nth-child(odd){animation:walk .5s ease-in-out infinite alternate}
-.parade-label{position:absolute;left:16px;top:12px;z-index:3;font-family:var(--loud);color:var(--pen);background:var(--sun);border:3px solid var(--pen);border-radius:10px;padding:6px 12px 3px;box-shadow:0 4px 0 var(--pen);transform:rotate(-3deg)}
+.parade-label{position:absolute;left:16px;top:12px;z-index:3;font-family:var(--loud);background:var(--sun);border:3px solid var(--pen);border-radius:10px;padding:6px 12px 3px;box-shadow:0 4px 0 var(--pen);transform:rotate(-3deg)}
 .parade-label a{text-decoration:none}
 @keyframes scroll{to{transform:translateX(-50%)}}
-/* doodles drawn stroke by stroke from the game's reference strokes */
-.feat .ic{width:56px;height:56px;margin-bottom:10px}
-[data-doodle] svg{display:block;width:100%;height:100%;overflow:visible}
-@media (prefers-reduced-motion:reduce){
-  .boil,.notes .n,.walk,.fly,.hop,.flap,.march .m,.parade .row,.parade .row img{animation:none!important}
-  .march{display:none}
-}
 
-.contact .sub{margin-left:auto;margin-right:auto}
-.contact .btns{justify-content:center}
+/* how I build: sticky notes, icons drawn stroke by stroke (C) */
+.feats{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.feat{padding:20px 18px 22px;border:3px solid var(--pen);border-radius:6px 4px 10px 5px;box-shadow:0 7px 0 var(--pen);position:relative}
+.feat:nth-child(1){background:#c6ffe9;transform:rotate(-2deg)}
+.feat:nth-child(2){background:#fff2a8;transform:rotate(1.5deg)}
+.feat:nth-child(3){background:#ffd0e6;transform:rotate(-1deg)}
+.feat:nth-child(4){background:#d5edff;transform:rotate(2deg)}
+.feat::before{content:"";position:absolute;left:35%;top:-12px;width:30%;height:20px;background:#ffffffcc;transform:rotate(-4deg)}
+.feat .ic{width:62px;height:62px;margin-bottom:8px}
+.feat h3{font-family:var(--display);font-size:1.3rem;margin:0 0 6px;line-height:1.15}
+.feat p{margin:0;font-size:.98rem}
+[data-doodle] svg{display:block;width:100%;height:100%;overflow:visible}
+@media (max-width:960px){.feats{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.feats{grid-template-columns:1fr}}
+
+/* journey: to-do list (A) */
+.todo{list-style:none;margin:0;padding:0;max-width:720px}
+.todo li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;margin:0 0 20px}
+.box{width:34px;height:34px;border:3px solid var(--pen);border-radius:6px;background:#fff;position:relative;margin-top:2px}
+.box svg{position:absolute;left:-4px;top:-12px;width:46px}
+.todo .when{font-weight:800;color:var(--pink);font-size:.86rem;letter-spacing:.05em;text-transform:uppercase}
+.todo b{display:block;font-family:var(--display);font-size:1.32rem;line-height:1.2}
+.todo span:last-child{color:#4a3a8a}
+.todo li.future b{color:#7a6cb8}
+
+#contact{text-align:center;padding-bottom:30px}
+#contact .sub{margin-left:auto;margin-right:auto}
+#contact .btns,#contact h2 .notes{justify-content:center}
+footer{background:var(--pen);color:#e6deff;padding:40px 0 calc(env(safe-area-inset-bottom,0px) + 50px);font-weight:700}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer .wrap>div:first-child{display:flex;flex-wrap:wrap;gap:6px 18px;min-width:0}
+footer a{color:#fff;white-space:nowrap;text-underline-offset:3px;text-decoration-color:var(--pink)}
+
+/* music button (off until tapped), as a sticker */
+#musicBtn{position:fixed;right:18px;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);z-index:40;width:62px;height:62px;border-radius:50%;border:4px solid var(--pen);cursor:pointer;
+  background:linear-gradient(#ffe88a,#ffc21a);box-shadow:0 6px 0 var(--pen),0 14px 24px rgba(0,0,0,.25);display:grid;place-items:center;font-size:0}
+#musicBtn svg{width:28px;height:28px}
+#musicBtn.on{animation:bop .5s ease-in-out infinite alternate}
+#musicBtn:not(.on) .slash{display:block}
+#musicBtn.on .slash{display:none}
+#musicBtn:focus-visible{outline:3px solid var(--pink);outline-offset:4px}
+@keyframes bop{to{transform:translateY(-4px) rotate(-6deg)}}
+
+
+.rise{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s cubic-bezier(.2,.9,.3,1.2)}
+.rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .boil,.notes .n,.btn.pink::after,.walk,.fly,.hop,.flap,.drift,.skr::before,.world.voice .rings i,.march .m,.parade .row,.parade .row img,#musicBtn.on{animation:none!important}
+  .march{display:none}
+  .rise{opacity:1;transform:none;transition:none}
+}
 </style>
 </head>
 <body>
 <nav id="nav">
-  <div class="wrap">
-    <a class="brand" href="#top"><img src="img/vespayao-icon-512.png" alt="">vespayao.skr</a>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#build">How I build</a></li>
-      <li><a href="#journey">Journey</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
+  <a class="brand" href="#top"><img src="img/vespayao-icon-512.png" alt="">vespayao.skr</a>
+  <ul><li><a href="#about">About</a></li><li><a href="#work">Games</a></li><li><a href="#build">How I build</a></li><li><a href="#journey">Journey</a></li><li><a href="#contact">Contact</a></li></ul>
 </nav>
 
 <header class="hero" id="top">
-  <div class="fallback" aria-hidden="true"></div>
-  <canvas id="scene" aria-hidden="true"></canvas>
-  <div class="wrap">
-    <div class="hero-copy">
-      <p class="kicker">Independent developer on Solana Seeker</p>
-      <h1>vespayao<span class="dot">.skr<svg viewBox="0 0 120 22" preserveAspectRatio="none" class="boil" aria-hidden="true"><path d="M3 14 C30 4 60 20 117 8" fill="none" stroke="#ffd23f" stroke-width="7" stroke-linecap="round"/></svg></span></h1>
-      <p class="lead">I make playful games for Solana Seeker that you play with your voice and your pen.</p>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="label"><i></i>Independent developer on Solana Seeker</p>
+      <h1><span class="notes" data-notes="VESPAYAO">vespayao</span><span class="skr">.skr</span></h1>
+      <p class="lead">I make playful games for Solana Seeker that you play with <mark>your voice</mark> and <mark>your pen</mark>.</p>
       <div class="btns">
-        <a class="btn primary" href="#work">See my work</a>
-        <a class="btn ghost" href="#contact">Get in touch</a>
+        <a class="btn pink" href="#work">See my work</a>
+        <a class="btn mint" href="#contact">Get in touch</a>
       </div>
     </div>
-  </div>
-  <div class="hero-note" aria-hidden="true">2 GAMES<br>&amp; COUNTING!<small>voice + doodles</small></div>
-  <div class="peekers" aria-hidden="true">
-    <img class="sticker hop" src="img/doodle/mob_skull.webp" alt="" width="62" style="left:6%;width:62px">
-    <img class="sticker walk" src="img/doodle/mob_snail.webp" alt="" width="70" style="left:18%;width:70px">
-    <img class="sticker" src="img/bird.png" alt="" width="84" style="left:46%;width:84px;animation:hop 1.1s ease-in-out infinite">
-    <img class="sticker walk" src="img/doodle/mob_ant.webp" alt="" width="58" style="left:64%;width:58px">
-    <img class="sticker flap" src="img/doodle/mob_bat.webp" alt="" width="84" style="left:78%;width:84px;bottom:40px">
+    <div class="stagebox">
+      <svg class="d drift" style="left:-6%;top:-4%;--dx:24px" width="110" height="56" viewBox="0 0 110 56" aria-hidden="true"><path class="boil" d="M14 44c-12 0-12-18 2-18 0-14 22-18 28-6 6-12 28-10 28 4 14-2 18 20 4 20z" fill="#bff7e2" stroke="#2e1690" stroke-width="3" stroke-linejoin="round"/></svg>
+      <figure class="polaroid">
+        <span class="tape"></span>
+        <div class="stage3d" id="stage3d">
+          <svg class="fallback" viewBox="0 0 200 200" aria-hidden="true"><path d="M48 52 L100 158" fill="none" stroke="#fff" stroke-width="26" stroke-linecap="round"/><path d="M109 106.8 A52 52 0 0 1 134.8 119.4" fill="none" stroke="#2ef0a8" stroke-width="20" stroke-linecap="round"/><path d="M114.6 75.3 A84 84 0 0 1 156.2 95.6" fill="none" stroke="#ffd23f" stroke-width="20" stroke-linecap="round"/><path d="M120.1 43.8 A116 116 0 0 1 177.6 71.8" fill="none" stroke="#ff3d9a" stroke-width="20" stroke-linecap="round"/><circle cx="100" cy="158" r="17" fill="#ff3d9a" stroke="#fff" stroke-width="6"/></svg>
+          <canvas id="scene" aria-hidden="true"></canvas>
+        </div>
+        <figcaption>ECHO V · est. 2026</figcaption>
+      </figure>
+      <img class="d sticker fly" src="img/doodle/mob_dragon.webp" alt="" style="left:-9%;top:46%;width:22%">
+      <img class="d sticker flap" src="img/doodle/mob_bat.webp" alt="" style="right:-6%;top:8%;width:22%">
+      <img class="d sticker hop" src="img/doodle/mob_skull.webp" alt="" style="left:4%;bottom:-4%;width:15%">
+      <img class="d sticker" src="img/bird.png" alt="" style="right:-2%;bottom:-6%;width:24%;animation:hop 1.1s ease-in-out infinite">
+    </div>
   </div>
 </header>
 
-<div class="flow" aria-hidden="true" style="background:#4a22c4">
-  <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto"><path d="M0 0 H2400 V40 C2200 90 2000 0 1800 40 S1400 90 1200 40 S800 0 600 40 S200 90 0 40Z" fill="#2e1690"/></svg>
-  <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto"><path d="M0 52 C200 100 400 10 600 52 S1000 100 1200 52 S1600 10 1800 52 S2200 100 2400 52" fill="none" stroke="#2ef0a8" stroke-width="7" stroke-linecap="round"/></svg>
-  <svg viewBox="0 0 2400 110" preserveAspectRatio="none" style="top:0;bottom:auto"><path d="M0 66 C200 20 400 110 600 66 S1000 20 1200 66 S1600 110 1800 66 S2200 20 2400 66" fill="none" stroke="#ff3d9a" stroke-width="7" stroke-linecap="round"/></svg>
-</div>
+<div class="squiggle" aria-hidden="true"><svg viewBox="0 0 1200 70" preserveAspectRatio="none" class="boil"><path d="M0 22 C100 2 200 42 300 22 S500 2 600 22 S800 42 900 22 S1100 2 1200 22" fill="none" stroke="#2ef0a8" stroke-width="6" stroke-linecap="round"/><path d="M0 36 C100 16 200 56 300 36 S500 16 600 36 S800 56 900 36 S1100 16 1200 36" fill="none" stroke="#ffd23f" stroke-width="6" stroke-linecap="round"/><path d="M0 50 C100 30 200 70 300 50 S500 30 600 50 S800 70 900 50 S1100 30 1200 50" fill="none" stroke="#ff3d9a" stroke-width="6" stroke-linecap="round"/></svg></div>
 
 <section id="about">
-  <img class="floaty sticker fly" src="img/doodle/mob_dragon.webp" alt="" width="110" style="width:110px;right:5%;top:60px">
-  <span class="coin" style="left:4%;bottom:70px"></span>
-  <div class="wrap about">
-    <img class="tilt mark" data-tilt="10" src="img/vespayao-icon-512.png" alt="vespayao logo" width="512" height="512">
-    <div>
-      <h2><span class="notes" data-notes="HI, I'M VESPAYAO">Hi, I'm vespayao</span></h2>
-      <p>Seeker is where mobile and crypto finally meet: a phone with a wallet built in, and a community that owns what it uses. I build apps that feel native to that future, made for the phone in your hand rather than ported from somewhere else.</p>
-      <p>I love games, and I can't wait to design many more fun ones that help the Seeker ecosystem grow.</p>
+  <div class="wrap">
+    <div class="card about rise">
+      <span class="tape"></span>
+      <img src="img/vespayao-icon-512.png" alt="vespayao logo" width="512" height="512">
+      <div>
+        <h2><span class="notes" data-notes="HI, I'M VESPAYAO">Hi, I'm vespayao</span></h2>
+        <p>Seeker is where mobile and crypto finally meet: a phone with a wallet built in, and a community that owns what it uses. I build apps that feel native to that future, made for the phone in your hand rather than ported from somewhere else.</p>
+        <p>I love games, and I can't wait to design many more fun ones that help the Seeker ecosystem grow.</p>
+      </div>
+      <div class="margin-doodle" data-doodle="sword" data-color="#ff3d9a"></div>
     </div>
   </div>
 </section>
 
 <section id="work">
-  <span class="pill spiky" style="width:150px;left:-30px;top:110px;background:linear-gradient(#ff9ccc,#ff3d9a)"></span>
   <div class="wrap">
-    <h2><span class="notes" data-notes="MY GAMES">My work</span></h2>
+    <h2><span class="notes" data-notes="MY GAMES">My games</span></h2>
     <p class="sub">Every project starts with one question: what would be fun on a Seeker?</p>
-    <div class="page"><span class="tape" aria-hidden="true"></span><div class="works">
-      <article class="work featured tilt" data-tilt="4">
-        <img class="peek sticker" src="img/bird.png" alt="" width="84" style="left:-30px">
-        <a class="shot" href="squawk-rush/"><span class="sticker-tag" style="background:var(--mint)">PLAY NOW</span><img src="img/keyart.jpg" alt="Squawk Rush key art" width="1600" height="900" loading="lazy"></a>
+    <div class="works">
+      <article class="work rise">
+        <span class="tape"></span>
+        <span class="stamp" style="background:var(--mint)">LIVE ON SEEKER</span>
+        <a class="world voice" href="squawk-rush/">
+          <span class="rings" aria-hidden="true"><i></i><i></i><i></i></span>
+          <img src="img/keyart.jpg" alt="Squawk Rush key art" width="1600" height="900" loading="lazy">
+          <span class="side l">PLAY WITH YOUR VOICE</span>
+        </a>
         <div class="work-body">
-          <p class="tag live">Game · Live on Seeker</p>
-          <h3>Squawk Rush</h3>
+          <h3 style="color:var(--grape)">Squawk Rush</h3>
           <p>A voice-controlled arcade game. Hum to walk, yell to jump, and the louder you scream, the higher you fly. Seven modes, server-verified scores and an SKR cosmetics shop.</p>
-          <div class="btns">
-            <a class="btn primary" href="squawk-rush/">Explore the game</a>
-            <a class="btn ghost" href="https://squawkrush.party">squawkrush.party</a>
-          </div>
+          <div class="btns"><a class="btn pink" href="squawk-rush/">Explore the game</a><a class="btn sun" href="https://squawkrush.party">squawkrush.party</a></div>
         </div>
+        <img class="peek sticker" src="img/bird.png" alt="" style="left:-36px">
       </article>
-      <article class="work featured tilt" data-tilt="4">
-        <img class="peek sticker" src="img/doodle/mob_dragon.webp" alt="" width="84" style="right:-26px">
-        <a class="shot" href="scribble-siege/"><span class="sticker-tag" style="background:var(--sun)">NEW!</span><img src="img/scribble-siege-doodle.jpg" alt="Scribble Siege logo over a hand-drawn battlefield" width="1200" height="675" loading="lazy"></a>
+      <article class="work rise">
+        <span class="tape"></span>
+        <span class="stamp" style="background:var(--sun)">IN DEVELOPMENT</span>
+        <a class="world pen" href="scribble-siege/">
+          <img src="img/scribble-siege-doodle.jpg" alt="Scribble Siege logo over a hand-drawn battlefield" width="1200" height="675" loading="lazy">
+          <span class="side r">PLAY WITH YOUR PEN</span>
+        </a>
         <div class="work-body">
-          <p class="tag">Game · In development</p>
-          <h3>Scribble Siege</h3>
+          <h3 style="color:var(--pink)">Scribble Siege</h3>
           <p>A tower defense game where you draw every tower and monster yourself. The better you draw, the stronger it fights. The uglier it is, the funnier it gets.</p>
-          <div class="btns">
-            <a class="btn primary" href="scribble-siege/">Explore the game</a>
-            <a class="btn ghost" href="https://scribblesiege.party">scribblesiege.party</a>
-          </div>
+          <div class="btns"><a class="btn pink" href="scribble-siege/">Explore the game</a><a class="btn sun" href="https://scribblesiege.party">scribblesiege.party</a></div>
         </div>
+        <img class="peek sticker" src="img/doodle/mob_dragon.webp" alt="" style="right:-34px">
       </article>
-    </div></div>
+    </div>
     <div class="march" aria-hidden="true">
       <div class="path"></div>
       <div class="m"><img class="sticker walk" src="img/doodle/mob_skull.webp" alt="" loading="lazy"></div>
       <div class="m" style="animation-delay:-3s;width:80px"><img class="sticker walk" src="img/doodle/mob_snake.webp" alt="" loading="lazy"></div>
-      <div class="m" style="animation-delay:-6s;width:60px"><img class="sticker walk" src="img/doodle/mob_spider.webp" alt="" loading="lazy"></div>
-      <div class="m" style="animation-delay:-9s;width:76px"><img class="sticker walk" src="img/doodle/mob_rhino.webp" alt="" loading="lazy"></div>
+      <div class="m" style="animation-delay:-6s;width:60px"><img class="sticker walk" src="img/doodle/mob_ant.webp" alt="" loading="lazy"></div>
+      <div class="m" style="animation-delay:-9s;width:76px"><img class="sticker walk" src="img/doodle/mob_snail.webp" alt="" loading="lazy"></div>
       <div class="m" style="animation-delay:-13s;width:96px"><img class="sticker walk" src="img/doodle/boss_frog_king.webp" alt="" loading="lazy"></div>
       <div class="m" style="animation-delay:-17s;width:64px"><img class="sticker walk" src="img/doodle/mob_bee.webp" alt="" loading="lazy"></div>
     </div>
@@ -428,86 +340,66 @@ h1 .dot svg{position:absolute;left:-6%;bottom:-14px;width:112%;height:22px}
 </div>
 
 <section id="build">
-  <img class="floaty sticker hop" src="img/doodle/boss_kraken.webp" alt="" width="110" style="width:110px;right:5%;top:50px">
   <div class="wrap">
     <h2><span class="notes" data-notes="HOW I BUILD">How I build</span></h2>
     <p class="sub">A few principles behind everything I make.</p>
     <div class="feats">
-      <div class="feat tilt" data-tilt="5"><div class="ic" data-doodle="lightning" data-color="#5ef7c2"></div><h3>New ways to play</h3><p>Phones have microphones and cameras, not just screens. I use them as controllers so the fun goes beyond two thumbs.</p></div>
-      <div class="feat tilt" data-tilt="5"><div class="ic" data-doodle="castle" data-color="#ffd23f"></div><h3>Seeker-native</h3><p>Mobile Wallet Adapter sign-in, Seed Vault support, Seeker Genesis Token rewards and SKR payments verified on chain.</p></div>
-      <div class="feat tilt" data-tilt="5"><div class="ic" data-doodle="snowman" data-color="#ff9ccc"></div><h3>Fair by design</h3><p>Ranked results are checked on the server, and anything you buy is cosmetic. Paying never changes the rules.</p></div>
-      <div class="feat tilt" data-tilt="5"><div class="ic" data-doodle="cannon" data-color="#9be4ff"></div><h3>Built with AI</h3><p>I work with Claude Code as a coding partner, which lets an independent developer ship faster and test more.</p></div>
+      <div class="feat rise"><div class="ic" data-doodle="lightning" data-color="#0f8c5f"></div><h3>New ways to play</h3><p>Phones have microphones and cameras, not just screens. I use them as controllers so the fun goes beyond two thumbs.</p></div>
+      <div class="feat rise"><div class="ic" data-doodle="castle" data-color="#b07800"></div><h3>Seeker-native</h3><p>Mobile Wallet Adapter sign-in, Seed Vault support, Seeker Genesis Token rewards and SKR payments verified on chain.</p></div>
+      <div class="feat rise"><div class="ic" data-doodle="snowman" data-color="#c4006a"></div><h3>Fair by design</h3><p>Ranked results are checked on the server, and anything you buy is cosmetic. Paying never changes the rules.</p></div>
+      <div class="feat rise"><div class="ic" data-doodle="cannon" data-color="#1a6fb0"></div><h3>Built with AI</h3><p>I work with Claude Code as a coding partner, which lets an independent developer ship faster and test more.</p></div>
     </div>
   </div>
 </section>
 
 <section id="journey">
-  <img class="floaty sticker walk" src="img/doodle/mob_snail.webp" alt="" width="100" style="width:100px;right:6%;bottom:60px">
   <div class="wrap">
-    <h2><span class="notes" data-notes="JOURNEY">Journey so far</span></h2>
-    <ol class="timeline">
-      <li><span class="when">Mar 2026</span><b>Joined the Solana dApp Store</b><span>Became a publisher on the Seeker dApp Store.</span></li>
-      <li><span class="when">Oct 2026</span><b>Built Squawk Rush</b><span>Designed and built a voice-controlled game from scratch for Seeker.</span></li>
-      <li><span class="when">Oct 2026</span><b>Entered the CLOCK IN hackathon</b><span>Submitted Squawk Rush with its demo, deck and APK.</span></li>
-      <li><span class="when">Oct 2026</span><b>Live on the dApp Store</b><span>Squawk Rush is now available on Seeker.</span></li>
-      <li><span class="when">Oct 2026</span><b>Started Scribble Siege</b><span>A tower defense game where you draw your own towers and monsters.</span></li>
-      <li class="future"><span class="when">Next</span><b>More games</b><span>This list is just getting started.</span></li>
-    </ol>
+    <h2><span class="notes" data-notes="JOURNEY">Journey</span></h2>
+    <p class="sub">So far, one checkbox at a time.</p>
+    <ul class="todo">
+      <li class="rise"><span class="box"><svg viewBox="0 0 46 40" class="boil"><path d="M6 22 L17 33 L42 4" fill="none" stroke="#ff3d9a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><span class="when">Mar 2026</span><b>Joined the Solana dApp Store</b><span>Became a publisher on the Seeker dApp Store.</span></div></li>
+      <li class="rise"><span class="box"><svg viewBox="0 0 46 40" class="boil"><path d="M6 22 L17 33 L42 4" fill="none" stroke="#ff3d9a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><span class="when">Oct 2026</span><b>Built Squawk Rush</b><span>Designed and built a voice-controlled game from scratch for Seeker.</span></div></li>
+      <li class="rise"><span class="box"><svg viewBox="0 0 46 40" class="boil"><path d="M6 22 L17 33 L42 4" fill="none" stroke="#ff3d9a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><span class="when">Oct 2026</span><b>Entered the CLOCK IN hackathon</b><span>Submitted Squawk Rush with its demo, deck and APK.</span></div></li>
+      <li class="rise"><span class="box"><svg viewBox="0 0 46 40" class="boil"><path d="M6 22 L17 33 L42 4" fill="none" stroke="#ff3d9a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><span class="when">Oct 2026</span><b>Live on the dApp Store</b><span>Squawk Rush is now available on Seeker.</span></div></li>
+      <li class="rise"><span class="box"><svg viewBox="0 0 46 40" class="boil"><path d="M6 22 L17 33 L42 4" fill="none" stroke="#ff3d9a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><span class="when">Oct 2026</span><b>Started Scribble Siege</b><span>A tower defense game where you draw your own towers and monsters.</span></div></li>
+      <li class="rise future"><span class="box"></span><div><span class="when">Next</span><b>More games</b><span>This list is just getting started.</span></div></li>
+    </ul>
   </div>
 </section>
 
 <section id="contact">
-  <div class="wrap contact">
-    <h2><span class="notes" data-notes="LET'S PLAY">Let's build something fun</span></h2>
+  <div class="wrap">
+    <h2><span class="notes" data-notes="LET'S PLAY">Let's play</span></h2>
     <p class="sub">Questions, feedback or ideas for working together are all welcome.</p>
-    <div class="btns">
-      <a class="btn primary" href="mailto:support@squawkrush.party">support@squawkrush.party</a>
-      <a class="btn ghost" href="https://github.com/vvv-yao">GitHub</a>
-    </div>
+    <div class="btns"><a class="btn pink" href="mailto:support@squawkrush.party">support@squawkrush.party</a><a class="btn mint" href="https://github.com/vvv-yao">GitHub</a></div>
   </div>
 </section>
 
-<footer>
-  <div class="wrap">
-    <div><a href="squawk-rush/">Squawk Rush</a><a href="https://squawkrush.party">squawkrush.party</a><a href="scribble-siege/">Scribble Siege</a><a href="https://scribblesiege.party">scribblesiege.party</a></div>
-    <div>© 2026 vespayao.skr</div>
-  </div>
-</footer>
+<footer><div class="wrap"><div><a href="squawk-rush/">Squawk Rush</a><a href="https://squawkrush.party">squawkrush.party</a><a href="scribble-siege/">Scribble Siege</a><a href="https://scribblesiege.party">scribblesiege.party</a></div><div>© 2026 vespayao.skr</div></div></footer>
 
 <button id="musicBtn" aria-label="Background music" aria-pressed="false">
   <svg viewBox="0 0 24 24" fill="none" stroke="#5a2a00" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3" fill="#5a2a00"/><circle cx="17" cy="16" r="3" fill="#5a2a00"/><path class="slash" d="M3 3l18 18" stroke="#c4002f" stroke-width="3" style="display:none"/></svg>
 </button>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const nav=document.getElementById('nav');
-addEventListener('scroll',()=>nav.classList.toggle('solid',scrollY>40),{passive:true});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rise').forEach(el=>io.observe(el));
-if(!REDUCED && matchMedia('(hover:hover)').matches){
-  document.querySelectorAll('[data-tilt]').forEach(el=>{
-    const max=+el.dataset.tilt||7;
-    el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-      el.style.transform=`perspective(1000px) rotateY(${x*max*2}deg) rotateX(${-y*max*2}deg) translateZ(10px)`});
-    el.addEventListener('pointerleave',()=>el.style.transform='');
-  });
-}
 
-
-/* ---------- doodle layer ---------- */
 // crayon wobble filters
 document.body.insertAdjacentHTML('afterbegin','<svg width="0" height="0" style="position:absolute" aria-hidden="true">'+[1,7,13].map((s,i)=>`<filter id="b${i+1}"><feTurbulence baseFrequency="0.03" numOctaves="2" seed="${s}"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>`).join('')+'</svg>');
 // sticky-note titles: one note per letter, lines only break between words
 document.querySelectorAll('[data-notes]').forEach((el,k)=>{
   const NOTE=['#ff7dbb','#ffd23f','#5ef7c2','#b9a2ff','#8fd8ff']; let i=0;
-  el.closest('h2').setAttribute('aria-label',el.textContent);
+  el.closest('h1,h2').setAttribute('aria-label',el.textContent);
   el.innerHTML=el.dataset.notes.split(' ').map(w=>'<span class="w" aria-hidden="true">'+[...w].map(ch=>{
     const r=((i*37+k*11)%13)-6, s=`background:${NOTE[(i+k)%NOTE.length]};--r:${r}deg;--d:${(i*.12).toFixed(2)}s`; i++;
     return `<span class="n" style="${s}">${ch}</span>`}).join('')+'</span>').join('');
 });
-// reference strokes from Scribble Siege, drawn one stroke at a time
-const DOODLES={"lightning": {"d": "M7,9 L18,4 L20,4 L33,0 L36,0 L40,2 L43,5 L43,8 L45,9 L51,6 L58,4 L63,4 L71,4 L77,6 L79,8 L80,12 L80,16 L78,18 L71,23 L70,23 L69,22 L70,21 L71,22 L74,26 L75,30 L73,31 L70,32 L61,32 L51,28 L49,28 L49,30 L46,32 L28,31 L23,29 L23,27 L24,24 L19,28 L17,28 L13,28 L10,28 L3,24 L0,21 L0,20 L1,14 L4,10 L6,9 L10,9 M32,29 L49,37 L71,43 L72,44 L65,47 L57,54 L51,57 L48,61 L48,62 L54,65 L58,69 L63,76 L65,79 L66,82 L62,86 L59,87 L52,93 L38,100 L35,100 L27,98 L27,97 L30,96 L31,95 L35,92 L38,91 L46,85 L57,82 L56,80 L51,77 L42,66 L40,61", "vb": "-6 -6 92 112"}, "castle": {"d": "M0,94 L0,91 L1,65 L1,59 L2,58 L5,57 L9,57 L10,61 L12,61 L16,60 L17,59 L17,54 L21,54 L24,53 L25,53 L25,54 L25,58 L26,59 L32,59 L37,57 L38,54 L39,51 L39,41 L41,23 M54,24 L55,28 L55,35 L53,48 L53,52 L53,52 L61,55 L64,55 L67,46 L68,47 L71,46 L71,46 L72,48 L72,53 L72,55 L73,55 L79,55 L80,53 L80,51 L83,47 L88,48 L89,51 L89,54 L87,68 L85,74 L84,80 L84,88 L85,92 L87,96 L86,93 L86,93 M60,21 L54,21 L40,23 L30,23 L28,24 L31,20 L32,17 L40,10 L44,4 L46,2 L48,0 L49,1 L51,4 L53,11 L56,18 L56,21 L58,23 L57,22 M37,98 L36,98 L36,95 L38,85 L39,76 L41,72 L42,71 L43,71 L46,73 L48,77 L51,80 L52,89 L52,100", "vb": "-6 -6 101 112"}, "snowman": {"d": "M22,12 L22,27 L23,29 L27,31 L33,31 L39,27 L44,21 L47,15 L47,7 L43,3 L36,0 L26,0 M29,36 L18,37 L11,42 L10,53 L10,56 L12,59 L20,62 L36,62 L46,59 L51,54 L53,39 L48,33 L35,29 L26,29 L22,30 M28,63 L19,62 L11,65 L6,69 L1,76 L0,90 L6,97 L13,99 L25,100 L35,100 L43,96 L48,92 L54,77 L54,65 L49,60 L44,58 L32,57 M56,47 L69,36 L85,25", "vb": "-6 -6 97 112"}, "cannon": {"d": "M1,24 L6,28 L23,40 L47,53 L65,61 M0,20 L3,20 L9,18 L11,16 L13,13 L12,6 L10,1 L9,0 L8,0 L5,2 L2,5 L0,15 L1,18 M11,2 L13,2 L26,8 L49,23 L55,25 L83,35 L88,38 L93,41 L96,45 L98,48 L100,53 L100,55 L98,59 L96,63 L91,67 L80,70 L73,70 L69,70 L63,68 L59,66 L55,63 L52,59 L52,56 L54,53 L60,49 L66,46 L73,45 L77,45 L79,46 L82,50 L82,54 L83,59 L81,65 L77,72 L69,81 L59,87 L55,88 L54,87 L51,85 L47,79 L45,71 L44,66 L45,63 L48,58 L55,51 L62,47 L70,45 M74,44 L62,72 L56,84 M61,58 L65,67 L67,76 M50,75 L54,74 L62,69 L77,60", "vb": "-6 -6 112 100"}};
+// Scribble Siege reference strokes, drawn one stroke at a time
+const DOODLES={"lightning": {"d": "M7,9 L18,4 L20,4 L33,0 L36,0 L40,2 L43,5 L43,8 L45,9 L51,6 L58,4 L63,4 L71,4 L77,6 L79,8 L80,12 L80,16 L78,18 L71,23 L70,23 L69,22 L70,21 L71,22 L74,26 L75,30 L73,31 L70,32 L61,32 L51,28 L49,28 L49,30 L46,32 L28,31 L23,29 L23,27 L24,24 L19,28 L17,28 L13,28 L10,28 L3,24 L0,21 L0,20 L1,14 L4,10 L6,9 L10,9 M32,29 L49,37 L71,43 L72,44 L65,47 L57,54 L51,57 L48,61 L48,62 L54,65 L58,69 L63,76 L65,79 L66,82 L62,86 L59,87 L52,93 L38,100 L35,100 L27,98 L27,97 L30,96 L31,95 L35,92 L38,91 L46,85 L57,82 L56,80 L51,77 L42,66 L40,61", "vb": "-6 -6 92 112"}, "castle": {"d": "M0,94 L0,91 L1,65 L1,59 L2,58 L5,57 L9,57 L10,61 L12,61 L16,60 L17,59 L17,54 L21,54 L24,53 L25,53 L25,54 L25,58 L26,59 L32,59 L37,57 L38,54 L39,51 L39,41 L41,23 M54,24 L55,28 L55,35 L53,48 L53,52 L53,52 L61,55 L64,55 L67,46 L68,47 L71,46 L71,46 L72,48 L72,53 L72,55 L73,55 L79,55 L80,53 L80,51 L83,47 L88,48 L89,51 L89,54 L87,68 L85,74 L84,80 L84,88 L85,92 L87,96 L86,93 L86,93 M60,21 L54,21 L40,23 L30,23 L28,24 L31,20 L32,17 L40,10 L44,4 L46,2 L48,0 L49,1 L51,4 L53,11 L56,18 L56,21 L58,23 L57,22 M37,98 L36,98 L36,95 L38,85 L39,76 L41,72 L42,71 L43,71 L46,73 L48,77 L51,80 L52,89 L52,100", "vb": "-6 -6 101 112"}, "snowman": {"d": "M22,12 L22,27 L23,29 L27,31 L33,31 L39,27 L44,21 L47,15 L47,7 L43,3 L36,0 L26,0 M29,36 L18,37 L11,42 L10,53 L10,56 L12,59 L20,62 L36,62 L46,59 L51,54 L53,39 L48,33 L35,29 L26,29 L22,30 M28,63 L19,62 L11,65 L6,69 L1,76 L0,90 L6,97 L13,99 L25,100 L35,100 L43,96 L48,92 L54,77 L54,65 L49,60 L44,58 L32,57 M56,47 L69,36 L85,25", "vb": "-6 -6 97 112"}, "cannon": {"d": "M1,24 L6,28 L23,40 L47,53 L65,61 M0,20 L3,20 L9,18 L11,16 L13,13 L12,6 L10,1 L9,0 L8,0 L5,2 L2,5 L0,15 L1,18 M11,2 L13,2 L26,8 L49,23 L55,25 L83,35 L88,38 L93,41 L96,45 L98,48 L100,53 L100,55 L98,59 L96,63 L91,67 L80,70 L73,70 L69,70 L63,68 L59,66 L55,63 L52,59 L52,56 L54,53 L60,49 L66,46 L73,45 L77,45 L79,46 L82,50 L82,54 L83,59 L81,65 L77,72 L69,81 L59,87 L55,88 L54,87 L51,85 L47,79 L45,71 L44,66 L45,63 L48,58 L55,51 L62,47 L70,45 M74,44 L62,72 L56,84 M61,58 L65,67 L67,76 M50,75 L54,74 L62,69 L77,60", "vb": "-6 -6 112 100"}, "sword": {"d": "M43,87 L48,100 L55,95 L60,92 L50,81 L47,77 L42,66 M29,69 L36,68 L55,60 L51,51 L49,51 L38,57 L24,61 L29,67 L31,70 M41,54 L29,27 L21,15 L18,12 L12,9 L9,7 L0,0 L0,1 L1,9 L1,19 L6,25 L33,63 M5,4 L11,20 L20,37 L26,48 L35,62", "vb": "-6 -6 72 112"}};
 document.querySelectorAll('[data-doodle]').forEach(el=>{
   const d=DOODLES[el.dataset.doodle];
   el.innerHTML=`<svg viewBox="${d.vb}" class="boil" aria-hidden="true"><path d="${d.d}" fill="none" stroke="${el.dataset.color}" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -520,9 +412,9 @@ document.querySelectorAll('[data-doodle]').forEach(el=>{
 // boss parade (list twice so the loop is seamless)
 (function(){const row=document.getElementById('parade'), imgs=row.dataset.bosses.split(' ').map(b=>`<img class="sticker" src="img/doodle/boss_${b}.webp" alt="" loading="lazy" height="96">`).join('');row.innerHTML=imgs+imgs})();
 
-/* ---------- 3D logo hero: the Echo V mark in 3D ---------- */
+/* ---------- 3D Echo V stage, inside the taped polaroid (same scene as the live hero) ---------- */
 (function hero(){
-  const heroEl=document.querySelector('.hero'), cv=document.getElementById('scene');
+  const heroEl=document.getElementById('stage3d'), cv=document.getElementById('scene');
   if(!window.THREE||REDUCED){heroEl.classList.add('static');return}
   let renderer;
   try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true})}catch(e){heroEl.classList.add('static');return}
@@ -559,8 +451,8 @@ document.querySelectorAll('[data-doodle]').forEach(el=>{
   const box=new THREE.Box3().setFromObject(logo), c=box.getCenter(new THREE.Vector3());
   logo.children.forEach(ch=>ch.position.sub(c));
   const holder=new THREE.Group(); holder.add(logo); scene.add(holder);
-  const S=mobile?1.05:1.25; holder.scale.set(S,S,S);
-  holder.position.set(mobile?0:6.3, mobile?2.9:0.2, 0);
+  const S=1.35; holder.scale.set(S,S,S);
+  holder.position.set(0, 0, 0);
 
   // floating pills, gems and coins around it
   const cols=[0x2ef0a8,0xffd23f,0xff8a3d,0xff3d9a,0x4fc3ff], floaters=[];
@@ -570,8 +462,8 @@ document.querySelectorAll('[data-doodle]').forEach(el=>{
       [-1,1].forEach(s=>{const e=new THREE.Mesh(new THREE.SphereGeometry(.22,20,14),mm);e.position.x=s*L/2;m.add(e)})}
     else if(kind===1){m=new THREE.Mesh(new THREE.OctahedronGeometry(.32),mat(color,.3))}
     else{m=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.08,28),new THREE.MeshStandardMaterial({color:0xffd23f,metalness:.6,roughness:.25,emissive:0xb07800,emissiveIntensity:.35}));m.rotation.x=Math.PI/2}
-    const ang=Math.random()*Math.PI*2, rad=(mobile?2.6:3.6)+Math.random()*(mobile?2:2.6);
-    m.userData={ang,rad,speed:(.08+Math.random()*.12)*(Math.random()<.5?-1:1),y:(mobile?2.9:0)+(Math.random()-.5)*(mobile?4:6.5),bob:Math.random()*6,spin:(Math.random()-.5)*.03};
+    const ang=Math.random()*Math.PI*2, rad=3.4+Math.random()*2.4;
+    m.userData={ang,rad,speed:(.08+Math.random()*.12)*(Math.random()<.5?-1:1),y:(Math.random()-.5)*6.5,bob:Math.random()*6,spin:(Math.random()-.5)*.03};
     scene.add(m); floaters.push(m);
   }
   const sg=new THREE.BufferGeometry(), sp=[];
@@ -589,7 +481,7 @@ document.querySelectorAll('[data-doodle]').forEach(el=>{
     if(!running)return;
     const t=(now-t0)/1000;
     holder.rotation.y=Math.sin(t*.6)*.45+mx*.6; holder.rotation.x=Math.sin(t*.4)*.12+my*.3;
-    holder.position.y=(mobile?2.9:0.2)+Math.sin(t*1.2)*.15;
+    holder.position.y=Math.sin(t*1.2)*.15;
     // waves light up one after another, like sound leaving the dot
     arcs.forEach(a=>{const p=Math.max(0,Math.sin(t*3-a.i*.9)); a.m.emissiveIntensity=.2+p*.55; const s=1+p*.06; a.g.scale.set(s,s,s)});
     floaters.forEach(f=>{const u=f.userData;u.ang+=u.speed*.016;
@@ -599,6 +491,7 @@ document.querySelectorAll('[data-doodle]').forEach(el=>{
   }
   requestAnimationFrame(loop);
 })();
+
 
 /* ---------- audio: sound effects + background music (all synthesized) ---------- */
 let actx=null, sfxOn=true, master=null, musicGain=null;
@@ -653,6 +546,7 @@ function setMusic(on){on?music.start():music.stop();musicBtn.classList.toggle('o
 // music stays off until the visitor taps the note button
 musicBtn.onclick=e=>{e.stopPropagation();setMusic(!music.on)};
 document.addEventListener('visibilitychange',()=>{if(actx){document.hidden?actx.suspend():actx.resume()}});
+
 
 
 </script>

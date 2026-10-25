@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Scribble Siege – Draw it. It fights. | vespayao.skr</title>
+<meta name="description" content="Scribble Siege is a tower defense game for Solana Seeker where you draw every tower and monster yourself. The better you draw, the stronger it fights.">
+<meta property="og:title" content="Scribble Siege by vespayao.skr">
+<meta property="og:description" content="A tower defense game where every tower and monster is drawn by you. Coming to the Solana dApp Store.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vvv-yao.github.io/scribble-siege/">
+<meta property="og:image" content="https://vvv-yao.github.io/img/og-scribble-siege.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://vvv-yao.github.io/scribble-siege/">
+<link rel="icon" href="../img/favicon.png">
+<link rel="apple-touch-icon" href="../img/vespayao-icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Luckiest+Guy&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"Scribble Siege","alternateName":"鬼畫符塔防","url":"https://scribblesiege.party/","genre":"Tower defense","gamePlatform":["Android","Solana Seeker"],"description":"A tower defense game where every tower and monster is drawn by you.","author":{"@type":"Person","name":"vespayao.skr","url":"https://vvv-yao.github.io/"}}
+</script>
+<style>
+:root{
+  --pen:#2e1690; --violet:#6a3cf0; --grape:#4a22c4; --indigo:#2e1690;
+  --pink:#ff3d9a; --mint:#2ef0a8; --sun:#ffd23f; --orange:#ff8a3d; --sky:#4fc3ff;
+  --muted:#e6deff; --paper:#fffdf6; --rule:#cfe0ff; --margin:#ff9dbb;
+  --display:"Fredoka","Baloo 2",system-ui,sans-serif;
+  --body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --loud:"Luckiest Guy","Fredoka",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--pen);font-family:var(--body);font-size:17px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:2}
+.paper{background-color:var(--paper);background-image:linear-gradient(90deg,transparent 56px,var(--margin) 56px,var(--margin) 58px,transparent 58px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 34px)}
+@media (max-width:760px){.paper{background-image:linear-gradient(90deg,transparent 12px,var(--margin) 12px,var(--margin) 14px,transparent 14px),repeating-linear-gradient(transparent 0 33px,var(--rule) 33px 34px)}}
+
+/* nav (same as the other pages) */
+nav{position:fixed;top:0;left:0;right:0;z-index:30;padding:calc(env(safe-area-inset-top,0px) + 12px) 0 12px;transition:background .3s,box-shadow .3s;color:#fff}
+nav.solid,nav{background:rgba(58,28,170,.9);backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(20,8,70,.25)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-family:var(--display);font-weight:700;font-size:1.3rem;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand img{width:40px;height:40px;border-radius:12px;box-shadow:0 4px 0 rgba(0,0,0,.25)}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+nav ul a{text-decoration:none;font-weight:800;color:var(--muted)}
+nav ul a:hover{color:var(--sun)}
+@media (max-width:760px){nav ul{display:none}}
+
+/* crayon wobble */
+.boil{animation:boil .36s steps(1) infinite}
+@keyframes boil{0%{filter:url(#b1)}33%{filter:url(#b2)}66%{filter:url(#b3)}}
+
+/* buttons: ink outline + thick drop */
+.btns{display:flex;flex-wrap:wrap;gap:14px}
+.btn{font-family:var(--display);font-weight:700;font-size:1.08rem;color:var(--pen);text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  padding:12px 24px;border:4px solid var(--pen);border-radius:18px;box-shadow:0 7px 0 var(--pen);transition:transform .12s,box-shadow .12s;cursor:pointer;background:#fff}
+.btn:hover{transform:translateY(-2px);box-shadow:0 9px 0 var(--pen)}
+.btn:active{transform:translateY(5px);box-shadow:0 2px 0 var(--pen)}
+.btn:focus-visible{outline:3px solid var(--pink);outline-offset:4px}
+.btn.pink{background:var(--pink);color:#fff}
+.btn.mint{background:var(--mint)}
+.btn.sun{background:var(--sun)}
+.btn[aria-pressed="true"]{background:var(--sun)}
+
+/* sticky-note titles */
+h2{margin:0 0 10px}
+.notes{display:flex;flex-wrap:wrap;gap:6px .5em;font-family:var(--loud);font-weight:400;line-height:1;font-size:clamp(1.9rem,4.6vw,3rem)}
+.notes .w{display:inline-flex;flex-wrap:nowrap;gap:6px}
+.notes .n{display:inline-grid;place-items:center;min-width:.95em;height:1.15em;padding:.1em .08em 0;color:var(--pen);position:relative;
+  border:3px solid var(--pen);border-radius:6px 4px 8px 5px;box-shadow:0 5px 0 var(--pen),0 12px 18px rgba(20,8,70,.25);
+  transform:rotate(var(--r,0deg));animation:bob 2s ease-in-out infinite;animation-delay:var(--d,0s)}
+.notes .n::before{content:"";position:absolute;left:28%;top:-.16em;width:44%;height:.22em;background:#ffffffb8;transform:rotate(-5deg)}
+@media (max-width:480px){.notes{font-size:min(1.9rem,5.8vw)}.notes .w{gap:3px}.notes .n{border-width:2px}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-5px) rotate(var(--r,0deg))}}
+.sub{font-size:1.12rem;font-weight:600;max-width:36em;margin:6px 0 34px;color:#4a3a8a}
+.dark .sub{color:var(--muted)}
+section{position:relative;padding:80px 0;overflow:hidden}
+.dark{background:linear-gradient(180deg,#6a3cf0,#4a22c4);color:#fff}
+
+/* stickers */
+.sticker{filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 8px 8px rgba(46,22,144,.28))}
+.walk{animation:walk .5s ease-in-out infinite alternate}
+@keyframes walk{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-6px) rotate(5deg)}}
+.fly{animation:fly 4.6s ease-in-out infinite}
+@keyframes fly{0%,100%{transform:translate(0,0) rotate(-6deg)}25%{transform:translate(10px,-12px) rotate(4deg)}50%{transform:translate(20px,0) rotate(-3deg)}75%{transform:translate(8px,10px) rotate(6deg)}}
+.hop{animation:hop 1.4s ease-in-out infinite}
+@keyframes hop{0%,100%{transform:translateY(0) rotate(-6deg)}40%{transform:translateY(-14px) rotate(6deg)}}
+.flap{animation:flap .5s ease-in-out infinite}
+@keyframes flap{0%,100%{scale:1 1}50%{scale:.84 1.05}}
+.tape{position:absolute;width:96px;height:28px;background:rgba(255,236,150,.8);box-shadow:0 2px 4px rgba(46,22,144,.15);z-index:3}
+
+/* hero */
+.hero{min-height:100svh;display:flex;align-items:center;padding:100px 0 50px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.kicker{display:inline-block;font-weight:800;background:#fff;border:3px solid var(--pen);border-radius:10px;padding:4px 14px;transform:rotate(-2deg);box-shadow:0 4px 0 var(--pen);margin:0 0 18px}
+.kicker i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--sun);border:2px solid var(--pen);margin-right:8px;vertical-align:1px}
+.hero h1{margin:0 0 6px}
+.hero h1 img{width:min(520px,100%);filter:drop-shadow(0 14px 14px rgba(46,22,144,.3))}
+.lead{font-size:1.2rem;font-weight:600;max-width:30em;margin:12px 0 26px}
+.lead mark{background:linear-gradient(transparent 55%,#ffe36b 55%);color:inherit}
+.page-photo{position:relative;justify-self:center;width:min(360px,100%);background:#fff;border:4px solid var(--pen);border-radius:14px;padding:12px;box-shadow:0 10px 0 var(--pen),0 26px 40px rgba(46,22,144,.25);transform:rotate(3deg)}
+.page-photo img{border-radius:8px;border:2px solid var(--pen);aspect-ratio:669/900;object-fit:cover;object-position:50% 100%;width:100%}
+.page-photo .tape{left:50%;top:-14px;margin-left:-48px;transform:rotate(-4deg)}
+.hero .d{position:absolute;z-index:3}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}.page-photo{width:min(260px,70%);order:-1}.hero .d.opt{display:none}}
+
+/* how to play: the game's 8 pages, each with a moving doodle (same art as the in-game screen) */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:40px 22px}
+.step{display:flex;flex-direction:column;align-items:center;text-align:center}
+.ill{position:relative;width:252px;height:272px;border:4px solid var(--pen);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 7px 0 var(--pen);font-family:var(--body)}
+.step .tp{position:absolute;width:70px;height:20px;background:#ffffffcc;border:1px solid #0001;z-index:5}
+.ill-wrap{position:relative}
+.pg{position:absolute;right:10px;bottom:8px;font-family:var(--loud);font-size:13px;color:var(--pen);background:var(--sun);padding:2px 8px 0;border-radius:9px;border:2px solid var(--pen);z-index:6}
+.step h3{font-family:var(--loud);font-weight:400;font-size:1.5rem;line-height:1;margin:22px 0 8px;letter-spacing:.02em;-webkit-text-stroke:1px var(--pen);paint-order:stroke fill;text-shadow:0 3px 0 var(--pen)}
+.step p{margin:0;font-weight:700;font-size:.98rem;max-width:252px}
+.ill svg.dd{overflow:visible}
+.ill .spark{position:absolute;animation:spark 1.6s infinite;z-index:4}
+@keyframes spark{0%{opacity:0;transform:scale(.2)}40%{opacity:1;transform:scale(1.1) rotate(40deg)}100%{opacity:0;transform:scale(.3) rotate(90deg)}}
+@keyframes hbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes draw{0%{stroke-dashoffset:1}55%,100%{stroke-dashoffset:0}}
+@keyframes popin{0%,55%{transform:scale(0);opacity:0}65%{transform:scale(1.25);opacity:1}75%,100%{transform:scale(1)}}
+@keyframes flash{0%,100%{opacity:.2}50%{opacity:1}}
+@keyframes shake{0%,100%{transform:translateX(0) rotate(0)}25%{transform:translateX(-4px) rotate(-3deg)}75%{transform:translateX(4px) rotate(3deg)}}
+@keyframes march{to{transform:translate(var(--dx),var(--dy))}}
+@keyframes ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(1.8);opacity:0}}
+[data-doodle] svg{display:block;width:100%;height:100%;overflow:visible}
+@media (max-width:1100px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.steps{grid-template-columns:1fr}}
+
+/* draw demo */
+.draw-grid{display:grid;grid-template-columns:1fr 400px;gap:44px;align-items:center}
+.pick{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 18px}
+.pick .btn{padding:8px 16px;font-size:1rem;box-shadow:0 5px 0 var(--pen)}
+.sheet{position:relative;aspect-ratio:1;border:5px solid #fff;border-radius:26px;overflow:hidden;box-shadow:0 12px 0 #2e1690,0 34px 60px rgba(20,6,70,.5);touch-action:none}
+.sheet .ghost{position:absolute;inset:14%;opacity:.16;pointer-events:none}
+.sheet .ghost.off{opacity:0}
+#pad{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair}
+.timer{position:absolute;left:12px;top:12px;z-index:2;font-family:var(--loud);font-size:1.2rem;background:var(--sun);border:3px solid var(--pen);border-radius:10px;padding:4px 10px 1px;box-shadow:0 4px 0 var(--pen)}
+.hint{position:absolute;left:0;right:0;bottom:14px;text-align:center;font-weight:800;color:#7a6cb8;pointer-events:none}
+.verdict{position:absolute;inset:0;display:none;place-items:center;text-align:center;z-index:3;pointer-events:none}
+.verdict.show{display:grid}
+.grade{font-family:var(--loud);font-size:5.4rem;line-height:1;padding:16px 24px 6px;border:5px solid var(--pen);border-radius:20px;box-shadow:0 9px 0 var(--pen);transform:rotate(-6deg);animation:stamp .35s cubic-bezier(.2,.9,.3,1.5)}
+.grade small{display:block;font-family:var(--body);font-weight:800;font-size:1rem}
+@keyframes stamp{from{transform:scale(2.2) rotate(-20deg);opacity:0}}
+#status{font-weight:800;color:var(--sun);min-height:3.2em;margin:16px 0 0}
+.note{color:var(--muted);font-size:.95rem}
+.wobble{animation:boil .36s steps(1) infinite}
+@media (max-width:880px){.draw-grid{grid-template-columns:1fr}.sheet{max-width:400px;width:100%;margin:0 auto}}
+
+/* ink colors */
+.inks{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.ink{background:#fff;border:3px solid var(--pen);border-radius:20px;padding:18px 14px;text-align:center;box-shadow:0 7px 0 var(--pen);transition:transform .2s}
+.ink:hover{transform:translateY(-6px) rotate(-2deg)}
+.ink svg{width:72px;height:72px;margin:0 auto 6px;display:block}
+.ink b{display:block;font-family:var(--display);font-size:1.15rem;line-height:1.2}
+.ink span{font-size:.92rem}
+@media (max-width:860px){.inks{grid-template-columns:repeat(2,1fr)}.ink:last-child{grid-column:span 2}}
+
+/* monsters */
+.mobs{display:grid;grid-template-columns:repeat(7,1fr);gap:16px}
+.mobs figure{min-width:0;overflow:hidden;margin:0;background:#fff;border:3px solid var(--pen);border-radius:16px;padding:10px;box-shadow:0 5px 0 var(--pen);display:grid;place-items:center;aspect-ratio:1}
+.mobs img{width:100%;height:100%;object-fit:contain;transition:transform .25s}
+.mobs figure:hover img{transform:scale(1.15) rotate(-8deg)}
+@media (max-width:860px){.mobs{grid-template-columns:repeat(4,1fr)}}
+.parade{position:relative;background:var(--paper);border-top:4px solid var(--pen);border-bottom:4px solid var(--pen);padding:58px 0 18px;overflow:hidden;margin-top:44px}
+.parade .row{display:flex;gap:30px;width:max-content;animation:scroll 60s linear infinite}
+.parade img{height:96px;width:auto}
+.parade .row img:nth-child(odd){animation:walk .5s ease-in-out infinite alternate}
+.parade-label{position:absolute;left:16px;top:12px;z-index:3;font-family:var(--loud);background:var(--sun);border:3px solid var(--pen);border-radius:10px;padding:6px 12px 3px;box-shadow:0 4px 0 var(--pen);transform:rotate(-3deg)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* battlefields */
+.maps{display:grid;grid-template-columns:1fr 1fr;gap:34px;max-width:820px;margin:0 auto}
+.map{position:relative;background:#fff;border:4px solid var(--pen);border-radius:14px;padding:12px 12px 48px;box-shadow:0 10px 0 var(--pen)}
+.map:nth-child(1){transform:rotate(-2deg)}.map:nth-child(2){transform:rotate(1.5deg)}
+.map img{border-radius:8px;border:2px solid var(--pen);aspect-ratio:3/4;object-fit:cover;width:100%}
+.map figcaption{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-family:var(--loud);font-size:1.3rem}
+.map .tape{left:50%;top:-14px;margin-left:-48px;transform:rotate(3deg)}
+@media (max-width:560px){.maps{gap:22px}.map{padding:8px 8px 40px}.map figcaption{font-size:1rem}}
+
+/* modes */
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.mode{border:3px solid #fff;border-radius:22px;padding:20px;background:linear-gradient(160deg,rgba(255,255,255,.2),rgba(255,255,255,.07));box-shadow:0 8px 0 rgba(0,0,0,.2)}
+.mode h3{font-family:var(--loud);font-weight:400;font-size:1.4rem;margin:0 0 4px;letter-spacing:.02em}
+.mode p{margin:0;color:var(--muted)}
+.planned{display:inline-block;font-weight:800;font-size:.85rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:999px;background:#ffe88a;color:#5a3a00;margin:0 0 18px}
+@media (max-width:860px){.modes{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.modes{grid-template-columns:1fr}}
+
+/* seeker + cta */
+.cta{text-align:center}
+.cta .sub{margin-left:auto;margin-right:auto}
+.cta .btns,.cta .notes{justify-content:center}
+footer{background:#1e0e6a;padding:44px 0 calc(env(safe-area-inset-bottom,0px) + 40px);color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px}
+footer a{color:#fff;font-weight:800;margin-right:18px;white-space:nowrap;text-underline-offset:3px;text-decoration-color:var(--pink)}
+
+.rise{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s cubic-bezier(.2,.9,.3,1.2)}
+.rise.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .ill *,.boil,.wobble,.notes .n,.walk,.fly,.hop,.flap,.parade .row,.parade .row img,.grade{animation:none!important}
+  .rise{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../img/vespayao-icon-512.png" alt="">vespayao.skr</a>
+    <ul>
+      <li><a href="#game">How to play</a></li>
+      <li><a href="#draw">Try it</a></li>
+      <li><a href="#ink">Ink</a></li>
+      <li><a href="#monsters">Monsters</a></li>
+      <li><a href="../">Developer</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero paper" id="top">
+  <img class="d sticker fly" src="../img/doodle/mob_dragon.webp" alt="" width="110" style="left:41%;top:16%;width:100px">
+  <img class="d sticker flap opt" src="../img/doodle/mob_bat.webp" alt="" width="100" style="right:4%;top:14%;width:100px">
+  <img class="d sticker hop" src="../img/doodle/mob_skull.webp" alt="" width="70" style="left:44%;bottom:4%;width:70px">
+  <img class="d sticker walk opt" src="../img/doodle/mob_snail.webp" alt="" width="90" style="right:6%;bottom:6%;width:90px">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker"><i></i>In development · Coming to the Solana dApp Store</p>
+      <h1><img src="../img/scribble-siege-logo.webp" alt="Scribble Siege" width="640" height="439"></h1>
+      <p class="lead">A tower defense game where every tower and monster is drawn by you. <mark>The better you draw, the stronger it fights.</mark> The uglier it is, the funnier it gets.</p>
+      <div class="btns">
+        <a class="btn pink" href="#draw">Try drawing one</a>
+        <a class="btn sun" href="https://scribblesiege.party">scribblesiege.party</a>
+      </div>
+    </div>
+    <figure class="page-photo" style="margin:0">
+      <span class="tape"></span>
+      <img src="../img/scribble-siege-notebook.jpg" alt="A doodled castle on notebook paper, the Scribble Siege title screen" width="669" height="1200">
+    </figure>
+  </div>
+</header>
+
+<section id="game" class="paper" style="padding-top:40px">
+  <div class="wrap">
+    <h2><span class="notes" data-notes="HOW TO PLAY">How to play</span></h2>
+    <p class="sub">Monsters come from every side. Draw your army, hold the castle, and save up for an ultimate.</p>
+    <ol class="steps" id="steps"></ol>
+  </div>
+</section>
+
+<section id="draw" class="dark">
+  <div class="wrap draw-grid">
+    <div>
+      <h2><span class="notes" data-notes="TRY IT HERE">Try it here</span></h2>
+      <p class="sub">Pick a tower and draw it on the page. You have ten seconds from your first stroke. Then see what grade it gets.</p>
+      <div class="pick" role="group" aria-label="What to draw">
+        <button class="btn" data-kind="cannon" aria-pressed="true">Cannon</button>
+        <button class="btn" data-kind="sword" aria-pressed="false">Sword</button>
+        <button class="btn" data-kind="snowman" aria-pressed="false">Snowman</button>
+        <button class="btn" data-kind="castle" aria-pressed="false">Castle</button>
+      </div>
+      <div class="btns">
+        <button class="btn pink" id="judgeBtn">Judge my drawing</button>
+        <button class="btn mint" id="clearBtn">Draw again</button>
+        <button class="btn" id="ghostBtn" aria-pressed="true">Show guide</button>
+      </div>
+      <p id="status" aria-live="polite"></p>
+      <p class="note">A tiny web version of the drawing judge, using stroke matching. The game itself uses an on-device model, and the score here doesn't count anywhere.</p>
+    </div>
+    <div class="sheet paper" id="sheet">
+      <div class="ghost" id="ghost" aria-hidden="true"></div>
+      <canvas id="pad" aria-label="Drawing area"></canvas>
+      <span class="timer" id="timer">10.0</span>
+      <span class="hint" id="hint">Draw here with your finger or mouse</span>
+      <div class="verdict" id="verdict"></div>
+    </div>
+  </div>
+</section>
+
+<section id="ink" class="paper">
+  <div class="wrap">
+    <h2><span class="notes" data-notes="INK = ELEMENT">Ink = element</span></h2>
+    <p class="sub">Your ink color is your element. Every element also has its own shape, so you can tell them apart without relying on color.</p>
+    <div class="inks">
+      <div class="ink rise"><svg viewBox="0 0 72 72" class="boil" aria-hidden="true"><path d="M36 8c4 14 18 18 18 34a18 18 0 0 1-36 0c0-10 6-14 8-22 4 6 4 10 8 12 2-8 0-16 2-24z" fill="#ff5a4a" stroke="#2e1690" stroke-width="3.5" stroke-linejoin="round"/></svg><b>Red</b><span>Fire burns</span></div>
+      <div class="ink rise"><svg viewBox="0 0 72 72" class="boil" aria-hidden="true"><g stroke="#2e9bff" stroke-width="7" stroke-linecap="round"><path d="M36 8v56M12 22l48 28M12 50l48-28"/></g><g stroke="#2e1690" stroke-width="2.5" stroke-linecap="round" fill="none"><path d="M36 8v56M12 22l48 28M12 50l48-28"/></g></svg><b>Blue</b><span>Ice slows and freezes</span></div>
+      <div class="ink rise"><svg viewBox="0 0 72 72" class="boil" aria-hidden="true"><path d="M42 6L16 40h16l-6 26 30-36H38z" fill="#ffd23f" stroke="#2e1690" stroke-width="3.5" stroke-linejoin="round"/></svg><b>Yellow</b><span>Lightning chains</span></div>
+      <div class="ink rise"><svg viewBox="0 0 72 72" class="boil" aria-hidden="true"><path d="M36 8C28 24 16 34 16 46a20 20 0 0 0 40 0c0-12-12-22-20-38z" fill="#4cd964" stroke="#2e1690" stroke-width="3.5" stroke-linejoin="round"/><circle cx="29" cy="46" r="4" fill="#fff"/></svg><b>Green</b><span>Poison spreads</span></div>
+      <div class="ink rise"><svg viewBox="0 0 72 72" class="boil" aria-hidden="true"><circle cx="36" cy="38" r="24" fill="#3a3550" stroke="#2e1690" stroke-width="3.5"/><circle cx="28" cy="30" r="5" fill="#fff" opacity=".5"/></svg><b>Black</b><span>Plain ink, plain power</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="monsters" class="paper" style="padding-top:20px">
+  <div class="wrap">
+    <h2><span class="notes" data-notes="MEET THE MONSTERS">Meet the monsters</span></h2>
+    <p class="sub">Every monster and boss is a crayon doodle, and they come from every side.</p>
+    <div class="mobs" id="mobs" data-mobs="skull snake dragon angel spider elephant octopus bat ant snail bee mosquito rhino ufo"></div>
+  </div>
+  <div class="parade" aria-label="Scribble Siege bosses">
+    <span class="parade-label">21 BOSSES</span>
+    <div class="row" id="parade" data-bosses="ant_emperor bat_count beast_king crab_general croc_tyrant dragon_queen frog_king ice_bear kraken mammoth mothership owl_witch queen_bee rhino_warlord scorpion_king sea_witch serpent_king shark_lord spider_queen tiger_general boss"></div>
+  </div>
+</section>
+
+<section id="maps" class="paper" style="padding-top:20px">
+  <div class="wrap">
+    <h2><span class="notes" data-notes="BATTLEFIELDS">Battlefields</span></h2>
+    <p class="sub">Your castle sits in the middle of a hand-drawn map. Hold it from every direction.</p>
+    <div class="maps">
+      <figure class="map rise"><span class="tape"></span><img src="../img/scribble-siege-meadow.jpg" alt="Doodled meadow battlefield with a castle in the middle" width="503" height="900" loading="lazy"><figcaption>Meadow</figcaption></figure>
+      <figure class="map rise"><span class="tape"></span><img src="../img/scribble-siege-snow.jpg" alt="Doodled snow battlefield with a castle in the middle" width="503" height="900" loading="lazy"><figcaption>Snow</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="modes" class="dark">
+  <div class="wrap">
+    <h2><span class="notes" data-notes="LOTS TO PLAY">Lots to play</span></h2>
+    <p class="planned">Planned modes · some arrive after launch</p>
+    <div class="modes">
+      <div class="mode rise"><h3>Campaign</h3><p>Themed worlds, each with its own twist, mini-bosses and bosses.</p></div>
+      <div class="mode rise"><h3>Hero &amp; Iron</h3><p>Replay every level with special rules.</p></div>
+      <div class="mode rise"><h3>Expedition</h3><p>A roguelite run with a new blessing to pick after every wave.</p></div>
+      <div class="mode rise"><h3>Daily &amp; weekly</h3><p>New themes and leaderboards.</p></div>
+      <div class="mode rise"><h3>Siege battles</h3><p>Attack other players' castles and defend your own.</p></div>
+      <div class="mode rise"><h3>Gallery</h3><p>Every match ends with a gallery of what you drew. Share the best and the worst.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="seeker" class="paper cta">
+  <div class="wrap">
+    <h2><span class="notes" data-notes="MADE FOR SEEKER">Made for Seeker</span></h2>
+    <p class="sub">Sign in with your Seeker wallet to keep your progress, climb the leaderboards and unlock Seeker-holder rewards. Shop items are cosmetic only.</p>
+    <div class="btns">
+      <a class="btn pink" href="https://scribblesiege.party">Follow the build</a>
+      <a class="btn mint" href="mailto:support@scribblesiege.party">support@scribblesiege.party</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <a href="https://scribblesiege.party">scribblesiege.party</a>
+      <a href="https://scribblesiege.party/privacy">Privacy</a>
+      <a href="https://scribblesiege.party/terms">Terms</a>
+      <a href="../squawk-rush/">Squawk Rush</a>
+    </div>
+    <div>© 2026 vespayao.skr</div>
+  </div>
+</footer>
+
+<script>
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rise').forEach(el=>io.observe(el));
+
+// crayon wobble filters
+document.body.insertAdjacentHTML('afterbegin','<svg width="0" height="0" style="position:absolute" aria-hidden="true">'+[1,7,13].map((s,i)=>`<filter id="b${i+1}"><feTurbulence baseFrequency="0.03" numOctaves="2" seed="${s}"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>`).join('')+'</svg>');
+
+// sticky-note titles: one note per letter, lines only break between words
+document.querySelectorAll('[data-notes]').forEach((el,k)=>{
+  const NOTE=['#ff7dbb','#ffd23f','#5ef7c2','#b9a2ff','#8fd8ff']; let i=0;
+  el.closest('h2').setAttribute('aria-label',el.textContent);
+  el.innerHTML=el.dataset.notes.split(' ').map(w=>'<span class="w" aria-hidden="true">'+[...w].map(ch=>{
+    const r=((i*37+k*11)%13)-6, s=`background:${NOTE[(i+k)%NOTE.length]};--r:${r}deg;--d:${(i*.12).toFixed(2)}s`; i++;
+    return `<span class="n" style="${s}">${ch}</span>`}).join('')+'</span>').join('');
+});
+
+// reference strokes from Scribble Siege (0-100 coordinates)
+const DOODLES={"cannon": {"d": "M1,24 L6,28 L23,40 L47,53 L65,61 M0,20 L3,20 L9,18 L11,16 L13,13 L12,6 L10,1 L9,0 L8,0 L5,2 L2,5 L0,15 L1,18 M11,2 L13,2 L26,8 L49,23 L55,25 L83,35 L88,38 L93,41 L96,45 L98,48 L100,53 L100,55 L98,59 L96,63 L91,67 L80,70 L73,70 L69,70 L63,68 L59,66 L55,63 L52,59 L52,56 L54,53 L60,49 L66,46 L73,45 L77,45 L79,46 L82,50 L82,54 L83,59 L81,65 L77,72 L69,81 L59,87 L55,88 L54,87 L51,85 L47,79 L45,71 L44,66 L45,63 L48,58 L55,51 L62,47 L70,45 M74,44 L62,72 L56,84 M61,58 L65,67 L67,76 M50,75 L54,74 L62,69 L77,60", "vb": "-6 -6 112 100"}, "sword": {"d": "M43,87 L48,100 L55,95 L60,92 L50,81 L47,77 L42,66 M29,69 L36,68 L55,60 L51,51 L49,51 L38,57 L24,61 L29,67 L31,70 M41,54 L29,27 L21,15 L18,12 L12,9 L9,7 L0,0 L0,1 L1,9 L1,19 L6,25 L33,63 M5,4 L11,20 L20,37 L26,48 L35,62", "vb": "-6 -6 72 112"}, "snowman": {"d": "M22,12 L22,27 L23,29 L27,31 L33,31 L39,27 L44,21 L47,15 L47,7 L43,3 L36,0 L26,0 M29,36 L18,37 L11,42 L10,53 L10,56 L12,59 L20,62 L36,62 L46,59 L51,54 L53,39 L48,33 L35,29 L26,29 L22,30 M28,63 L19,62 L11,65 L6,69 L1,76 L0,90 L6,97 L13,99 L25,100 L35,100 L43,96 L48,92 L54,77 L54,65 L49,60 L44,58 L32,57 M56,47 L69,36 L85,25", "vb": "-6 -6 97 112"}, "castle": {"d": "M0,94 L0,91 L1,65 L1,59 L2,58 L5,57 L9,57 L10,61 L12,61 L16,60 L17,59 L17,54 L21,54 L24,53 L25,53 L25,54 L25,58 L26,59 L32,59 L37,57 L38,54 L39,51 L39,41 L41,23 M54,24 L55,28 L55,35 L53,48 L53,52 L53,52 L61,55 L64,55 L67,46 L68,47 L71,46 L71,46 L72,48 L72,53 L72,55 L73,55 L79,55 L80,53 L80,51 L83,47 L88,48 L89,51 L89,54 L87,68 L85,74 L84,80 L84,88 L85,92 L87,96 L86,93 L86,93 M60,21 L54,21 L40,23 L30,23 L28,24 L31,20 L32,17 L40,10 L44,4 L46,2 L48,0 L49,1 L51,4 L53,11 L56,18 L56,21 L58,23 L57,22 M37,98 L36,98 L36,95 L38,85 L39,76 L41,72 L42,71 L43,71 L46,73 L48,77 L51,80 L52,89 L52,100", "vb": "-6 -6 101 112"}, "dragon": {"d": "M38,8 L39,7 L41,5 L43,3 L48,1 L54,0 L60,0 L62,1 L68,3 L71,6 L71,7 L71,9 L70,10 L68,11 L55,10 L51,11 L49,11 L47,12 L45,16 M38,9 L37,12 L38,19 L37,22 L36,26 L34,27 L34,27 L31,27 L30,26 L26,24 L12,12 L10,11 L8,11 L8,12 L10,13 L24,30 L26,33 L26,34 L23,36 L4,43 L0,45 L0,45 L3,46 L7,46 L19,45 L22,44 L27,43 L32,40 L34,38 L38,33 L44,18 L46,13 M39,26 L46,24 L57,22 L59,22 L59,22 L57,24 L53,25 L44,29 L36,32 L35,32 L34,33 M23,43 L22,46 L21,51 L21,51 L15,52 L16,52 L22,52 L22,52 L23,54 M67,7 L72,7 L87,4 L92,4 L92,5 L86,8 L84,10 L88,10 L100,9 L89,12 L88,14 L87,14 L88,15 L94,17 L96,19 L97,20 L96,21 L95,21 L93,22 L85,21 L86,20 L86,20 L81,17 L72,10 L67,7 M61,3 L60,3 L61,3 L61,3 L62,3 L62,3 L61,3 L61,3 L61,3 L60,3", "vb": "-6 -6 112 66"}, "lion": {"d": "M8,27 L1,25 L14,39 L16,43 L9,40 L8,40 L6,41 L6,48 L4,55 L13,55 L13,56 L3,69 L1,74 L0,77 L2,77 L11,74 L14,74 L15,75 L16,77 L16,82 L14,90 L14,92 L15,93 L19,93 L28,90 L34,90 L36,92 L39,97 L41,99 L42,100 L44,100 L47,98 L51,93 L57,84 L59,82 L62,81 L68,82 L70,82 L80,71 L82,68 L80,68 L77,68 L72,70 L74,70 L78,68 L82,64 L87,55 L95,39 L95,37 L93,34 L86,33 L80,33 L72,34 L71,32 L71,27 L76,15 L77,11 L77,8 L75,7 L72,7 L57,10 L51,10 L48,8 L47,7 L45,5 L43,0 L42,0 L31,8 L26,10 L18,13 L16,13 L15,13 L12,25 M47,48 L41,41 L37,40 L32,40 L28,42 L25,45 L22,48 L21,52 L20,59 L22,63 L27,68 L29,69 L34,70 L44,71 L51,68 L54,66 L56,64 L58,58 L58,54 L57,50 L55,46 L51,43 L46,42 L41,42 L38,43 M38,57 L33,55 L31,57 L34,60 L37,62 L40,62 L41,61 L42,59 L41,58 L35,56", "vb": "-6 -6 107 112"}, "angel": {"d": "M51,16 L50,17 L48,25 L51,30 L53,32 L57,32 L60,28 L66,24 L67,19 L67,15 L66,14 L64,13 L56,16 M53,32 L37,55 L35,60 L30,69 L26,79 L20,85 L15,88 L10,94 L0,100 M64,26 L66,38 L68,59 L70,67 L71,69 L73,70 L72,71 L67,74 L62,75 L57,75 L39,74 L35,73 L31,71 M50,35 L39,28 L30,21 L26,20 L25,20 L22,25 L20,30 L24,33 L28,33 L28,34 L22,38 L20,41 L19,45 L19,46 L21,46 L24,46 L23,56 L24,57 L27,56 L36,50 L49,44 M65,32 L74,20 L82,17 L83,16 L83,18 L82,25 L79,30 L85,26 L91,24 L93,24 L96,24 L96,26 L96,27 L92,30 L93,35 L93,36 L91,39 L84,44 L75,49 L70,51 L69,52 M60,0 L53,1 L51,4 L47,10 L47,11 L48,12 L49,12 L51,12 L61,7 L64,5 L62,3 L59,2", "vb": "-6 -6 108 112"}};
+
+// how to play: the same 8 pages and pictures as the game's How to play screen
+(function(){
+  const D='../img/doodle/', MAP='../img/scribble-siege-meadow.jpg';
+  const ILL=[
+`<div style="position:absolute;inset:0;background:#fffdf3 repeating-linear-gradient(#fffdf3 0 22px,#d6ecf5 22px 23px)"></div>
+ <svg class="dd draw" data-d="cannon" data-c="#ff3d9a" style="position:absolute;left:46px;top:40px;width:170px;height:170px"></svg>
+ <div style="position:absolute;left:150px;top:140px;font-size:40px;animation:hbob 1s infinite">✏️</div>
+ <div style="position:absolute;left:12px;top:12px;font-family:var(--loud);font-size:16px;color:#ff3d9a;background:#fff;border:3px solid #2e1690;border-radius:12px;padding:2px 10px 0">10s</div>
+ <div style="position:absolute;right:16px;top:100px;font-family:var(--loud);font-size:28px;color:#ffd23f;-webkit-text-stroke:1.5px #2e1690;animation:popin 3s infinite">POP!</div>`,
+`<div style="position:absolute;inset:0;background:#fff8e7"></div>
+ <div style="position:absolute;left:10px;top:26px;width:110px;text-align:center">
+   <div style="position:relative;height:130px"><div style="position:absolute;inset:6px;border-radius:50%;background:#ffd23f55;animation:flash 1.4s infinite"></div>
+   <svg class="dd" data-d="sword" data-c="#2e1690" style="position:absolute;left:10px;top:10px;width:90px;height:110px;animation:hbob 1.6s infinite"></svg></div>
+   <div style="font-family:var(--loud);font-size:44px;line-height:1.1;color:#ffd23f;-webkit-text-stroke:2px #2e1690;text-shadow:0 4px 0 #2e1690">S</div>
+   <div style="font-weight:900;color:#2e1690;font-size:13px">Power ×3.0</div></div>
+ <div style="position:absolute;left:112px;top:100px;font-family:var(--loud);font-size:22px;color:#2e1690">VS</div>
+ <div style="position:absolute;right:10px;top:26px;width:110px;text-align:center">
+   <div style="position:relative;height:130px"><svg class="dd" data-d="sword" data-c="#8a7fb0" style="position:absolute;left:20px;top:24px;width:70px;height:86px;animation:shake .4s infinite"></svg></div>
+   <div style="font-family:var(--loud);font-size:44px;line-height:1.1;color:#cfc8e2;-webkit-text-stroke:2px #2e1690;text-shadow:0 4px 0 #2e1690">C</div>
+   <div style="font-weight:900;color:#2e1690;font-size:13px">Power ×1.0</div></div>
+ <div class="spark" style="left:30px;top:20px;color:#ffd23f;font-size:20px">✦</div><div class="spark" style="left:100px;top:110px;color:#ff3d9a;font-size:16px;animation-delay:.7s">✦</div>`,
+`<div style="position:absolute;inset:0;background:url(${MAP}) 50% 48%/180%"></div>
+ <div style="position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px;border-radius:50%;border:5px dashed #2ef0a8;animation:flash 1.6s infinite"></div>
+ <img src="${D}mob_skull.webp" alt="" style="position:absolute;left:4px;top:110px;width:44px;--dx:40px;--dy:0;animation:march 1.8s ease-in-out infinite alternate">
+ <img src="${D}mob_bat.webp" alt="" style="position:absolute;right:2px;top:104px;width:52px;--dx:-40px;--dy:0;animation:march 1.5s ease-in-out infinite alternate">
+ <img src="${D}mob_spider.webp" alt="" style="position:absolute;left:104px;top:2px;width:44px;--dx:0;--dy:34px;animation:march 1.9s ease-in-out infinite alternate">
+ <img src="${D}mob_snake.webp" alt="" style="position:absolute;left:102px;bottom:2px;width:48px;--dx:0;--dy:-32px;animation:march 1.6s ease-in-out infinite alternate">
+ <div style="position:absolute;left:54px;top:122px;color:#ff2e4a;font-size:22px;animation:flash .8s infinite">▶</div>
+ <div style="position:absolute;right:54px;top:118px;color:#ff2e4a;font-size:22px;animation:flash .8s .4s infinite">◀</div>`,
+`<div style="position:absolute;inset:0;background:url(${MAP}) 22% 30%/230%"></div>
+ <div style="position:absolute;right:10px;top:12px;background:#fffdf3;border:3px solid #2e1690;border-radius:14px;padding:2px 10px 0;font-family:var(--loud);font-size:20px;color:#2e1690;z-index:3">💧 <span id="inkN">15</span></div>
+ <img src="${D}mob_skull.webp" alt="" style="position:absolute;left:28px;top:120px;width:70px;animation:shake .5s infinite">
+ <div style="position:absolute;left:20px;top:94px;font-family:var(--loud);font-size:24px;color:#ff3d9a;-webkit-text-stroke:1.2px #2e1690;animation:flash 1.8s infinite">POOF!</div>
+ <div id="drop" style="position:absolute;left:62px;top:130px;font-size:26px;z-index:4">💧</div>
+ <div style="position:absolute;left:170px;top:160px;width:66px;height:66px;border-radius:50%;border:4px solid #ffd23f;animation:ring 1.3s infinite"></div>
+ <div style="position:absolute;left:180px;top:166px;font-size:44px;animation:hbob 1.3s infinite">🧴</div>
+ <div style="position:absolute;left:214px;top:212px;font-size:28px;animation:hbob .8s infinite">👆</div>`,
+`<div style="position:absolute;inset:0;background:#fff8e7"></div>
+ <div style="position:absolute;inset:0;display:flex;justify-content:space-around;align-items:flex-end;padding:0 4px 40px">
+  ${[["dragon","#e8432e","DRAGONKIN","🔥"],["lion","#c98a00","BEASTFOLK","💥"],["angel","#2f80ed","DIVINE","✨"]].map(([d,c,e,fx],i)=>`
+  <div style="text-align:center;width:31%"><div style="position:relative;height:150px">
+   <svg class="dd" data-d="${d}" data-c="${c}" style="position:absolute;left:2px;top:40px;width:72px;height:80px;animation:hbob ${1.6+i*.3}s infinite"></svg>
+   <div style="position:absolute;left:26px;top:6px;font-size:26px;animation:flash .7s ${i*.2}s infinite">${fx}</div></div>
+   <div style="font-family:var(--loud);font-size:11px;color:#fff;background:${c};border:3px solid #2e1690;border-radius:10px;padding:5px 2px 2px;box-shadow:0 3px 0 #2e1690">${e}</div></div>`).join("")}
+ </div>`,
+`<div style="position:absolute;inset:0;background:#ffe3e8"></div>
+ <div style="position:absolute;inset:0;border:8px solid #ff2e4a;animation:flash .6s infinite"></div>
+ <svg viewBox="0 0 100 100" style="position:absolute;left:56px;top:46px;width:140px;height:140px;animation:shake .35s infinite"><path d="M20 60 C30 10 70 90 80 30 S 40 20 30 80 S 85 75 60 20 M25 30 L75 70" fill="none" stroke="#2e1690" stroke-width="4" stroke-linecap="round"/></svg>
+ <div style="position:absolute;top:16px;width:100%;text-align:center;font-family:var(--loud);font-size:28px;color:#fff;-webkit-text-stroke:1.5px #2e1690;text-shadow:0 4px 0 #c8102e">SCRIBBLE!</div>
+ <div style="position:absolute;left:18px;bottom:22px;font-family:var(--loud);font-size:22px;color:#c8102e;animation:hbob .8s infinite">-8 🏰</div>
+ <div style="position:absolute;right:14px;bottom:42px;font-size:13px;font-weight:900;color:#2e1690;background:#fff;border:3px solid #2e1690;border-radius:10px;padding:4px 8px">50% ink back</div>`,
+`<div style="position:absolute;inset:0;background:#2e1690"></div>
+ <div id="ultFx" style="position:absolute;inset:0;transition:background .2s"></div>
+ <svg viewBox="0 0 100 100" style="position:absolute;left:46px;top:40px;width:160px;height:160px"><path id="ultPath" pathLength="1" d="" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" style="stroke-dasharray:1;animation:draw 1.6s infinite"/></svg>
+ <div id="ultName" style="position:absolute;bottom:16px;width:100%;text-align:center;font-family:var(--loud);font-size:24px;color:#ffd23f;-webkit-text-stroke:1.2px #2e1690">THUNDER!</div>
+ <div style="position:absolute;top:12px;left:12px;font-weight:900;font-size:12px;color:#fff">Energy full: draw a symbol!</div>`,
+`<div style="position:absolute;inset:0;background:#fff8e7"></div>
+ <div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:space-around;padding:0 6px 34px">
+ ${[1,2,3,4,5].map(l=>`<div style="text-align:center;width:19%">
+   <div style="position:relative;height:${60+l*24}px">
+    ${l>=2?`<div style="position:absolute;left:50%;bottom:6px;width:${30+l*6}px;height:${30+l*6}px;margin-left:-${15+l*3}px;border-radius:50%;background:#ff6a1a${l>=4?"66":"33"}"></div>`:""}
+    ${l>=5?`<div style="position:absolute;top:-8px;width:100%;font-size:18px;animation:hbob 1.2s infinite">👑</div>`:""}
+    <svg class="dd" data-d="cannon" data-c="${l>=5?"#c98a00":"#e8432e"}" style="position:absolute;left:0;right:0;bottom:4px;margin:auto;width:${28+l*5}px;height:${28+l*5}px;${l>=5?"animation:hbob 1.4s infinite":""}"></svg>
+    ${l>=4?`<div style="position:absolute;right:0;top:20%;font-size:14px;animation:flash .6s infinite">🔥</div>`:""}
+   </div>
+   <div style="font-family:var(--loud);font-size:14px;color:#2e1690">LV${l}</div><div style="color:#ffb300;font-size:10px">${"★".repeat(l-1)||"·"}</div></div>`).join("")}
+ </div>`];
+  // English text from the game's strings.xml (howto_1 … howto_8)
+  const PAGES=[
+    ["DRAW YOUR WEAPON","Tap empty ground, pick what to draw, and sketch it in 10 seconds. Your drawing appears on the battlefield and fights for you."],
+    ["THE CLOSER, THE STRONGER","An on-device model judges your drawing from S to C. An S drawing hits about 3 times harder than a C."],
+    ["HOLD THE CASTLE","Monsters come from every side. Red arrows show where the next wave will come from. Don't let them reach the castle!"],
+    ["INK","Drawing costs ink; stronger things cost more. Defeated monsters drop ink, and you can tap ink bottles to collect them."],
+    ["DRAW ANY CREATURE","Dragonkin, Beastfolk and Divine can be anything you imagine. Whatever the game recognizes decides how it attacks."],
+    ["TOO UGLY?","An ugly “scribble” might attack your own castle or just dance for 3 seconds. You get half its ink back."],
+    ["ULTIMATE","Defeat monsters to fill the energy bar, then draw on the map: lightning strikes, a triangle burns, a circle freezes, a line builds a wall."],
+    ["LEVEL UP","Tap a tower to upgrade it up to Lv5. It grows new parts, changes with its element and turns golden at Lv5."]];
+  const COLORS=["#ff3d9a","#ffd23f","#2ef0a8","#8f6bff","#ff8a3d","#ff3d9a","#ffd23f","#2ef0a8"];
+  const stepsEl=document.getElementById('steps'); stepsEl.innerHTML=PAGES.map(([t,b],i)=>`<li class="step rise">
+    <div class="ill-wrap"><div class="ill" aria-hidden="true">${ILL[i]}<div class="pg">${i+1}/8</div></div>
+    <span class="tp" style="left:14px;top:-8px;transform:rotate(-8deg)"></span><span class="tp" style="right:14px;top:-8px;transform:rotate(7deg)"></span></div>
+    <h3 style="color:${COLORS[i]}${t.length>18?';font-size:1.2rem':''}">${t}</h3><p>${b}</p></li>`).join('');
+  stepsEl.querySelectorAll('.rise').forEach(el=>io.observe(el));
+  // reference doodles as white-edged stickers; .draw ones draw themselves stroke by stroke
+  document.querySelectorAll('#steps svg.dd').forEach(el=>{
+    const d=DOODLES[el.dataset.d]; el.setAttribute('viewBox',d.vb);
+    const sw=parseFloat(d.vb.split(' ')[2])/16, c=el.dataset.c, anim=el.classList.contains('draw')?' pathLength="1" style="stroke-dasharray:1;animation:draw 3s infinite"':'';
+    el.innerHTML=`<path d="${d.d}"${anim} fill="none" stroke="#fff" stroke-width="${sw*2.2}" stroke-linecap="round" stroke-linejoin="round"/><path d="${d.d}"${anim} fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  });
+  if(REDUCED)return;
+  // page 4: an ink drop bounces into the counter
+  const drop=document.getElementById('drop'), n=document.getElementById('inkN'), t0=performance.now();
+  (function f(now){const k=((now-t0)%1800)/1800; let x,y,s=1;
+    if(k<.3){x=0;y=-Math.sin(k/.3*Math.PI)*40}else{const t=Math.min(1,(k-.3)/.5),e=t*t;x=164*e;y=-118*e;s=1-.5*t}
+    drop.style.transform=`translate(${x}px,${y}px) scale(${s})`; drop.style.opacity=k>.8?0:1;
+    n.textContent=15+(Math.floor((now-t0)/1800)%5)*2+(k>.8?2:0); requestAnimationFrame(f)})(t0);
+  // page 7: the four ultimate symbols take turns
+  const P=[["M60 10 L35 50 L58 50 L38 92","THUNDER!","#ffe34a55"],["M50 12 L88 85 L12 85 Z","FIRESTORM!","#ff4d1f66"],["M50 15 A35 35 0 1 1 49.9 15","FREEZE!","#8fe3ff66"],["M12 50 L88 50","INK WALL!","#ffffff33"]];
+  let i=0; const up=document.getElementById('ultPath'), nm=document.getElementById('ultName'), fx=document.getElementById('ultFx');
+  const next=()=>{const [d,name,col]=P[i++%4]; up.setAttribute('d',d); nm.textContent=name; fx.style.background='transparent'; setTimeout(()=>fx.style.background=col,1000)};
+  next(); setInterval(next,1600);
+})();
+const svgOf=(d,color,w=5.5,cls='boil')=>`<svg viewBox="${d.vb}" class="${cls}" aria-hidden="true"><path d="${d.d}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+document.querySelectorAll('[data-doodle]').forEach(el=>{
+  el.innerHTML=svgOf(DOODLES[el.dataset.doodle],el.dataset.color);
+  if(REDUCED)return;
+  const p=el.querySelector('path'), len=p.getTotalLength();
+  p.style.strokeDasharray=len; p.style.strokeDashoffset=len;
+  const draw=()=>{p.style.transition='none';p.style.strokeDashoffset=len;p.getBoundingClientRect();p.style.transition='stroke-dashoffset 2.4s ease-in-out';p.style.strokeDashoffset=0};
+  new IntersectionObserver(([e])=>{clearInterval(el._t);if(e.isIntersecting){draw();el._t=setInterval(draw,5200)}}).observe(el);
+});
+
+// monsters grid and boss parade (parade list twice so the loop is seamless)
+(function(){
+  const mobs=document.getElementById('mobs');
+  mobs.innerHTML=mobs.dataset.mobs.split(' ').map((m,i)=>`<figure><img class="sticker ${['walk','hop','fly','flap'][i%4]}" src="../img/doodle/mob_${m}.webp" alt="${m} monster" loading="lazy"></figure>`).join('');
+  const row=document.getElementById('parade'), imgs=row.dataset.bosses.split(' ').map(b=>`<img class="sticker" src="../img/doodle/boss_${b}.webp" alt="" loading="lazy" height="96">`).join('');
+  row.innerHTML=imgs+imgs;
+})();
+
+/* ---------- draw demo: $P point-cloud matching, ported from the game's PointCloud.kt ---------- */
+(function demo(){
+  const N=64, PERFECT=0.005, ZERO=0.13, LIMIT=10000;
+  const GRADES=[[90,'S','#ffd23f','Masterpiece! Full power.'],[75,'A','#5ef7c2','Looking sharp. It even got a bonus trait.'],[55,'B','#8fd8ff','Solid work. It will hold the line.'],[35,'C','#ff9ccc','Close enough... mostly.'],[0,'SCRIBBLE!','#ff7a5a','Uh oh. It might dance around or attack your own castle.']];
+
+  // "M x,y L x,y ..." → strokes of points
+  const parse=d=>d.split('M').filter(Boolean).map(s=>s.trim().split(/\s*L\s*/).map(p=>{const [x,y]=p.split(',').map(Number);return {x,y}}));
+  function normalize(strokes){
+    let raw=[];
+    strokes.forEach((st,s)=>{ if(st.length===1){raw.push({x:st[0].x-.5,y:st[0].y,s},{x:st[0].x+.5,y:st[0].y,s})} else st.forEach(p=>raw.push({x:p.x,y:p.y,s})) });
+    if(raw.length<2)return null;
+    let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+    raw.forEach(p=>{minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y)});
+    const size=Math.max(maxX-minX,maxY-minY); if(size<=0)return null;
+    raw=raw.map(p=>({x:(p.x-minX)/size,y:(p.y-minY)/size,s:p.s}));
+    const pts=resample(raw); if(!pts)return null;
+    let cx=0,cy=0; pts.forEach(p=>{cx+=p.x;cy+=p.y}); cx/=pts.length; cy/=pts.length;
+    return pts.map(p=>({x:p.x-cx,y:p.y-cy}));
+  }
+  const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+  function resample(points){
+    let len=0; for(let i=1;i<points.length;i++) if(points[i].s===points[i-1].s) len+=dist(points[i-1],points[i]);
+    if(len<=0)return null;
+    const I=len/(N-1), out=[points[0]]; let acc=0, prev=points[0], i=1;
+    while(i<points.length){
+      const cur=points[i];
+      if(cur.s!==prev.s){prev=cur;i++;continue}
+      const seg=dist(prev,cur);
+      if(seg>0&&acc+seg>=I){const t=(I-acc)/seg, q={x:prev.x+t*(cur.x-prev.x),y:prev.y+t*(cur.y-prev.y),s:cur.s}; out.push(q); prev=q; acc=0; if(out.length===N)break}
+      else{acc+=seg;prev=cur;i++}
+    }
+    while(out.length<N) out.push(points[points.length-1]);
+    return out;
+  }
+  function cloudDistance(pts,tmpl,start){
+    const n=pts.length, matched=new Array(n).fill(false); let sum=0, i=start, w=0;
+    do{ let min=Infinity, index=-1;
+      for(let j=0;j<n;j++) if(!matched[j]){const dd=dist(pts[i],tmpl[j]); if(dd<min){min=dd;index=j}}
+      matched[index]=true; sum+=(1-w/n)*min; w++; i=(i+1)%n;
+    }while(i!==start);
+    return sum;
+  }
+  function distance(a,b){
+    const n=a.length; let step=1; while((step+1)*(step+1)<=n)step++;
+    let best=Infinity; for(let s=0;s<n;s+=step) best=Math.min(best,cloudDistance(a,b,s),cloudDistance(b,a,s));
+    return best/((n+1)/2);
+  }
+  const toPercent=raw=>raw<=PERFECT?100:raw>=ZERO?0:Math.round(100*(ZERO-raw)/(ZERO-PERFECT));
+  const TEMPLATES={}; ['cannon','sword','snowman','castle'].forEach(k=>TEMPLATES[k]=normalize(parse(DOODLES[k].d)));
+
+  // drawing pad
+  const sheet=document.getElementById('sheet'), cv=document.getElementById('pad'), g=cv.getContext('2d');
+  const ghost=document.getElementById('ghost'), timerEl=document.getElementById('timer'), hint=document.getElementById('hint');
+  const verdict=document.getElementById('verdict'), status=document.getElementById('status');
+  let kind='cannon', strokes=[], cur=null, t0=0, tick=null, done=false;
+  function size(){const r=cv.getBoundingClientRect(), dpr=Math.min(devicePixelRatio,2); cv.width=r.width*dpr; cv.height=r.height*dpr; g.setTransform(dpr,0,0,dpr,0,0); redraw()}
+  function redraw(){
+    g.clearRect(0,0,cv.width,cv.height); g.lineCap=g.lineJoin='round'; g.lineWidth=5; g.strokeStyle='#2e1690';
+    strokes.forEach(st=>{g.beginPath(); st.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y)); if(st.length===1)g.lineTo(st[0].x+.1,st[0].y); g.stroke()});
+  }
+  function reset(){
+    strokes=[]; cur=null; done=false; clearInterval(tick); tick=null; t0=0;
+    timerEl.textContent='10.0'; hint.style.display=''; verdict.className='verdict'; verdict.innerHTML=''; cv.classList.remove('wobble'); status.textContent=''; redraw();
+  }
+  function setKind(k){
+    kind=k; document.querySelectorAll('[data-kind]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.kind===k));
+    ghost.innerHTML=svgOf(DOODLES[k],'#2e1690',4,''); reset();
+  }
+  const pos=e=>{const r=cv.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top}};
+  cv.addEventListener('pointerdown',e=>{
+    if(done)return; e.preventDefault(); try{cv.setPointerCapture(e.pointerId)}catch(_){}
+    if(!t0){t0=performance.now(); hint.style.display='none'; tick=setInterval(()=>{const left=Math.max(0,LIMIT-(performance.now()-t0)); timerEl.textContent=(left/1000).toFixed(1); if(!left)judge()},100)}
+    cur=[pos(e)]; strokes.push(cur); redraw();
+  });
+  cv.addEventListener('pointermove',e=>{if(!cur||done)return; cur.push(pos(e)); redraw()});
+  const end=()=>{cur=null}; cv.addEventListener('pointerup',end); cv.addEventListener('pointercancel',end);
+  function judge(){
+    if(done)return;
+    const cloud=normalize(strokes);
+    if(!cloud){status.textContent='Draw something first!';return}
+    done=true; clearInterval(tick);
+    const pct=toPercent(distance(cloud,TEMPLATES[kind])), [,grade,color,line]=GRADES.find(gr=>pct>=gr[0]);
+    verdict.innerHTML=`<div class="grade" style="background:${color}">${grade}<small>${pct}% like a ${kind}</small></div>`;
+    verdict.className='verdict show'; status.textContent=line;
+    if(grade==='SCRIBBLE!'&&!REDUCED) cv.classList.add('wobble');
+  }
+  document.querySelectorAll('[data-kind]').forEach(b=>b.onclick=()=>setKind(b.dataset.kind));
+  document.getElementById('judgeBtn').onclick=judge;
+  document.getElementById('clearBtn').onclick=reset;
+  const ghostBtn=document.getElementById('ghostBtn');
+  ghostBtn.onclick=()=>{const on=ghostBtn.getAttribute('aria-pressed')!=='true'; ghostBtn.setAttribute('aria-pressed',on); ghost.classList.toggle('off',!on)};
+  addEventListener('resize',size); size(); setKind('cannon');
+})();
+</script>
+</body>
+</html>

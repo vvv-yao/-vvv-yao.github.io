@@ -514,11 +514,9 @@ const music=(()=>{
   };
 })();
 const musicBtn=document.getElementById('musicBtn');
-let musicTouched=false;
 function setMusic(on){on?music.start():music.stop();musicBtn.classList.toggle('on',on);musicBtn.setAttribute('aria-pressed',on)}
-musicBtn.onclick=e=>{e.stopPropagation();musicTouched=true;setMusic(!music.on)};
-// browsers only allow sound after the visitor interacts, so the music starts on the first tap or click
-addEventListener('pointerdown',()=>{if(!musicTouched){musicTouched=true;setMusic(true)}},{once:true});
+// music stays off until the visitor taps the note button
+musicBtn.onclick=e=>{e.stopPropagation();setMusic(!music.on)};
 document.addEventListener('visibilitychange',()=>{if(actx){document.hidden?actx.suspend():actx.resume()}});
 
 /* ---------- mini playable demo ---------- */
